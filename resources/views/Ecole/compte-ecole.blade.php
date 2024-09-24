@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire d'Inscription des Écoles</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css?family=Exo:400,700" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="/style/style.css" rel="stylesheet">
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Barre de navigation -->
+  <nav class="bg-white shadow fixed top-0 left-0 w-full z-10">
+    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="{{ asset('image/logofin.jpg') }}" alt="Logo" class="h-10">
+      </div>
+      <div class="hidden md:flex space-x-4">
+        <a href="#" class="text-gray-700 hover:text-blue-500">Accueil</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Écoles</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Banques</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Contact</a>
+      </div>
+      <form method="" action="">
+        <div class="flex items-center">
+          <input type="text" placeholder="Verifier un paiement..." class="p-2 border rounded-md" required>
+          <button class="ml-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Verifier</button>
+        </div>
+      </form>
+      <button class="md:hidden flex items-center justify-center p-2 text-gray-700 hover:text-blue-500" id="menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="md:hidden" id="mobile-menu">
+      <div class="flex flex-col space-y-2 p-4">
+        <a href="#" class="text-gray-700 hover:text-blue-500">Accueil</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Écoles</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Banques</a>
+        <a href="#" class="text-gray-700 hover:text-blue-500">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Section d'animation (background fixe) -->
+  <div class="area">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <!-- Titre principal -->
+  <div class="text-center mt-20 text-white text-4xl font-bold">Formulaire d'Inscription des Écoles</div>
+
+  @if(session('success'))
+    <div class="text-green-500 font-bold mb-4">
+      {{ session('success') }}
+    </div>
+  @endif
+
+  @if(session('error'))
+    <div class="text-red-500 font-bold mb-4">
+      {{ session('error') }}
+    </div>
+  @endif
+
+  @if ($errors->any())
+    <div class="text-red-500 font-bold mb-4">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  <!-- Formulaire École et Banques Partenaires -->
+  <div class="max-w-4xl mx-auto mt-10 p-6 border border-yellow-500 rounded-lg relative z-10 bg-gray-900 bg-opacity-75">
+    <h2 class="text-xl font-semibold mb-4 text-white">Informations de l'École</h2>
+    <form id="combinedForm" method="post" action="{{ route('compte.traitement') }}">
+      @csrf
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Nom École -->
+        <div class="flex flex-col">
+          <label for="nomEcole" class="mb-2 font-medium text-white">Nom de l'école</label>
+          <input type="text" id="nomEcole" name="nom_ecole" class="p-2 border rounded-md" placeholder="Entrez le nom de l'école" required>
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col">
+          <label for="email" class="mb-2 font-medium text-white">Email</label>
+          <input type="email" id="email" name="email" class="p-2 border rounded-md" placeholder="Entrez l'email" required>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Ville -->
+        <div class="flex flex-col">
+          <label for="ville" class="mb-2 font-medium text-white">Ville</label>
+          <input type="text" id="ville" name="ville" class="p-2 border rounded-md" placeholder="Entrez la ville" required>
+        </div>
+
+        <!-- Telephone -->
+        <div class="flex flex-col">
+          <label for="telephone" class="mb-2 font-medium text-white">Téléphone</label>
+          <input type="text" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required>
+        </div>
+      </div>
+
+      <!-- Section 2: Banques Partenaires -->
+      <h2 class="text-xl font-semibold mt-6 mb-4 text-white">Banques Partenaires</h2>
+      <p class="text-green-500 font-bold mb-4">Cliquez sur Ajouter une Banque pour ajouter vos banques partenaires</p>
+      <p class="text-red-500 font-bold mb-4">NB: Une banque ne peut être choisie deux fois.</p>
+
+     <div id="bank-container">
+    <!-- Bloc par défaut (1ère banque) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 bank-row" id="bankRow1">
+        <!-- Nom Banque -->
+        <div class="flex flex-col">
+            <label for="nom_banque1" class="mb-2 font-medium text-white">Nom de la Banque</label>
+            <select class="p-2 border rounded-md bank-name" name="nom_banque1">
+                <option value="" selected>Veuillez choisir une banque</option>
+                <option value="Afriland First Bank">Afriland First Bank</option>
+                <option value="Banque Atlantique">Banque Atlantique</option>
+                <option value="UBA Bank">UBA Bank</option>
+                <option value="SCB Bank">SCB Bank</option>
+                <option value="SGBC">SGBC</option>
+                <option value="Commercial Bank">Commercial Bank</option>
+                <option value="BICEC">BICEC</option>
+                <option value="Eco Bank">Eco Bank</option>
+                <option value="BGFI Bank">BGFI Bank</option>
+                <option value="Bange Bank">Bange Bank</option>
+                <option value="Express Union">Express Union</option>
+                <option value="Vision Finance">Vision Finance</option>
+                <option value="NFC Bank">NFC Bank</option>
+            </select>
+        </div>
+        <!-- Numéro Compte -->
+        <div class="flex flex-col">
+            <label for="numero_compte1" class="mb-2 font-medium text-white">Numéro de Compte</label>
+            <input type="text" class="p-2 border rounded-md numero-compte" name="numero_compte1" placeholder="Entrez le numéro de compte">
+        </div>
+    </div>
+</div>
+
+<!-- Boutons d'ajout et de retrait -->
+<div class="flex justify-center mt-6 space-x-4">
+    <button type="button" id="add-bank" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Ajouter une banque</button>
+    <button type="button" id="remove-bank" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">Retirer une banque</button>
+</div>
+
+<!-- Bouton de soumission -->
+<div class="flex justify-center mt-6">
+    <button type="submit" class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600">Soumettre</button>
+</div>
+    </form>
+  </div>
+
+ <script src="/jscript/style.js">
+  </script>
+</body>
+</html>
