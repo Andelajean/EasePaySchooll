@@ -22,38 +22,7 @@
 </head>
 <body>
   <!-- Barre de navigation -->
-  <nav class="bg-white shadow fixed top-0 left-0 w-full z-10">
-    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-      <div class="flex items-center">
-        <img src="{{ asset('image/logofin.jpg') }}" alt="Logo" class="h-10">
-      </div>
-      <div class="hidden md:flex space-x-4">
-        <a href="#" class="text-gray-700 hover:text-blue-500">Accueil</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Écoles</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Banques</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Contact</a>
-      </div>
-      <form method="" action="">
-        <div class="flex items-center">
-          <input type="text" placeholder="Verifier un paiement..." class="p-2 border rounded-md" required>
-          <button class="ml-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Verifier</button>
-        </div>
-      </form>
-      <button class="md:hidden flex items-center justify-center p-2 text-gray-700 hover:text-blue-500" id="menu-button">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button>
-    </div>
-    <div class="md:hidden" id="mobile-menu">
-      <div class="flex flex-col space-y-2 p-4">
-        <a href="#" class="text-gray-700 hover:text-blue-500">Accueil</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Écoles</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Banques</a>
-        <a href="#" class="text-gray-700 hover:text-blue-500">Contact</a>
-      </div>
-    </div>
-  </nav>
+  @include('navbar')
 
   <!-- Loader -->
   <div id="loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">

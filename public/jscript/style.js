@@ -1,10 +1,4 @@
-
-
-    document.getElementById('menu-button').addEventListener('click', function() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenu.classList.toggle('hidden');
-      });
-      //chargement de la page
+//chargement de la page
   window.addEventListener("load", function () {
     const loader = document.getElementById('loader');
     loader.classList.add('fade-out'); // Ajoute l'animation de fondu
@@ -100,3 +94,69 @@
 
     // Appeler la fonction pour la première initialisation
     updateBankListeners();
+
+    /*paiement
+    $(document).ready(function() {
+        $('#search').on('keyup', function() {
+            var query = $(this).val();
+            if (query.length >= 1) {
+                $.ajax({
+                    url: '/search-school',
+                    data: { query: query },
+                    success: function(data) {
+                        var resultList = $('#result-list');
+                        resultList.empty().removeClass('hidden');
+                        if (data.length > 0) {
+                            $.each(data, function(index, school) {
+                                resultList.append('<li class="p-2 cursor-pointer hover:bg-gray-200" data-id="' + school.id + '">' + school.nom_ecole + '</li>');
+                            });
+                        } else {
+                            resultList.append('<li class="p-2 text-gray-500">Aucune école trouvée</li>');
+                        }
+                    }
+                });
+            } else {
+                $('#result-list').empty().addClass('hidden');
+            }
+        });
+
+        // Récupérer les détails de l'école lorsqu'un résultat est cliqué
+    $(document).on('click', '#result-list li', function() {
+var schoolId = $(this).data('id');
+$.ajax({
+    url: '/school/' + schoolId,
+    success: function(data) {
+        if (data) {
+            $('#nom_ecole').val(data.nom_ecole);
+            $('#telephone').val(data.telephone);
+            $('#ville').val(data.ville);
+
+            // Gérer la liste des banques
+            var banqueSelect = $('#banque');
+            banqueSelect.empty().append('<option value="">Sélectionnez une banque</option>');
+
+            $.each(data.banques, function(index, banque) {
+                banqueSelect.append('<option value="' + banque.numero_banque + '">' + banque.nom_banque + '</option>');
+            });
+
+            // Masquer la liste des suggestions
+            $('#result-list').empty().addClass('hidden');
+
+            // Afficher le formulaire
+            $('#form-container').removeClass('hidden');
+        }
+    }
+});
+});
+
+
+        // Afficher les champs pour l'université
+        $('#niveau').on('change', function() {
+            if ($(this).val() === 'université') {
+                $('#university-fields').removeClass('hidden');
+            } else {
+                $('#university-fields').addClass('hidden');
+            }
+        });
+    });
+    */

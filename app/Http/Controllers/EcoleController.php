@@ -103,4 +103,49 @@ class EcoleController extends Controller
     public function email_inscription_ecole(){
         return view('Ecole.email-inscription');
     }
+    // Fonction pour rechercher des écoles qui contiennent les lettres saisies
+    public function searchSchool(Request $request)
+    {
+        if ($request->has('query')) {
+            $searchTerm = $request->input('query');
+            
+            // Rechercher uniquement par nom d'école
+            $ecoles = Ecole::where('nom_ecole', 'LIKE', '%' . $searchTerm . '%')
+                ->get(['id', 'nom_ecole']); // Récupérer seulement l'ID et le nom pour les suggestions
+    
+            return response()->json($ecoles);
+        }
+    
+        return response()->json([]);
+    }
+    
+    
+
+    public function getSchoolDetails($id)
+    {
+        // Trouver l'école
+        $ecole = Ecole::find($id);
+    
+        if ($ecole) {
+            // Préparer les détails à envoyer au frontend
+            $ecoleDetails = [
+                'nom_ecole' => $ecole->nom_ecole,
+                'telephone' => $ecole->telephone,
+                'ville' => $ecole->ville,
+                'montant_total' => $ecole->montant_total, // Montant total
+            ];
+    
+            // Ajouter les banques (nom uniquement)
+            for ($i = 1; $i <= 8; $i++) {
+                if ($ecole->{'nom_banque' . $i}) {
+                    $ecoleDetails['nom_banque' . $i] = $ecole->{'nom_banque' . $i};
+                }
+            }
+    
+            return response()->json($ecoleDetails);
+        }
+    
+        return response()->json(null, 404);
+    }
+    
 }

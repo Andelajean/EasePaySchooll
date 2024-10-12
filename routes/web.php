@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EcoleController;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,8 @@ require __DIR__.'/auth.php';
 Route::get('/ecole/compte',[EcoleController::class,'compte'])->name('ecole.compte');
 Route::post('/traitement_compte_ecole',[EcoleController::class,'traitement_compte'])->name('compte.traitement');
 Route::get('/email/inscription/ecole',[EcoleController::class,'email_inscription_ecole'])->name('ecole.email.inscription');
-Route::get('/email/admin/inscription/ecole',[AdminController::class,''])->name('admin.emial.inscription.ecole');
+Route::get('/email/admin/inscription/ecole',[AdminController::class,'email_incription_ecole'])->name('admin.emial.inscription.ecole');
+Route::get('/paiement',[PaiementController::class,'formulaire_paiement'])->name('paiement');
+Route::get('/search-school', [EcoleController::class, 'searchSchool']);
+Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
+
