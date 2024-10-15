@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 class EcoleController extends Controller
 {
-    public function compte(){
+  public function compte(){
         return view('Ecole.compte-ecole');
     }
     public function traitement_compte(Request $request)
