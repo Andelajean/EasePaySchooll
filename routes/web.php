@@ -28,4 +28,6 @@ Route::get('/email/admin/inscription/ecole',[AdminController::class,'email_incri
 Route::get('/paiement',[PaiementController::class,'formulaire_paiement'])->name('paiement');
 Route::get('/search-school', [EcoleController::class, 'searchSchool']);
 Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
+Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
+Route::get('/recu-paiement',[PageController::class,'recu'])->name('recu');
 
