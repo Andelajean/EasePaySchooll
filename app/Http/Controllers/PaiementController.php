@@ -14,7 +14,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 
 class PaiementController extends Controller
 {
-    public function formulaire_paiement()
+  public function formulaire_paiement()
     {
         return view('Paiement.paiement');
     }
