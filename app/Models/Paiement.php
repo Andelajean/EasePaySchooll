@@ -22,6 +22,9 @@ class Paiement extends Model
         'montant',
         'details',
         'qr_code',
+        'id_paiement',
+        'date_paiement',
+        'heure_paiement' ,
     ];
 
     public static function generateIdPaiement()

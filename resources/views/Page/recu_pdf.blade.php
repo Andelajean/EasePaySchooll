@@ -4,21 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reçu de paiement</title>
-    
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/apple-touch-icon.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
-  <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
-  <!-- Google Web Fonts -->
-  <link href="/style/recu.css" rel="stylesheet">
-  <!-- Icon Font Stylesheet -->
-  
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .section p {
+            margin: 5px 0;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            text-align: center;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 style="text-align: center;">Reçu de Paiement Des Frais De Scolarité</h1>
+        <h1 style="text-align: center;">Reçu de Paiement Des Frais de scolarité</h1>
 
         <!-- Première section : Informations de l'école -->
         <div class="section">
@@ -44,26 +75,17 @@
             <p><strong>Niveau Université :</strong> {{ $niveau_universite }}</p>
         </div>
 
-        <!-- QR code -->
+        <!-- Afficher le QR code -->
         <div class="qr-code">
-            <img src="{{ asset('qrcodes/' . $qr_code) }}" alt="QR Code">
+            <img src="{{ public_path('qrcodes/' . $qr_code) }}" alt="QR Code" width="150">
         </div>
-
-    
         <!-- Footer -->
         <div class="footer">
             <p>Reçu délivré par : <strong>EasePaySchool.com</strong></p>
             <p>Développé par <strong>Smart Tech Engineering</strong></p>
             <p>Tel : +237 620 699 733 / 659 454 737</p>
         </div>
-         <!-- Bouton de téléchargement du reçu -->
-        <div style="text-align: center;">
-            <a href="{{ route('telecharger_recu', ['id_paiement' => $id_paiement]) }}" class="download-btn">Télécharger le Reçu</a>
-        </div>
     </div>
 
- <script src="/jscript/style.js">
-  </script>
- 
 </body>
 </html>
