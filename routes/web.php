@@ -32,4 +32,5 @@ Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
 Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
 Route::get('/recu-paiement',[PageController::class,'recu'])->name('recu');
 Route::get('/telecharger-recu/{id_paiement}', [PageController::class, 'telechargerRecu'])->name('telecharger_recu');
+Route::get('/verifier-paiement', [PageController::class, 'verifierPaiement'])->name('verifier.paiement');
 
