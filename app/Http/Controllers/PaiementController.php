@@ -1,20 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Paiement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str; // Pour générer un ID de paiement
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel;
 
 class PaiementController extends Controller
 {
-  public function formulaire_paiement()
+    public function formulaire_paiement()
     {
         return view('Paiement.paiement');
     }
@@ -22,100 +19,205 @@ class PaiementController extends Controller
     public function payer(Request $request)
     {
         // Validation des données
-        $validator = Validator::make($request->all(), [
-            'nom_ecole' => 'required|string',
-            'telephone' => 'required|string',
-            'ville' => 'required|string',
-            'banque' => 'required|string',
-            'nom_complet' => 'required|string',
-            'classe' => 'required|string',
-            'niveau' => 'required|string',
-            'filiere' => 'required_if:niveau,université|string',
-            'niveau_universite' => 'required_if:niveau,université|string',
-            'montant' => 'required|numeric',
-            'details' => 'required|string',
-        ]);
+       $validator = Validator::make($request->all(), $this->validationRules($request));
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+         return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // Générer un ID de paiement unique ici
+        $id_paiement = Paiement::generateIdPaiement(); 
+
         // Effectuer le paiement via l'API MOMO
-        $paymentResponse = $this->callMomoApi($request);
+        $paymentResponse = $this->callMomoApi($request, $id_paiement);
 
         // Vérifier le statut du paiement
-        if ($paymentResponse['status'] == 'success') {
+        if ($paymentResponse['status'] === 'success') {
             // Enregistrer le paiement dans la base de données
-            $paiement = Paiement::create([
-                'nom_ecole' => $request->nom_ecole,
-                'telephone' => $request->telephone,
-                'ville' => $request->ville,
-                'banque' => $request->banque,
-                'nom_complet' => $request->nom_complet,
-                'classe' => $request->classe,
-                'niveau' => $request->niveau,
-                'filiere' => $request->filiere,
-                'niveau_universite' => $request->niveau_universite,
-                'montant' => $request->montant,
-                'details' => $request->details,
-                'qr_code' => $paymentResponse['qr_code'], // Enregistrer le QR code
-                'id_paiement' => $this->generateIdPaiement(), // Générer un ID de paiement
-            ]);
+            $paiement = $this->createPaiementRecord($request, $paymentResponse['qr_code'], $id_paiement);
 
             // Retourner la vue de reçu avec toutes les informations de paiement
             return $this->returnPaymentView($paiement, $request);
         }
 
-        return response()->json(['message' => 'Échec du paiement, veuillez réessayer.'], 500);
+        return redirect()->back()->withErrors('error','Échec du paiement, veuillez réessayer.');
     }
 
-    private function callMomoApi(Request $request)
+    private function validationRules(Request $request)
+    {
+        $rules = [];
+    
+        if ($request->has('nom_ecole')) {
+            $rules['nom_ecole'] = 'required|string';
+        }
+        if ($request->has('telephone')) {
+            $rules['telephone'] = 'required|string';
+        }
+        if ($request->has('ville')) {
+            $rules['ville'] = 'required|string';
+        }
+        if ($request->has('banque')) {
+            $rules['banque'] = 'required|string';
+        }
+    
+        if ($request->has('nom_complet')) {
+            $rules['nom_complet'] = 'required|string';
+        }
+    
+        if ($request->has('classe')) {
+            $rules['classe'] = 'required|string';
+        }
+    
+        if ($request->has('niveau')) {
+            $rules['niveau'] = 'required|string';
+    
+            // Vérifier si le niveau est 'université'
+            if ($request->input('niveau') === 'université') {
+                $rules['filiere'] = 'required|string';
+                $rules['niveau_universite'] = 'required|string';
+            }
+        }
+    
+        if ($request->has('date_paiement')) {
+            $rules['date_paiement'] = 'required|string';
+        }
+    
+        if ($request->has('heure_paiement')) {
+            $rules['heure_paiement'] = 'required|string';
+        }
+    
+        if ($request->has('montant')) {
+            $rules['montant'] = 'required|numeric';
+        }
+    
+        if ($request->has('details')) {
+            $rules['details'] = 'required|string';
+        }
+    
+        return $rules;
+    }
+    
+    private function createPaiementRecord(Request $request, $qrCode, $id_paiement)
+    {
+        $paiementData = [];
+        // Vérification et ajout conditionnel des données de paiement
+        if ($request->has('nom_ecole')) {
+            $paiementData['nom_ecole'] = $request->nom_ecole;
+        }
+        if ($request->has('telephone')) {
+            $paiementData['telephone'] = $request->telephone;
+        }
+        if ($request->has('ville')) {
+            $paiementData['ville'] = $request->ville;
+        }
+        if ($request->has('banque')) {
+            $paiementData['banque'] = $request->banque;
+        }
+        if ($request->has('nom_complet')) {
+            $paiementData['nom_complet'] = $request->nom_complet;
+        }
+        if ($request->has('classe')) {
+            $paiementData['classe'] = $request->classe;
+        }
+        if ($request->has('niveau')) {
+            $paiementData['niveau'] = $request->niveau;
+            // Si le niveau est 'université', ajouter les champs spécifiques à l'université
+            if ($request->input('niveau') === 'université') {
+                if ($request->has('filiere')) {
+                    $paiementData['filiere'] = $request->filiere;
+                }
+                if ($request->has('niveau_universite')) {
+                    $paiementData['niveau_universite'] = $request->niveau_universite;
+                }
+            }
+        }
+        if ($request->has('montant')) {
+            $paiementData['montant'] = $request->montant;
+        } 
+        if ($request->has('details')) {
+            $paiementData['details'] = $request->details;
+        }  
+        if ($request->has('date_paiement')) {
+            $paiementData['date_paiement'] = $request->date_paiement;
+        }
+        if ($request->has('heure_paiement')) {
+            $paiementData['heure_paiement'] = $request->heure_paiement;
+        }
+        // Ajout du QR Code et de l'ID de paiement
+        $paiementData['qr_code'] = $qrCode;
+        $paiementData['id_paiement'] = $id_paiement; // Utilisation du même ID de paiement généré
+        
+        // Création du paiement avec les données collectées
+        return Paiement::create($paiementData);  
+    }
+
+    private function callMomoApi(Request $request, $id_paiement)
     {
         // Simulation de paiement
         $url = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/bc-authorize";
         $curl = curl_init($url);
-
+    
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
+    
         // Request headers
-        $headers = array(
+        $headers = [
             'Content-Type: application/x-www-form-urlencoded',
             'Cache-Control: no-cache',
-        );
+        ];
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
+    
         // Request body
         $request_body = 'login_hint=ID:{msisdn}/MSISDN&scope={scope}&access_type={online/offline}';
         curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
-
+    
         $resp = curl_exec($curl);
         curl_close($curl);
-
+    
         // Simuler le succès du paiement pour cet exemple
         $success = true; // Changez cela en fonction de votre logique
-
+    
         if ($success) {
-            // Générer un ID de paiement unique
-            $id_paiement = strtoupper(bin2hex(random_bytes(5))); // 11 caractères alphanumériques
-
-            // Générer le QR Code
-            $qrCode = new QrCode('ID Paiement: ' . $id_paiement . ', Montant: ' . $request->montant);
+            // Créer le contenu du QR code avec tous les détails du paiement
+            $qrContent = [
+                'ID Paiement' => $id_paiement,
+                'Nom École' => $request->nom_ecole,
+                'Nom Complet' => $request->nom_complet,
+                'Téléphone' => $request->telephone,
+                'Ville' => $request->ville,
+                'Banque' => $request->banque,
+                'Classe' => $request->classe,
+                'Niveau' => $request->niveau,
+                'Filière' => $request->filiere,
+                'Niveau Université' => $request->niveau_universite,
+                'Montant' => $request->montant,
+                'Détails' => $request->details,
+                'date_paiement' => $request->date_paiement,
+                'heure_paiement' => $request->heure_paiement,
+            ];
+    
+            // Convertir le contenu en chaîne formatée
+            $qrCodeData = http_build_query($qrContent, '', "\n");
+    
+            $qrCode = new QrCode($qrCodeData);
             $qrCode->setSize(300)
                 ->setMargin(10)
                 ->setEncoding(new Encoding('UTF-8'))
-                //->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::HIGH)) // Vérifiez que cela fonctionne
                 ->setForegroundColor(new Color(0, 0, 0)) // Couleur noire
                 ->setBackgroundColor(new Color(0, 0, 255)); // Couleur bleue
-
-            // Écrire le QR Code en tant qu'image PNG
+    
+            // Vérifier si le dossier pour les QR codes existe, sinon le créer
+            $qrCodeDir = public_path('qrcodes');
+            if (!file_exists($qrCodeDir)) {
+                mkdir($qrCodeDir, 0777, true);
+            }
+    
+            // Sauvegarder le QR Code dans le dossier public
+            $qrCodePath = $qrCodeDir . '/' . $id_paiement . '.png';
             $writer = new PngWriter();
             $result = $writer->write($qrCode);
-            
-            // Sauvegarder le QR Code dans le dossier public
-            $qrCodePath = public_path('qrcodes/' . $id_paiement . '.png');
             $result->saveToFile($qrCodePath);
-
+    
             // Retourner la réponse du paiement
             return [
                 'status' => 'success',
@@ -127,12 +229,7 @@ class PaiementController extends Controller
             return ['status' => 'error'];
         }
     }
-
-    private function generateIdPaiement()
-    {
-        // Générer un ID de paiement aléatoire de 11 caractères alphanumériques
-        return strtoupper(Str::random(11));
-    }
+    
 
     private function returnPaymentView(Paiement $paiement, Request $request)
     {
@@ -150,6 +247,8 @@ class PaiementController extends Controller
             'niveau' => $request->niveau,
             'filiere' => $request->filiere,
             'niveau_universite' => $request->niveau_universite,
+            'date_paiement' => $request->date_paiement,
+            'heure_paiement' => $request->heure_paiement,
         ]);
     }
 }

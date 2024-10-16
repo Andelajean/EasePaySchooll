@@ -23,12 +23,10 @@
 <body>
   <!-- Barre de navigation -->
   @include('navbar')
-
   <!-- Loader -->
   <div id="loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
     <div class="loader"></div>
   </div>
-
   <!-- Section d'animation (background fixe) -->
   <div class="area">
     <ul class="circles">
@@ -44,22 +42,18 @@
       <li></li>
     </ul>
   </div>
-
   <!-- Titre principal -->
   <div class="text-center mt-20 text-white text-4xl font-bold">Formulaire d'Inscription des Écoles</div>
-
   @if(session('success'))
     <div class="text-green-500 font-bold mb-4">
       {{ session('success') }}
     </div>
   @endif
-
   @if(session('error'))
     <div class="text-red-500 font-bold mb-4">
       {{ session('error') }}
     </div>
   @endif
-
   @if ($errors->any())
     <div class="text-red-500 font-bold mb-4">
       <ul>
@@ -69,7 +63,6 @@
       </ul>
     </div>
   @endif
-
   <!-- Formulaire École et Banques Partenaires -->
   <div class="max-w-4xl mx-auto mt-10 p-6 border border-yellow-500 rounded-lg relative z-10 bg-gray-900 bg-opacity-75">
     <h2 class="text-xl font-semibold mb-4 text-white">Informations de l'École</h2>
@@ -81,33 +74,28 @@
           <label for="nomEcole" class="mb-2 font-medium text-white">Nom de l'école</label>
           <input type="text" id="nomEcole" name="nom_ecole" class="p-2 border rounded-md" placeholder="Entrez le nom de l'école" required>
         </div>
-
         <!-- Email -->
         <div class="flex flex-col">
           <label for="email" class="mb-2 font-medium text-white">Email</label>
           <input type="email" id="email" name="email" class="p-2 border rounded-md" placeholder="Entrez l'email" required>
         </div>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Ville -->
         <div class="flex flex-col">
           <label for="ville" class="mb-2 font-medium text-white">Ville</label>
           <input type="text" id="ville" name="ville" class="p-2 border rounded-md" placeholder="Entrez la ville" required>
         </div>
-
         <!-- Telephone -->
         <div class="flex flex-col">
           <label for="telephone" class="mb-2 font-medium text-white">Téléphone</label>
           <input type="text" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required>
         </div>
       </div>
-
       <!-- Section 2: Banques Partenaires -->
       <h2 class="text-xl font-semibold mt-6 mb-4 text-white">Banques Partenaires</h2>
       <p class="text-green-500 font-bold mb-4">Cliquez sur Ajouter une Banque pour ajouter vos banques partenaires</p>
       <p class="text-red-500 font-bold mb-4">NB: Une banque ne peut être choisie deux fois.</p>
-
      <div id="bank-container">
     <!-- Bloc par défaut (1ère banque) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 bank-row" id="bankRow1">
@@ -138,20 +126,17 @@
         </div>
     </div>
 </div>
-
 <!-- Boutons d'ajout et de retrait -->
 <div class="flex justify-center mt-6 space-x-4">
     <button type="button" id="add-bank" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Ajouter une banque</button>
     <button type="button" id="remove-bank" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">Retirer une banque</button>
 </div>
-
 <!-- Bouton de soumission -->
 <div class="flex justify-center mt-6">
     <button type="submit" class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600">Soumettre</button>
 </div>
     </form>
   </div>
-
  <script src="/jscript/style.js">
   </script>
 </body>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EcoleController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,4 +31,5 @@ Route::get('/search-school', [EcoleController::class, 'searchSchool']);
 Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
 Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
 Route::get('/recu-paiement',[PageController::class,'recu'])->name('recu');
+Route::get('/telecharger-recu/{id_paiement}', [PageController::class, 'telechargerRecu'])->name('telecharger_recu');
 

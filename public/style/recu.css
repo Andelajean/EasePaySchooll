@@ -1,0 +1,41 @@
+/* recu*/
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+  }
+  .section {
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+  .section p {
+    margin: 5px 0;
+  }
+  .qr-code {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .download-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  .footer {
+    margin-top: 40px;
+    font-size: 12px;
+    text-align: center;
+    color: #555;
+  }
+  

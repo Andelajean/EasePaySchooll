@@ -25,6 +25,8 @@ return new class extends Migration
             $table->decimal('montant', 10, 2);
             $table->text('details');
             $table->string('qr_code')->nullable(); // Champ pour le QR code
+            $table->string('date_paiement');
+            $table->string('heure_paiement');
             $table->timestamps();
         });
     }
