@@ -56,7 +56,8 @@
                 </ul>
             </div>
         @endif
-          <h2 class="text-lg font-bold mb-4">Formulaire de Paiement des frais de scolarité</h2>
+         <h2 class="text-lg font-bold text-white text-center mb-4">Formulaire de Paiement des frais de scolarité</h2>
+
   <div class="max-w-3xl mx-auto p-6">
     <!-- Barre de recherche -->
     <div class="mb-6">
