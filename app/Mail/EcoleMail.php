@@ -25,7 +25,7 @@ class EcoleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject:"Cette Message est Destiné à .$this->ecole['nom_ecole",
+            subject: "Ce message est destiné à " . $this->ecole->nom_ecole
         );
     }
 

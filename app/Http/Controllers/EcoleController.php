@@ -42,6 +42,7 @@ class EcoleController extends Controller
             'email' => 'required|string|email|max:255|unique:ecoles,email',
             'telephone' => 'required|string|max:255',
             'ville' => 'required|string|max:255',
+            'niveau' => 'required|string|max:255',
             'nom_banque1' => 'required|string|max:255|not_in:choisir', // Banque 1 obligatoire
             'numero_compte1' => 'required|string|max:255', // Numéro de compte 1 obligatoire
         ]);
@@ -78,6 +79,7 @@ class EcoleController extends Controller
         $ecole->identifiant = $validated['identifiant'];
         $ecole->telephone = $validated['telephone'];
         $ecole->ville = $validated['ville'];
+        $ecole->niveau = $validated['niveau'];
     
         // Assigner les valeurs de la banque obligatoire
         $ecole->nom_banque1 = $validated['nom_banque1'];
@@ -119,8 +121,6 @@ class EcoleController extends Controller
         return response()->json([]);
     }
     
-    
-
     public function getSchoolDetails($id)
     {
         // Trouver l'école
@@ -132,7 +132,7 @@ class EcoleController extends Controller
                 'nom_ecole' => $ecole->nom_ecole,
                 'telephone' => $ecole->telephone,
                 'ville' => $ecole->ville,
-                'montant_total' => $ecole->montant_total, // Montant total
+                'niveau' => $ecole->niveau, // Montant total
             ];
     
             // Ajouter les banques (nom uniquement)
@@ -147,5 +147,7 @@ class EcoleController extends Controller
     
         return response()->json(null, 404);
     }
-    
+    public function login(){
+        return view('Ecole.login');
+    }
 }

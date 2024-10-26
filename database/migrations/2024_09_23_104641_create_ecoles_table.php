@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('identifiant', 11)->unique();
             $table->string('ville');
-            $table->string('telephone');
+            $table->string('niveau');
+            $table->string('telephone')->unique();
             $table->string('nom_banque1');
             $table->string('numero_banque1');
             $table->string('nom_banque2')->nullable();
