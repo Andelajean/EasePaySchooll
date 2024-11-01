@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Dashboard Ecole</title>
+    <title>Rapport des Paiements pour le niveau: {{ $banque }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -61,107 +61,24 @@
                                     <li class="active"><a href="{{route('niveau')}}">Paiement Par Niveau</a></li>
                                     <li><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
                                     <li ><a href="{{route('banque')}}">Paiement Par Banque</a></li>
+                                     <li ><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li ><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
+                                    <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
+                                    <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
                                     <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar
-                                        Types
+                            <li >
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Uniforme   
                                     </span></a>
-                                <ul class="collapse">
-                                    <li><a href="index.html">Left Sidebar</a></li>
-                                    <li><a href="index3-horizontalmenu.html">Horizontal Sidebar</a></li>
+                                     <ul class="collapse">
+                                    <li ><a href="{{route('fac.distribuer_polo')}}">Distribuer Les Polo</a></li>
+                                      <li><a href="{{route('fac.distribuer_badge')}}">Distribuer Les Badges</a></li>
+                                    <li><a href="{{route('fac.badge')}}">Liste des Badges Distribués</a></li>
+                                     <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Charts</span></a>
-                                <ul class="collapse">
-                                    <li><a href="barchart.html">bar chart</a></li>
-                                    <li><a href="linechart.html">line Chart</a></li>
-                                    <li><a href="piechart.html">pie chart</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-palette"></i><span>UI Features</span></a>
-                                <ul class="collapse">
-                                    <li><a href="accordion.html">Accordion</a></li>
-                                    <li><a href="alert.html">Alert</a></li>
-                                    <li><a href="badge.html">Badge</a></li>
-                                    <li><a href="button.html">Button</a></li>
-                                    <li><a href="button-group.html">Button Group</a></li>
-                                    <li><a href="cards.html">Cards</a></li>
-                                    <li><a href="dropdown.html">Dropdown</a></li>
-                                    <li><a href="list-group.html">List Group</a></li>
-                                    <li><a href="media-object.html">Media Object</a></li>
-                                    <li><a href="modal.html">Modal</a></li>
-                                    <li><a href="pagination.html">Pagination</a></li>
-                                    <li><a href="popovers.html">Popover</a></li>
-                                    <li><a href="progressbar.html">Progressbar</a></li>
-                                    <li><a href="tab.html">Tab</a></li>
-                                    <li><a href="typography.html">Typography</a></li>
-                                    <li><a href="form.html">Form</a></li>
-                                    <li><a href="grid.html">grid system</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-slice"></i><span>icons</span></a>
-                                <ul class="collapse">
-                                    <li><a href="fontawesome.html">fontawesome icons</a></li>
-                                    <li><a href="themify.html">themify icons</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-table"></i>
-                                    <span>Tables</span></a>
-                                <ul class="collapse">
-                                    <li><a href="table-basic.html">basic table</a></li>
-                                    <li><a href="table-layout.html">table layout</a></li>
-                                    <li><a href="datatable.html">datatable</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="maps.html"><i class="ti-map-alt"></i> <span>maps</span></a></li>
-                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Invoice Summary</span></a></li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layers-alt"></i> <span>Pages</span></a>
-                                <ul class="collapse">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="login2.html">Login 2</a></li>
-                                    <li><a href="login3.html">Login 3</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="register2.html">Register 2</a></li>
-                                    <li><a href="register3.html">Register 3</a></li>
-                                    <li><a href="register4.html">Register 4</a></li>
-                                    <li><a href="screenlock.html">Lock Screen</a></li>
-                                    <li><a href="screenlock2.html">Lock Screen 2</a></li>
-                                    <li><a href="reset-pass.html">reset password</a></li>
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i>
-                                    <span>Error</span></a>
-                                <ul class="collapse">
-                                    <li><a href="404.html">Error 404</a></li>
-                                    <li><a href="403.html">Error 403</a></li>
-                                    <li><a href="500.html">Error 500</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i> <span>Multi
-                                        level menu</span></a>
-                                <ul class="collapse">
-                                    <li><a href="#">Item level (1)</a></li>
-                                    <li><a href="#">Item level (1)</a></li>
-                                    <li><a href="#" aria-expanded="true">Item level (1)</a>
-                                        <ul class="collapse">
-                                            <li><a href="#">Item level (2)</a></li>
-                                            <li><a href="#">Item level (2)</a></li>
-                                            <li><a href="#">Item level (2)</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Item level (1)</a></li>
-                                </ul>
-                            </li>
+                            
                         </ul>
                     </nav>
                 </div>
@@ -180,89 +97,119 @@
                             <span></span>
                             <span></span>
                         </div>
-                        <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Rechercher un eleve , entrez son Nom" required>
-                                <i class="ti-search"></i>
-                            </form>
-                        </div>
+                                           <div class="search-box pull-left">
+    <form action="#">
+        <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
+        <i class="ti-search"></i>
+    </form>
+    <ul id="suggestions" class="list-group" style="display: none;"></ul>
+</div>
+        
                     </div>
                   </div> 
             </div>
             <!-- header area end -->
-            <!-- page title area start -->
-            <div class="page-title-area">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Paiement</h4>
-                            <ul class="breadcrumbs pull-left">
-                                <li><a href="{{route('dashboard_ecole')}}">Home</a></li>
-                                <li><span>Paiement Par Niveau</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 clearfix">
-                        <form action="{{ route('niveau') }}" method="GET">
-    <div class="form-group">
-        <label for="classe">Choisissez un Niveau :</label>
-        <select id="classe" name="classe" class="form-control" onchange="this.form.submit()">
-            @if ($classes->isNotEmpty())
-                @foreach ($classes as $classe)
-                    <option value="{{ $classe }}" {{ $classe == $classeSelectionnee ? 'selected' : '' }}>
-                        {{ $classe }}
-                    </option>
-                @endforeach
-            @else
-                <option value="">Aucun niveau disponible</option>
-            @endif
-        </select>
-    </div>
-</form>
+           <!-- page title area start -->
+<div class="page-title-area">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <div class="breadcrumbs-area clearfix">
+                <h4 class="page-title pull-left">Dashboard</h4>
+                <ul class="breadcrumbs pull-left">
+                    <li><a href="{{ route('dashboard_ecole') }}">Home</a></li>
+                    <li><span>Paiement Par Niveau</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6 clearfix">
+            <!-- Sélection de la Banque -->
+            <form action="{{ route('classe') }}" method="GET">
+                <div class="form-group">
+                    <label for="classe">Choisissez un Niveau :</label>
+                    <select id="classe" name="classe" class="form-control" onchange="this.form.submit()">
+                        @if ($classes->isNotEmpty())
+                            @foreach ($classes as $classe)
+                                <option value="{{ $classe }}" {{ $classe == $classeSelectionnee ? 'selected' : '' }}>
+                                    {{ $classe }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="">Aucun Niveau disponible</option>
+                        @endif
+                    </select>
+                </div>
+            </form>
+            <!-- Sélection de la Date -->
+            <div class="form-group mb-2">
+    <label for="date" class="mr-2">Date:</label>
+    <form action="{{ route('classe') }}" method="GET">
+        <input type="date" class="form-control" id="date" name="date" required>
+        <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+    </form>
+</div>
 
+        </div>
+        <!-- Sélection Période de Paiement -->
+        <div class="col-sm-6 clearfix">
+            <form action="{{ route('classe') }}" method="GET">
+                <div class="form-group">
+                    <label for="periode">Choisissez la Période de Paiement :</label>
+                    <select id="periode" name="periode" class="form-control" onchange="this.form.submit()">
+                        <option value="today" {{ request('periode') == 'today' ? 'selected' : '' }}>Paiements Aujourd'hui</option>
+                        <option value="yesterday" {{ request('periode') == 'yesterday' ? 'selected' : '' }}>Paiements Hier</option>
+                        <option value="all" {{ request('periode') == 'all' ? 'selected' : '' }}>Tous les Paiements</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- main content start -->
+<div class="main-content-inner">
+    <!-- Sales report area -->
+   <div class="sales-report-area mt-5 mb-5">
+    <div class="row">
+        <!-- Paiements Aujourd'hui -->
+        <div class="col-md-4">
+            <div class="single-report mb-xs-30">
+                <div class="s-report-inner pr--20 pt--30 mb-3">
+                    <div class="icon"><i class="fa fa-btc"></i></div>
+                    <div class="s-report-title d-flex justify-content-between">
+                        <h4 class="header-title mb-0">Paiements Aujourd'hui</h4>
+                    </div>
+                    <div class="d-flex justify-content-between pb-2">
+                        <h2>{{ count($paiementsAujourdhui) }}</h2>
                     </div>
                 </div>
             </div>
-             
-           <div class="main-content-inner">
-    <div class="sales-report-area mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="icon"><i class="fa fa-btc"></i></div>
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Paiements Aujourd'hui</h4>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>{{ count($paiementsAujourdhui) }}</h2>
-                        </div>
+        </div>
+        
+        <!-- Paiements Hier -->
+        <div class="col-md-4">
+            <div class="single-report mb-xs-30">
+                <div class="s-report-inner pr--20 pt--30 mb-3">
+                    <div class="icon"><i class="fa fa-btc"></i></div>
+                    <div class="s-report-title d-flex justify-content-between">
+                        <h4 class="header-title mb-0">Paiements Hier</h4>
+                    </div>
+                    <div class="d-flex justify-content-between pb-2">
+                        <h2>{{ count($paiementsHier) }}</h2>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="icon"><i class="fa fa-btc"></i></div>
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Paiements Hier</h4>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>{{ $paiementsHier }}</h2>
-                        </div>
+        </div>
+        
+        <!-- Total Paiements -->
+        <div class="col-md-4">
+            <div class="single-report">
+                <div class="s-report-inner pr--20 pt--30 mb-3">
+                    <div class="icon"><i class="fa fa-eur"></i></div>
+                    <div class="s-report-title d-flex justify-content-between">
+                        <h4 class="header-title mb-0">Total Paiements</h4>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="single-report">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="icon"><i class="fa fa-eur"></i></div>
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total Paiements</h4>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>{{ $paiementsTotal }}</h2>
-                        </div>
+                    <div class="d-flex justify-content-between pb-2">
+                        <h2>{{ count($paiementsTotal) }}</h2>
                     </div>
                 </div>
             </div>
@@ -270,50 +217,144 @@
     </div>
 </div>
 
-                <div class="row mt-5 mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-sm-flex justify-content-between align-items-center">
-                                    <h4 class="header-title mb-0">Paiements D'Aujourd'hui</h4>
-                                </div>
-                                <div class="market-status-table mt-4">
-                                    <div class="table-responsive">
-                                        <table class="dbkit-table">
-    <tr class="heading-td">
-        <td class="mv-icon">Nom Étudiant/Élève</td>
-        <td class="coin-name">Classe</td>
-        <td class="buy">Banque de Paiement</td>
-        <td class="sell">Date Paiement</td>
-        <td class="trends">Heure Paiement</td>
-        <td class="attachments">Filière</td>
-        <td class="stats-chart">Niveau</td>
-    </tr>
-    @forelse($paiementsAujourdhui as $paiement)
-        <tr>
-            <td>{{ $paiement->nom_etudiant }}</td>
-            <td>{{ $paiement->classe }}</td>
-            <td>{{ $paiement->banque }}</td>
-            <td>{{ $paiement->created_at->format('d/m/Y') }}</td>
-            <td>{{ $paiement->created_at->format('H:i') }}</td>
-            <td>{{ $paiement->filiere }}</td>
-            <td>{{ $paiement->niveau }}</td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="7">Aucun paiement effectué aujourd'hui.</td>
-        </tr>
-    @endforelse
-</table>
 
-                                    </div>
+
+    <!-- Tableau des Paiements -->
+<div class="row mt-5 mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-sm-flex justify-content-between align-items-center">
+                    <h4 class="header-title mb-0" id="table-header">
+                        @if(request('periode') == 'yesterday')
+                            Paiements d'Hier
+                        @elseif(request('date'))  <!-- Vérifie si une date est sélectionnée -->
+                            Paiements du {{ request('date') }}
+                        @elseif(request('periode') == 'all')
+                            Tous les Paiements
+                        @else
+                            Paiements d'Aujourd'hui
+                        @endif
+                       
+                    </h4>
+                    
+                    <!-- Bouton Imprimer -->
+                    <button class="btn btn-primary" onclick="printTable()">Imprimer</button>
+                </div>
+
+                <div class="market-status-table mt-4">
+                    <div class="table-responsive">
+                        <table class="dbkit-table">
+                            <tr class="heading-td">
+                                <td class="mv-icon">Nom Étudiant/Élève</td>
+                                <td class="coin-name">Classe</td>
+                                <td class="buy">Banque de Paiement</td>
+                                <td class="sell">Date Paiement</td>
+                                <td class="trends">Heure Paiement</td>
+                                <td class="attachments">Filière</td>
+                                <td class="stats-chart">Niveau</td>
+                                 <td class="stats-chart">Details</td>
+                            </tr>
+
+                            <!-- Paiements Aujourd'hui ou Date Sélectionnée -->
+                            @if(request('periode') == 'today' || request('date'))
+                                @forelse($paiementsAujourdhui as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement pour la période sélectionnée.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsAujourdhui->links() }}
                                 </div>
-                            </div>
-                        </div>
+                            @endif
+
+                            <!-- Paiements Hier -->
+                            @if(request('periode') == 'yesterday')
+                                @forelse($paiementsHier as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement effectué hier.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsHier->links() }}
+                                </div>
+                            @endif
+
+                            <!-- Tous les Paiements -->
+                            @if(request('periode') == 'all')
+                                @forelse($paiementsTotal as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement disponible.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsTotal->links() }}
+                                </div>
+                            @endif
+                        </table>
                     </div>
                 </div>
-                
-               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main content end -->
+<!-- main content end -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- En-tête de la modale avec la croix rouge pour fermer -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentModalLabel">Détails de l'élève</h5>
+                <button type="button" class="btn-close"  id="close-modal-btn"data-bs-dismiss="modal" aria-label="Fermer" style="color: red; font-size: 1.5rem;">&times;</button>
+            </div>
+            <!-- Corps de la modale avec le tableau de détails -->
+            <div class="modal-body">
+                <table id="student-details-table" class="table table-striped">
+                    <!-- Les détails de l'élève seront insérés ici via JavaScript -->
+                </table>
+            </div>
+            <!-- Pied de page de la modale avec un bouton rouge pour fermer -->
+            <div class="modal-footer">
+                <button type="button" id="close-modal-btn" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
        
         <footer>
     <div class="footer-area">
@@ -332,7 +373,7 @@
     <script src="/assets/js/metisMenu.min.js"></script>
     <script src="/assets/js/jquery.slimscroll.min.js"></script>
     <script src="/assets/js/jquery.slicknav.min.js"></script>
-
+ <script src="/jscript/search_paiement.js"></script>
     <!-- start chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <!-- start highcharts js -->
@@ -350,6 +391,6 @@
     <!-- others plugins -->
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
+    <script src="/jscript/banque_impression.js"></script>
 </body>
-
 </html>

@@ -247,42 +247,54 @@ public function niveau(Request $request)
         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
     }
 
-    // Debugging: affiche l'école stockée dans la session
-   //dd($ecole);
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('niveau')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('niveau');
 
-   $classes = DB::table('paiements')
-   ->select('niveau_universite')
-   ->where('nom_ecole', $ecole->nom_ecole)
-   ->distinct()
-   ->get()
-   ->pluck('niveau_universite');
-        // Debugging: affiche les classes récupérées
-       // dd($classes);
-        
-    $classeSelectionnee = $request->query('classe', $classes->first());
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
 
-    // Continue avec les autres calculs (paiements aujourd'hui, hier, etc.)
-    $today = Carbon::today();
-    $yesterday = Carbon::yesterday();
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('niveau', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
 
-    $paiementsAujourdhui = DB::table('paiements')
-        ->where('niveau_universite', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->where('created_at', '>=', $today)
-        ->get();
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('niveau', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
 
-    $paiementsHier = DB::table('paiements')
-        ->where('niveau_universite', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->whereBetween('created_at', [$yesterday, $today])
-        ->count();
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('niveau', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
 
-    $paiementsTotal = DB::table('paiements')
-        ->where('niveau_universite', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->count();
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
 
-    return view('AdminEcole.niveau', compact('classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('niveau', $classeSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  $banque = $classes;
+
+    return view('AdminEcole.niveau', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
 
 public function filiere(Request $request)
@@ -293,42 +305,54 @@ public function filiere(Request $request)
         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
     }
 
-    // Debugging: affiche l'école stockée dans la session
-   //dd($ecole);
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('filiere')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('filiere');
 
-   $classes = DB::table('paiements')
-   ->select('filiere')
-   ->where('nom_ecole', $ecole->nom_ecole)
-   ->distinct()
-   ->get()
-   ->pluck('filiere');
-        // Debugging: affiche les classes récupérées
-       // dd($classes);
-        
-    $classeSelectionnee = $request->query('classe', $classes->first());
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
 
-    // Continue avec les autres calculs (paiements aujourd'hui, hier, etc.)
-    $today = Carbon::today();
-    $yesterday = Carbon::yesterday();
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('filiere', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
 
-    $paiementsAujourdhui = DB::table('paiements')
-        ->where('filiere', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->where('created_at', '>=', $today)
-        ->get();
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('filiere', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
 
-    $paiementsHier = DB::table('paiements')
-        ->where('filiere', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->whereBetween('created_at', [$yesterday, $today])
-        ->count();
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('filiere', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
 
-    $paiementsTotal = DB::table('paiements')
-        ->where('filiere', $classeSelectionnee)
-        ->where('nom_ecole', $ecole->nom_ecole)
-        ->count();
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
 
-    return view('AdminEcole.filiere', compact('classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('filiere', $classeSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  $banque = $classes;
+
+    return view('AdminEcole.filiere',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
 public function tout(Request $request)
 {
@@ -382,6 +406,313 @@ public function tout(Request $request)
     } else {
         return view('Primaire.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     }
+}
+
+public function tranche(Request $request)
+{
+    // Vérifier si l'école est bien présente dans la session
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    }
+
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('details')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('details');
+
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
+
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('details', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
+
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('details', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
+
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('details', $classeSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
+
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
+
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('details', $classeSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  $banque = $classes;
+
+    return view('AdminEcole.tranche',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
+}
+public function banque_classe(Request $request)
+{
+    // Vérifier si l'école est bien présente dans la session
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    }
+
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('classe')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('classe');
+
+      $banque= DB::table('paiements')
+      ->select('banque')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('banque');
+
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $banqueSelectionnee = $request->query('banque', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
+
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('banque', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
+
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('banque', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
+
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('banque', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
+
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
+
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('classe', $classeSelectionnee)
+          ->where('banque', $banqueSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  
+  // Retourner la vue avec les données
+  
+  return view('AdminEcole.classe_banque', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+
+}
+
+public function classe_tranche(Request $request)
+{
+    // Vérifier si l'école est bien présente dans la session
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    }
+
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('classe')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('classe');
+
+      $banque= DB::table('paiements')
+      ->select('details')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('details');
+
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $banqueSelectionnee = $request->query('banque', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
+
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('details', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
+
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('details', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
+
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('details', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
+
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
+
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('classe', $classeSelectionnee)
+          ->where('details', $banqueSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  
+  // Retourner la vue avec les données
+  
+  return view('AdminEcole.classe_tranche', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+
+}
+
+
+public function filiere_classe(Request $request)
+{
+    // Vérifier si l'école est bien présente dans la session
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    }
+
+      // Récupérer toutes les classes distinctes (banques) associées à cette école
+      $classes = DB::table('paiements')
+      ->select('classe')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('classe');
+
+      $banque= DB::table('paiements')
+      ->select('filiere')
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->distinct()
+      ->get()
+      ->pluck('filiere');
+
+  // Classe (banque) sélectionnée
+  $classeSelectionnee = $request->query('classe', $classes->first());
+  $banqueSelectionnee = $request->query('banque', $classes->first());
+  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+  $today = Carbon::today();
+  $yesterday = Carbon::yesterday();
+
+  // Paiements pour aujourd'hui
+  $paiementsAujourdhui = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('filiere', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->where('created_at', '>=', $today)
+      ->paginate(50);
+
+  // Paiements pour hier
+  $paiementsHier = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('filiere', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->whereBetween('created_at', [$yesterday, $today])
+      ->paginate(50);
+
+  // Total des paiements (sans prendre en compte la date)
+  $paiementsTotal = DB::table('paiements')
+      ->where('classe', $classeSelectionnee)
+      ->where('filiere', $banqueSelectionnee)
+      ->where('nom_ecole', $ecole->nom_ecole)
+      ->paginate(50); // Ici on récupère le nombre total de paiements
+
+  // Si une date est sélectionnée, récupérer les paiements pour cette date
+  if ($dateSelectionnee) {
+      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
+
+      $paiementsAujourdhui = DB::table('paiements')
+          ->where('classe', $classeSelectionnee)
+          ->where('filiere', $banqueSelectionnee)
+          ->where('nom_ecole', $ecole->nom_ecole)
+          ->whereBetween('created_at', [$startOfDay, $endOfDay])
+          ->paginate(50);  // Paginer les résultats par 50
+  }
+  
+  // Retourner la vue avec les données
+  
+  return view('AdminEcole.classe_filiere', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+
+}
+public function search_paiement(Request $request)
+{
+
+     // Vérifier si l'école est bien présente dans la session
+     $ecole = Session::get('ecole');
+     if (!$ecole) {
+         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+     }
+    // Récupération du paramètre de recherche
+    $query = $request->input('query');
+
+    // Recherche des élèves dont le nom contient le texte recherché
+    $students = Paiement::  where('nom_ecole', $ecole->nom_ecole)
+                      -> where('nom_complet', 'LIKE', '%' . $query . '%')->get(['id_paiement', 'nom_complet']);
+
+    // Retour des résultats sous forme de JSON
+    return response()->json($students);
+}
+
+// Méthode pour récupérer les détails d'un élève spécifique
+public function show_paiement($nom_complet)
+{
+    // Rechercher les paiements associés au nom complet
+    $students = Paiement::where('nom_complet', $nom_complet)->get();
+
+    // Vérifier si des enregistrements existent
+    if ($students->isEmpty()) {
+        return response()->json(['error' => 'Élève non trouvé'], 404);
+    }
+
+    // Retourner tous les détails des paiements pour cet élève
+    return response()->json($students);
 }
 
 }

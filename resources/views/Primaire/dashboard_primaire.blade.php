@@ -96,12 +96,14 @@
                             <span></span>
                             <span></span>
                         </div>
-                        <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Rechercher un eleve , entrez son Nom" required>
-                                <i class="ti-search"></i>
-                            </form>
-                        </div>
+                                          <div class="search-box pull-left">
+    <form action="#">
+        <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
+        <i class="ti-search"></i>
+    </form>
+    <ul id="suggestions" class="list-group" style="display: none;"></ul>
+</div>
+        
                     </div>
                   </div> 
             </div>
@@ -225,7 +227,29 @@
                         </div>
                     </div>
                 </div>
-                
+<!-- main content end -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- En-tête de la modale avec la croix rouge pour fermer -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentModalLabel">Détails de l'élève</h5>
+                <button type="button" class="btn-close"  id="close-modal-btn"data-bs-dismiss="modal" aria-label="Fermer" style="color: red; font-size: 1.5rem;">&times;</button>
+            </div>
+            <!-- Corps de la modale avec le tableau de détails -->
+            <div class="modal-body">
+                <table id="student-details-table" class="table table-striped">
+                    <!-- Les détails de l'élève seront insérés ici via JavaScript -->
+                </table>
+            </div>
+            <!-- Pied de page de la modale avec un bouton rouge pour fermer -->
+            <div class="modal-footer">
+                <button type="button" id="close-modal-btn" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
                
        
         <footer>
@@ -256,6 +280,7 @@
     zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
     </script>
+     <script src="/jscript/search_paiement.js"></script>
     <!-- all line chart activation -->
     <script src="/assets/js/line-chart.js"></script>
     <!-- all pie chart -->

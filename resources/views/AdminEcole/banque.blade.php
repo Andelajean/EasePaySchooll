@@ -61,16 +61,21 @@
                                     <li ><a href="{{route('niveau')}}">Paiement Par Niveau</a></li>
                                     <li><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
                                     <li class="active"><a href="{{route('banque')}}">Paiement Par Banque</a></li>
+                                     <li><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li ><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
+                                    <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
+                                    <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
                                     <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Sidebar
-                                        Types
+                             <li >
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Uniforme   
                                     </span></a>
-                                <ul class="collapse">
-                                    <li><a href="index.html">Left Sidebar</a></li>
-                                    <li><a href="index3-horizontalmenu.html">Horizontal Sidebar</a></li>
+                                     <ul class="collapse">
+                                    <li ><a href="{{route('fac.distribuer_polo')}}">Distribuer Les Polo</a></li>
+                                      <li><a href="{{route('fac.distribuer_badge')}}">Distribuer Les Badges</a></li>
+                                    <li><a href="{{route('fac.badge')}}">Liste des Badges Distribués</a></li>
+                                     <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
                             
@@ -92,12 +97,14 @@
                             <span></span>
                             <span></span>
                         </div>
-                        <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Rechercher un eleve , entrez son Nom" required>
-                                <i class="ti-search"></i>
-                            </form>
-                        </div>
+                                           <div class="search-box pull-left">
+    <form action="#">
+        <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
+        <i class="ti-search"></i>
+    </form>
+    <ul id="suggestions" class="list-group" style="display: none;"></ul>
+</div>
+        
                     </div>
                   </div> 
             </div>
@@ -321,6 +328,30 @@
     </div>
 </div>
 <!-- main content end -->
+<!-- Modale avec un tableau généré dynamiquement pour afficher les détails de l'élève -->
+<!-- main content end -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- En-tête de la modale avec la croix rouge pour fermer -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentModalLabel">Détails de l'élève</h5>
+                <button type="button" class="btn-close"  id="close-modal-btn"data-bs-dismiss="modal" aria-label="Fermer" style="color: red; font-size: 1.5rem;">&times;</button>
+            </div>
+            <!-- Corps de la modale avec le tableau de détails -->
+            <div class="modal-body">
+                <table id="student-details-table" class="table table-striped">
+                    <!-- Les détails de l'élève seront insérés ici via JavaScript -->
+                </table>
+            </div>
+            <!-- Pied de page de la modale avec un bouton rouge pour fermer -->
+            <div class="modal-footer">
+                <button type="button" id="close-modal-btn" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
        
         <footer>
@@ -359,6 +390,7 @@
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
     <script src="/jscript/banque_impression.js"></script>
+     <script src="/jscript/search_paiement.js"></script>
 </body>
 
 </html>
