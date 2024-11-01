@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Paiement;
+use App\Models\Ecole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Endroid\QrCode\QrCode;
@@ -18,6 +19,7 @@ class PaiementController extends Controller
 
     public function payer(Request $request)
     {
+
         // Validation des données
        $validator = Validator::make($request->all(), $this->validationRules($request));
 
@@ -30,11 +32,12 @@ class PaiementController extends Controller
 
         // Effectuer le paiement via l'API MOMO
         $paymentResponse = $this->callMomoApi($request, $id_paiement);
-
+        $ecole=Ecole::where('nom_ecole',$request->nom_ecole)->first();
+        $id_ecole=$ecole->id;
         // Vérifier le statut du paiement
         if ($paymentResponse['status'] === 'success') {
             // Enregistrer le paiement dans la base de données
-            $paiement = $this->createPaiementRecord($request, $paymentResponse['qr_code'], $id_paiement);
+            $paiement = $this->createPaiementRecord($request, $paymentResponse['qr_code'], $id_paiement,$id_ecole);
 
             // Retourner la vue de reçu avec toutes les informations de paiement
             return $this->returnPaymentView($paiement, $request);
@@ -50,8 +53,10 @@ class PaiementController extends Controller
         if ($request->has('nom_ecole')) {
             $rules['nom_ecole'] = 'required|string';
         }
+
         if ($request->has('telephone')) {
             $rules['telephone'] = 'required|string';
+            
         }
         if ($request->has('ville')) {
             $rules['ville'] = 'required|string';
@@ -97,7 +102,7 @@ class PaiementController extends Controller
         return $rules;
     }
     
-    private function createPaiementRecord(Request $request, $qrCode, $id_paiement)
+    private function createPaiementRecord(Request $request, $qrCode, $id_paiement,$id_ecole)
     {
         $paiementData = [];
         // Vérification et ajout conditionnel des données de paiement
@@ -146,7 +151,7 @@ class PaiementController extends Controller
         // Ajout du QR Code et de l'ID de paiement
         $paiementData['qr_code'] = $qrCode;
         $paiementData['id_paiement'] = $id_paiement; // Utilisation du même ID de paiement généré
-        
+        $paiementData['id_ecole']=$id_ecole;
         // Création du paiement avec les données collectées
         return Paiement::create($paiementData);  
     }

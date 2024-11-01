@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('nom_banque7')->nullable();
             $table->string('numero_banque7')->nullable();
             $table->string('nom_banque8')->nullable();
-            $table->string('numero_banque8')->nullable();
+            $table->string('numero_banque8')->nullable(); 
             $table->timestamps();
         });
     }

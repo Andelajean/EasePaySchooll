@@ -15,7 +15,7 @@
         <li><a href="/">Accueil</a></li>
         <li><a href="#">Apropos</a></li>
         <li><a href="{{route('paiement')}}">Paiement</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{route('ecole.contact.admin')}}">Contact</a></li>
         <li><a href="#">Aide</a></li>
     </ul>
     <div class="search-bar">

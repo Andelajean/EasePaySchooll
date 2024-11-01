@@ -103,20 +103,13 @@
         <div class="flex flex-col">
             <label for="nom_banque1" class="mb-2 font-medium text-white">Nom de la Banque</label>
             <select class="p-2 border rounded-md bank-name" name="nom_banque1">
-                <option value="" selected>Veuillez choisir une banque</option>
-                <option value="Afriland First Bank">Afriland First Bank</option>
-                <option value="Banque Atlantique">Banque Atlantique</option>
-                <option value="UBA Bank">UBA Bank</option>
-                <option value="SCB Bank">SCB Bank</option>
-                <option value="SGBC">SGBC</option>
-                <option value="Commercial Bank">Commercial Bank</option>
-                <option value="BICEC">BICEC</option>
-                <option value="Eco Bank">Eco Bank</option>
-                <option value="BGFI Bank">BGFI Bank</option>
-                <option value="Bange Bank">Bange Bank</option>
-                <option value="Express Union">Express Union</option>
-                <option value="Vision Finance">Vision Finance</option>
-                <option value="NFC Bank">NFC Bank</option>
+                            <option value="">Choisir une banque</option>
+                            <!-- Ajoutez ici les options pour chaque banque -->
+                            @isset($banques)
+                             @foreach ($banques as $banque)
+                              <option value="{{ $banque->nom }}">{{ $banque->nom }}</option>
+                             @endforeach
+                            @endisset  
             </select>
         </div>
         <!-- Numéro Compte -->
