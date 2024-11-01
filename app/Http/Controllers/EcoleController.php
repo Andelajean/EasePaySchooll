@@ -90,7 +90,6 @@ class EcoleController extends Controller
             $ecole->{"nom_banque" . ($index + 2)} = $bank['nom_banque']; // Commence à la banque 2
             $ecole->{"numero_banque" . ($index + 2)} = $bank['numero_compte'];
         }
-    
         // Enregistrer l'école dans la base de données
         $ecole->save();
     
@@ -141,7 +140,7 @@ class EcoleController extends Controller
                     $ecoleDetails['nom_banque' . $i] = $ecole->{'nom_banque' . $i};
                 }
             }
-    
+
             return response()->json($ecoleDetails);
         }
     

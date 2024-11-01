@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Rapport des Paiements pour la date du: {{ $banque }}</title>
+    <title>Rapport de distribution de polo pour la classe de :  </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -53,31 +53,32 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li class="active">
+                            <li >
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Paiement</span></a>
                                 <ul class="collapse">
                                     <li><a href="{{route('dashboard_ecole')}}">Paiement D'Aujourd'hui</a></li>
-                                    <li ><a href="{{route('classe')}}">Paiement Par Classe</a></li>
+                                    <li><a href="{{route('classe')}}">Paiement Par Classe</a></li>
                                     <li ><a href="{{route('niveau')}}">Paiement Par Niveau</a></li>
-                                    <li><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
-                                    <li ><a href="{{route('banque')}}">Paiement Par Banque</a></li>
-                                     <li ><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li ><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
+                                    <li ><a href="{{route('banque')}}"> Paiement Par Banque</a></li>
+                                     <li class="active"><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
                                     <li ><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
                                     <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
                                     <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
-                                    <li class="active"><a href="{{route('tout')}}">Tous les Paiements</a></li>
+                                    <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                            <li >
+                            <li class="active">
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Uniforme   
                                     </span></a>
                                      <ul class="collapse">
-                                    <li ><a href="{{route('fac.distribuer_polo')}}">Distribuer Les Polo</a></li>
-                                      <li><a href="{{route('fac.distribuer_badge')}}">Distribuer Les Badges</a></li>
-                                    <li><a href="{{route('fac.badge')}}">Liste des Badges Distribués</a></li>
-                                     <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
+                                    <li class="active"><a href="{{route('fac.distribuer_polo')}}">Distribuer Les Polo</a></li>
+                                      <li ><a href="{{route('fac.distribuer_badge')}}">Distribuer Les Badges</a></li>
+                                    <li ><a href="{{route('fac.badge')}}">Liste des Badges Distribués</a></li>
+                                     <li><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
+                            
                         </ul>
                     </nav>
                 </div>
@@ -96,7 +97,8 @@
                             <span></span>
                             <span></span>
                         </div>
-                                           <div class="search-box pull-left">
+                        <div class="container mt-5">
+                      <div class="search-box pull-left">
     <form action="#">
         <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
         <i class="ti-search"></i>
@@ -104,6 +106,7 @@
     <ul id="suggestions" class="list-group" style="display: none;"></ul>
 </div>
         
+</div>
                     </div>
                   </div> 
             </div>
@@ -113,135 +116,92 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="breadcrumbs-area clearfix">
-                <h4 class="page-title pull-left">Dashboard</h4>
+                <h4 class="page-title pull-left">Uniforme</h4>
                 <ul class="breadcrumbs pull-left">
-                    <li><a href="{{ route('dashboard_ecole') }}">Home</a></li>
-                    <li><span>tous les Paiements Par Date</span></li>
+                    <li><a href="{{ route('dashboard_ecole') }}">Distribution</a></li>
+                    <li><span>Polo</span></li>
                 </ul>
             </div>
         </div>
         <div class="col-sm-6 clearfix">
-          
-            <!-- Sélection de la Date -->
-            <div class="form-group mb-2">
-                 <label for="date" class="mr-2">Date:</label>
-                     <form action="{{ route('tout') }}" method="GET">
-                             <input type="date" class="form-control" id="date" name="date" required>
-                            <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
-                    </form>
-            </div>
-
-        </div>
-       
-    </div>
-</div>
-
-<!-- main content start -->
-<div class="main-content-inner">
-    <!-- Sales report area -->
-   <div class="sales-report-area mt-5 mb-5">
-    <div class="row">
-        <!-- Paiements Aujourd'hui -->
-        <div class="col-md-4">
-            <div class="single-report mb-xs-30">
-                <div class="s-report-inner pr--20 pt--30 mb-3">
-                    <div class="icon"><i class="fa fa-btc"></i></div>
-                    <div class="s-report-title d-flex justify-content-between">
-                        <h4 class="header-title mb-0">Paiements Aujourd'hui</h4>
-                    </div>
-                    <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $paiementsAujourdhui->count() }}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Paiements Hier -->
-        <div class="col-md-4">
-            <div class="single-report mb-xs-30">
-                <div class="s-report-inner pr--20 pt--30 mb-3">
-                    <div class="icon"><i class="fa fa-btc"></i></div>
-                    <div class="s-report-title d-flex justify-content-between">
-                        <h4 class="header-title mb-0">Paiements Hier</h4>
-                    </div>
-                    <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $paiementsHier->count() }} </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Total Paiements -->
-        <div class="col-md-4">
-            <div class="single-report">
-                <div class="s-report-inner pr--20 pt--30 mb-3">
-                    <div class="icon"><i class="fa fa-eur"></i></div>
-                    <div class="s-report-title d-flex justify-content-between">
-                        <h4 class="header-title mb-0">Total Paiements</h4>
-                    </div>
-                    <div class="d-flex justify-content-between pb-2">
-                         <h2>{{ $paiementsTotal->count() }}</h2>
-                    </div>
-                </div>
-            </div>
+            <!-- Sélection de la Banque -->
+            <form action="{{ route('fac.distribuer_polo') }}" method="GET">
+                <div class="form-group">
+                                <label for="classe">Choisissez la classe :</label>
+                                <select name="classe" id="classe" class="form-control" onchange="this.form.submit()">
+                                    @foreach ($classes as $classe)
+                                        <option value="{{ $classe }}" {{ $classe == request('classe') ? 'selected' : '' }}>{{ $classe }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+            </form>
         </div>
     </div>
 </div>
 
-
-
-    <!-- Tableau des Paiements -->
+<!-- Tableau des Paiements -->
 <div class="row mt-5 mb-5">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-sm-flex justify-content-between align-items-center">
-                    <h4 class="header-title mb-0" id="table-header">
-                        @if(request('date'))
-                            Paiements du {{ request('date') }}
-                        @else
-                            Paiements d'Aujourd'hui
+                    <h4 class="header-title mb-0" id="table-header">Distribuez les Polo ici !!</h4>
+                    <div class="container">
+                        <!-- Message de retour -->
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @elseif(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
                         @endif
-                    </h4>
-                    
-                    <!-- Bouton Imprimer -->
-                    <button class="btn btn-primary" onclick="printTable()">Imprimer</button>
+                    </div>
                 </div>
 
                 <div class="market-status-table mt-4">
                     <div class="table-responsive">
                         <table class="dbkit-table">
-                            <tr class="heading-td">
-                                <td class="mv-icon">Nom Étudiant/Élève</td>
-                                <td class="coin-name">Classe</td>
-                                <td class="buy">Banque de Paiement</td>
-                                <td class="sell">Date Paiement</td>
-                                <td class="trends">Heure Paiement</td>
-                                <td class="attachments">Filière</td>
-                                <td class="stats-chart">Niveau</td>
-                            </tr>
-
-                            <!-- Affichage des paiements -->
-                            @forelse($paiementsAujourdhui as $paiement)
-                                <tr>
-                                    <td>{{ $paiement->nom_complet }}</td>
-                                    <td>{{ $paiement->classe }}</td>
-                                    <td>{{ $paiement->banque }}</td>
-                                    <td>{{ $paiement->date_paiement }}</td>
-                                    <td>{{ $paiement->heure_paiement }}</td>
-                                    <td>{{ $paiement->filiere }}</td>
-                                    <td>{{ $paiement->niveau_universite }}</td>
+                            <thead>
+                                <tr class="heading-td">
+                                    <td class="mv-icon">Nom Étudiant/Élève</td>
+                                    <td class="coin-name">Classe</td>
+                                    <td class="buy">Banque de Paiement</td>
+                                    <td class="sell">Date Paiement</td>
+                                    <td class="trends">Heure Paiement</td>
+                                    <td class="attachments">Filière</td>
+                                    <td class="stats-chart">Niveau</td>
+                                    <td class="stats-chart">Détail</td>
+                                    <td class="stats-chart">Distribuer</td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7">Aucun paiement trouvé pour cette date.</td>
-                                </tr>
-                            @endforelse
+                            </thead>
+                            <tbody>
+                                @foreach ($paiement as $paiementItem)
+                                    <tr>
+                                        <td>{{ $paiementItem->nom_complet }}</td>
+                                        <td>{{ $paiementItem->classe }}</td>
+                                        <td>{{ $paiementItem->banque }}</td>
+                                        <td>{{ $paiementItem->date_paiement }}</td>
+                                        <td>{{ $paiementItem->heure_paiement }}</td>
+                                        <td>{{ $paiementItem->filiere }}</td>
+                                        <td>{{ $paiementItem->niveau_universite }}</td>
+                                        <td>{{ $paiementItem->details }}</td>
+                                        <td>
+                                            <form action="{{ route('polo.distribuer', $paiementItem->id_paiement) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Distribuer</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
 
                         <!-- Pagination -->
-                        <div class="mt-4">
-                            {{ $paiementsAujourdhui->links() }}
+                        <div class="mt-3">
+                            {{ $paiement->links() }}
                         </div>
                     </div>
                 </div>
@@ -249,7 +209,6 @@
         </div>
     </div>
 </div>
-<!-- main content end -->
 <!-- main content end -->
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -274,7 +233,7 @@
 </div>
 
 
-       
+<!-- main content end -->
         <footer>
     <div class="footer-area">
         <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
@@ -292,7 +251,7 @@
     <script src="/assets/js/metisMenu.min.js"></script>
     <script src="/assets/js/jquery.slimscroll.min.js"></script>
     <script src="/assets/js/jquery.slicknav.min.js"></script>
- <script src="/jscript/search_paiement.js"></script>
+
     <!-- start chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <!-- start highcharts js -->
@@ -311,6 +270,6 @@
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
     <script src="/jscript/banque_impression.js"></script>
+      <script src="/jscript/search_polo.js"></script>
 </body>
-
 </html>

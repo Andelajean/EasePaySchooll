@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Rapport des Paiements pour la date du: {{ $banque }}</title>
+    <title>Rapport des Paiements pour la :  </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -57,18 +57,18 @@
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Paiement</span></a>
                                 <ul class="collapse">
                                     <li><a href="{{route('dashboard_ecole')}}">Paiement D'Aujourd'hui</a></li>
-                                    <li ><a href="{{route('classe')}}">Paiement Par Classe</a></li>
+                                    <li><a href="{{route('classe')}}">Paiement Par Classe</a></li>
                                     <li ><a href="{{route('niveau')}}">Paiement Par Niveau</a></li>
-                                    <li><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
+                                    <li ><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
                                     <li ><a href="{{route('banque')}}">Paiement Par Banque</a></li>
                                      <li ><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
-                                    <li ><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
+                                    <li class="active"><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
                                     <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
                                     <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
-                                    <li class="active"><a href="{{route('tout')}}">Tous les Paiements</a></li>
+                                    <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                            <li >
+                           <li >
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Uniforme   
                                     </span></a>
                                      <ul class="collapse">
@@ -78,6 +78,7 @@
                                      <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
+                            
                         </ul>
                     </nav>
                 </div>
@@ -116,26 +117,56 @@
                 <h4 class="page-title pull-left">Dashboard</h4>
                 <ul class="breadcrumbs pull-left">
                     <li><a href="{{ route('dashboard_ecole') }}">Home</a></li>
-                    <li><span>tous les Paiements Par Date</span></li>
+                    <li><span>Paiement Par Classe et Par Filière</span></li>
                 </ul>
             </div>
         </div>
         <div class="col-sm-6 clearfix">
-          
+            <!-- Sélection de la Banque -->
+            <div class="col-sm-6 clearfix">
+            <!-- Sélection de la Banque -->
+             <form action="{{ route('classe_filiere') }}" method="GET">
+                <div class="form-group">
+                    <label for="classe">Choisissez la classe :</label>
+                    <select id="classe" name="classe" class="form-control">
+                        @if ($classes->isNotEmpty())
+                            @foreach ($classes as $classe)
+                                <option value="{{ $classe }}">
+                                    {{ $classe }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="">Aucune classe disponible</option>
+                        @endif
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="banque">Choisissez la Banque:</label>
+                    <select id="classe" name="banque" class="form-control">
+                        @if ($classes->isNotEmpty())
+                            @foreach ($banque as $banque)
+                                <option value="{{ $banque}}">
+                                    {{ $banque }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="">Aucune la Banque disponible</option>
+                        @endif
+                    </select>
+                </div>
+                 <div class="form-group mb-2">
+    <label for="date" class="mr-2">Date:</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+</div>
+                 <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+            </form>
             <!-- Sélection de la Date -->
-            <div class="form-group mb-2">
-                 <label for="date" class="mr-2">Date:</label>
-                     <form action="{{ route('tout') }}" method="GET">
-                             <input type="date" class="form-control" id="date" name="date" required>
-                            <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
-                    </form>
-            </div>
+           
 
         </div>
-       
+        
     </div>
 </div>
-
 <!-- main content start -->
 <div class="main-content-inner">
     <!-- Sales report area -->
@@ -150,7 +181,7 @@
                         <h4 class="header-title mb-0">Paiements Aujourd'hui</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $paiementsAujourdhui->count() }}</h2>
+                        <h2>{{ count($paiementsAujourdhui) }}</h2>
                     </div>
                 </div>
             </div>
@@ -165,7 +196,7 @@
                         <h4 class="header-title mb-0">Paiements Hier</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $paiementsHier->count() }} </h2>
+                        <h2>{{ count($paiementsHier) }}</h2>
                     </div>
                 </div>
             </div>
@@ -180,7 +211,7 @@
                         <h4 class="header-title mb-0">Total Paiements</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                         <h2>{{ $paiementsTotal->count() }}</h2>
+                        <h2>{{ count($paiementsTotal) }}</h2>
                     </div>
                 </div>
             </div>
@@ -197,11 +228,16 @@
             <div class="card-body">
                 <div class="d-sm-flex justify-content-between align-items-center">
                     <h4 class="header-title mb-0" id="table-header">
-                        @if(request('date'))
+                        @if(request('periode') == 'yesterday')
+                            Paiements d'Hier
+                        @elseif(request('date'))  <!-- Vérifie si une date est sélectionnée -->
                             Paiements du {{ request('date') }}
+                        @elseif(request('periode') == 'all')
+                            Tous les Paiements
                         @else
                             Paiements d'Aujourd'hui
                         @endif
+                       
                     </h4>
                     
                     <!-- Bouton Imprimer -->
@@ -219,30 +255,78 @@
                                 <td class="trends">Heure Paiement</td>
                                 <td class="attachments">Filière</td>
                                 <td class="stats-chart">Niveau</td>
+                                 <td class="stats-chart">Detail</td>
                             </tr>
 
-                            <!-- Affichage des paiements -->
-                            @forelse($paiementsAujourdhui as $paiement)
-                                <tr>
-                                    <td>{{ $paiement->nom_complet }}</td>
-                                    <td>{{ $paiement->classe }}</td>
-                                    <td>{{ $paiement->banque }}</td>
-                                    <td>{{ $paiement->date_paiement }}</td>
-                                    <td>{{ $paiement->heure_paiement }}</td>
-                                    <td>{{ $paiement->filiere }}</td>
-                                    <td>{{ $paiement->niveau_universite }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7">Aucun paiement trouvé pour cette date.</td>
-                                </tr>
-                            @endforelse
-                        </table>
+                            <!-- Paiements Aujourd'hui ou Date Sélectionnée -->
+                            @if(request('periode') == 'today' || request('date'))
+                                @forelse($paiementsAujourdhui as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement pour la période sélectionnée.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsAujourdhui->links() }}
+                                </div>
+                            @endif
 
-                        <!-- Pagination -->
-                        <div class="mt-4">
-                            {{ $paiementsAujourdhui->links() }}
-                        </div>
+                            <!-- Paiements Hier -->
+                            @if(request('periode') == 'yesterday')
+                                @forelse($paiementsHier as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement effectué hier.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsHier->links() }}
+                                </div>
+                            @endif
+
+                            <!-- Tous les Paiements -->
+                            @if(request('periode') == 'all')
+                                @forelse($paiementsTotal as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                        <td>{{ $paiement->details }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">Aucun paiement disponible.</td>
+                                    </tr>
+                                @endforelse
+                                <div class="pagination mt-4">
+                                    {{ $paiementsTotal->links() }}
+                                </div>
+                            @endif
+                        </table>
                     </div>
                 </div>
             </div>
@@ -250,6 +334,7 @@
     </div>
 </div>
 <!-- main content end -->
+
 <!-- main content end -->
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -274,7 +359,6 @@
 </div>
 
 
-       
         <footer>
     <div class="footer-area">
         <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
@@ -312,5 +396,4 @@
     <script src="/assets/js/scripts.js"></script>
     <script src="/jscript/banque_impression.js"></script>
 </body>
-
 </html>
