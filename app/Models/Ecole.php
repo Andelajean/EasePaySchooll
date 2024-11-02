@@ -9,10 +9,10 @@ class Ecole extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nom_ecole', 'email', 'identifiant','niveau','ville',
-        'telephone', 'nom_banque1', 'numero_compte1', 'nom_banque2',
-        'numero_compte2', 'nom_banque3', 'numero_compte3', 'nom_banque4',
-        'numero_compte4', 'nom_banque5', 'numero_compte5', 'nom_banque6','numero_compte6',
-         'nom_banque7', 'numero_compte7', 'nom_banque8','numero_compte8',
+       'nom_ecole', 'email', 'identifiant','ville','niveau',
+        'telephone', 'nom_banque1', 'numero_banque1', 'nom_banque2',
+        'numero_banque2', 'nom_banque3', 'numero_banque3', 'nom_banque4',
+        'numero_banque4', 'nom_banque5', 'numero_banque5', 'nom_banque6','numero_banque6',
+         'nom_banque7', 'numero_banque7', 'nom_banque8','numero_banque8',
     ];
 }
