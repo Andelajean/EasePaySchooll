@@ -92,6 +92,25 @@
           <input type="text" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required>
         </div>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Niveau de l'école -->
+    <div class="flex flex-col">
+       
+        <label for="niveau" class="mb-2 font-medium text-white">Niveau
+          <p class="text-green-500 font-bold mb-4">
+            Indiquez s'il s'agit d'une école maternelle, primaire et secondaire, ou d'une université
+        </p>
+        </label>
+        <select name="niveau" id="niveau" class="p-2 bg-white border border-gray-300 rounded-md" required>
+            <option value="">Veuillez Choisir</option>
+            <option value="primaire_secondaire">Primaire et Secondaire</option>
+            <option value="universite">Université</option>
+        </select>
+    </div>
+</div>
+
+
       <!-- Section 2: Banques Partenaires -->
       <h2 class="text-xl font-semibold mt-6 mb-4 text-white">Banques Partenaires</h2>
       <p class="text-green-500 font-bold mb-4">Cliquez sur Ajouter une Banque pour ajouter vos banques partenaires</p>

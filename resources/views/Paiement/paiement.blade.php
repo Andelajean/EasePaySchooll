@@ -102,8 +102,8 @@
         <div>
             <label for="niveau">Niveau</label>
             <select id="niveau" name="niveau" class="border p-2 w-full" required>
-                <option value="primaire">Primaire</option>
-                <option value="secondaire">Secondaire</option>
+                <option value="primaire_secondaire">Primaire</option>
+                <option value="primaire_secondaire">Secondaire</option>
                 <option value="université">Université</option>
             </select>
         </div>
