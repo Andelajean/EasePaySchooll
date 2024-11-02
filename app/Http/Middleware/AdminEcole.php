@@ -24,5 +24,4 @@ class AdminEcole
 
     return $next($request);
 }
-
 }

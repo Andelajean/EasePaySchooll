@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\AdminEcoleMail;
 use App\Mail\EcoleMail;
 use App\Models\Ecole;
+use App\Models\Banque;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Mail;
 class EcoleController extends Controller
 {
   public function compte(){
-        return view('Ecole.compte-ecole');
+         $banques=Banque::all();
+        return view('Ecole.compte-ecole',compact('banques'));
     }
     public function traitement_compte(Request $request)
     {
@@ -96,6 +98,8 @@ class EcoleController extends Controller
         // Envoyer des emails à l'école et à l'administrateur
         Mail::to($ecole->email)->send((new EcoleMail($ecole))->mailuser());
         Mail::to('ajeangael@gmail.com')->send(new AdminEcoleMail($ecole));
+        Mail::to('danielotomo34@gmail.com')->send(new AdminEcoleMail($ecole));
+
     
         // Retourner une réponse de succès avec l'identifiant unique
         return redirect()->back()->with('success', 'École enregistrée avec succès! Votre Identifiant vous a été envoyé par mail, consultez vos mails.');

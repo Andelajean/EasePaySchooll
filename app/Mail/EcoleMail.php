@@ -14,10 +14,13 @@ class EcoleMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $ecole;
-    public function __construct(Ecole $ecole)
+    public function __construct(Ecole $ecole = null)
     {
-        $this->ecole=$ecole;
+        $this->ecole = $ecole;
     }
+    
+    
+    
 
     /**
      * Get the message envelope.
@@ -37,6 +40,14 @@ class EcoleMail extends Mailable
                     ->subject('Merci d\'avoir fait confiance à EasePaySchol')
                     ->with('Ecole', $this->ecole);
     }
+
+
+    public function mailuserreply($message, $email) {
+        return $this->view('Ecole.email-reply')
+                    ->subject('Merci d\'avoir fait confiance à EasePaySchool')
+                    ->with(['message' => $message, 'email' => $email]);
+    }
+    
     /**
      * Get the attachments for the message.
      *
