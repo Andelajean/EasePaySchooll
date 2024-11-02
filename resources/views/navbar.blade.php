@@ -17,6 +17,8 @@
         <li><a href="{{route('paiement')}}">Paiement</a></li>
         <li><a href="{{route('ecole.contact.admin')}}">Contact</a></li>
         <li><a href="{{route('help')}}"> Aide</a></li>
+         <li><a href="{{route('login')}}">Se Connecter</a></li>
+        <li><a href="{{route('register')}}"> Créer Un Compte</a></li>
     </ul>
     <div class="search-bar">
         <form id="searchForm" action="{{ route('verifier.paiement') }}" method="GET">

@@ -6,21 +6,21 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\TrackVisits;
 
-return Application::configure(basePath: dirname(_DIR_))
+return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: _DIR_.'/../routes/web.php',
-        commands: _DIR_.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
         // Enregistrer ici le middleware sous forme de tableau
         $middleware->alias([
-            'auth.ecole' => \App\Http\Middleware\AdminEcole::class,
+            'auth.ecole' => AdminEcole::class,
         ]);
         
         $middleware->prepend(TrackVisits::class);
     })
-    
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        // Placez ici toute configuration d'exception nécessaire
+    })
+    ->create();
