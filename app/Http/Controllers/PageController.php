@@ -74,4 +74,10 @@ class PageController extends Controller
         return redirect()->back()->with('error', 'Paiement introuvable.');
     }
     
+    public function help(){
+        return view('Page.help');
+    }
+    public function index(){
+        return view('Page.index');
+    }
 }

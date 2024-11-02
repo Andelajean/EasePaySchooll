@@ -12,7 +12,7 @@ use App\Http\Controllers\UniformeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Page.index');
 });
 
 Route::get('/dashboard', function () {
@@ -39,6 +39,9 @@ Route::get('/telecharger-recu/{id_paiement}', [PageController::class, 'telecharg
 Route::get('/verifier-paiement', [PageController::class, 'verifierPaiement'])->name('verifier.paiement');
 Route::get('/login/ecole',[EcoleController::class,'login'])->name('login.ecole');
 Route::post('/login-ecole', [AdminEcoleController::class, 'login'])->name('login-ecole');
+
+Route::get('/help',[PageController::class,'help'])->name('help');
+Route::get('/index',[PageController::class,'index'])->name('index');
 
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
