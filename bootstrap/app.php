@@ -6,10 +6,10 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\TrackVisits;
 
-return Application::configure(basePath: dirname(__DIR__))
+return Application::configure(basePath: dirname(_DIR_))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: _DIR_.'/../routes/web.php',
+        commands: _DIR_.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {

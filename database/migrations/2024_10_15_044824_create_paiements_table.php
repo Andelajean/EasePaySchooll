@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paiements', function (Blueprint $table) {
-            $table->string('id_paiement', 11)->primary(); // ID unique pour le paiement
+            $table->id();
+            $table->unsignedBigInteger('id_ecole')->nullable();
+            $table->string('id_paiement', 11)->unique(); // ID unique pour le paiement
             $table->string('nom_ecole');
             $table->string('telephone');
             $table->string('ville');
@@ -27,6 +29,7 @@ return new class extends Migration
             $table->string('qr_code')->nullable(); // Champ pour le QR code
             $table->string('date_paiement');
             $table->string('heure_paiement');
+            $table->foreign('id_ecole')->references('id')->on('ecoles')->onDelete('set null');
             $table->timestamps();
         });
     }
