@@ -135,3 +135,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Appeler la fonction pour démarrer l'effet de machine à écrire
     typeWriter();
 });
+
+ // Sélection du bouton
+ const fixedButton = document.querySelector('.fixed-button');
+
+ // Ajout d'un écouteur d'événement pour le scroll
+ window.addEventListener('scroll', () => {
+     // Vérification si la page est scrollée
+     if (window.scrollY > 50) {
+         fixedButton.classList.add('scrolled');
+     } else {
+         fixedButton.classList.remove('scrolled');
+     }
+ });
+
+ 
+document.addEventListener('DOMContentLoaded', function() {
+    // Message à afficher
+    const message = "Pourquoi Utiliser EasePaySchool??";
+
+    const errorMessage = document.getElementById('messa');
+    let index = 0;
+
+    // Fonction pour afficher le texte lettre par lettre
+    function typeWriter() {
+        if (index < message.length) {
+            errorMessage.innerHTML += message.charAt(index);
+            index++;
+            setTimeout(typeWriter, 100); // Délai entre chaque lettre (100ms)
+        } else {
+            // Une fois le message complètement affiché, attendre un peu avant de recommencer
+            setTimeout(() => {
+                index = 0; // Réinitialiser l'index pour recommencer
+                errorMessage.innerHTML = ""; // Vider le texte affiché
+                typeWriter(); // Relancer la fonction
+            }, 2000); // Attendre 2 secondes avant de recommencer
+        }
+    }
+
+    // Appeler la fonction pour démarrer l'effet de machine à écrire
+    typeWriter();
+});
+

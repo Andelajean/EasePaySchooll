@@ -74,8 +74,8 @@
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
-                <h3>Address</h3>
-                <p>Center,Yaounde</p>
+                <h3>Adresse</h3>
+                <p>Centre,Yaounde</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -83,7 +83,7 @@
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
                 <h3>Nous contacter</h3>
-                <p>+237 673 42 95 91/+237 679 09 18 19</p>
+                <p>+237 673 42 95 91 / +237 679 09 18 19 / +237 659 454 737</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -123,7 +123,7 @@
                   <div class="error-message"></div>
                   <div class="sent-message">Your message has been sent. Thank you!</div>
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit">Envoyer </button>
                 </div>
 
               </div>
@@ -137,62 +137,7 @@
     </section><!-- /Contact Section -->
 
   </main>
-
-  <footer id="footer" class="footer light-background">
-
-    <div class="container">
-      <div class="row gy-3">
-        <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-geo-alt icon"></i>
-          <div class="address">
-            <h4>Address</h4>
-            <p>Center, Yaounde</p>
-            <p></p>
-          </div>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-telephone icon"></i>
-          <div>
-            <h4>Contact</h4>
-            <p>
-              <strong>Phone:</strong> <span>+237 673 42 95 91/+237 679 09 18 19</span><br>
-              <strong>Email:</strong> <span>easepayschoolpay@gmail.com</span><br>
-            </p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-clock icon"></i>
-          <div>
-            <h4>Service Client</h4>
-            <p>
-              <strong>Disponible</strong> <span>24h/24-7j/7</span><br>
-              
-            </p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <h4>Follow Us</h4>
-          <div class="social-links d-flex">
-            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">EasePaySchool</strong> <span>All Rights Reserved</span></p>
-    
-    </div>
-
-  </footer>
+@include('footer')
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -238,4 +238,17 @@
   .bullet.active {
     background: grey;
   }
-  
+  .fixed-button {
+    position: fixed;
+    top: 50%; /* Centre vertical */
+    left: 50%; /* Centre horizontal */
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+/* Effet de décalage en fonction du défilement */
+.fixed-button.scrolled {
+    transform: translate(-50%, calc(-50% + 20px)); /* Légère translation lors du scroll */
+}  
+

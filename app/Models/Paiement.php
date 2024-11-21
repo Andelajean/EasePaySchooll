@@ -11,7 +11,7 @@ class Paiement extends Model
     use HasFactory;
     protected $fillable = [
         'nom_ecole',
-        'id_ecole',
+        'ecole_id',
         'telephone',
         'ville',
         'banque',
@@ -31,5 +31,10 @@ class Paiement extends Model
     public static function generateIdPaiement()
     {
         return Str::upper(Str::random(11)); // Génère une chaîne aléatoire de 11 caractères alphanumériques
+    }
+
+    public function ecole()
+    {
+        return $this->belongsTo(Ecole::class);
     }
 }

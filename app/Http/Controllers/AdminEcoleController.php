@@ -58,7 +58,7 @@ public function dashboard() {
     // Si l'école est connectée
     if ($ecole) {
         // Vérifier si le niveau de l'école est "université"
-        if ($ecole->niveau === 'universite') {
+        if ($ecole->niveau === 'université') {
             // Récupérer le nombre de paiements de l'école connectée
             $nombrePaiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
                 ->whereDate('created_at', Carbon::today())
@@ -169,7 +169,7 @@ public function classe(Request $request)
   }
   $banque = $classes;
   // Retourner la vue avec les données
-  if ($ecole->niveau === 'universite') {
+  if ($ecole->niveau === 'université') {
       return view('AdminEcole.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   } else {
       return view('Primaire.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
@@ -231,7 +231,7 @@ public function banque(Request $request)
 
     $banque = $classes;
   // Retourner la vue avec les données
-  if ($ecole->niveau === 'universite') {
+  if ($ecole->niveau === 'université') {
       return view('AdminEcole.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   } else {
       return view('Primaire.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
@@ -401,7 +401,7 @@ public function tout(Request $request)
    // return view('AdminEcole.paiements', compact('paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     $banque =  $dateSelectionnee;
     // Retourner la vue avec les données
-    if ($ecole->niveau === 'universite') {
+    if ($ecole->niveau === 'université') {
         return view('AdminEcole.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     } else {
         return view('Primaire.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
