@@ -15,4 +15,9 @@ class Ecole extends Model
         'numero_banque4', 'nom_banque5', 'numero_banque5', 'nom_banque6','numero_banque6',
          'nom_banque7', 'numero_banque7', 'nom_banque8','numero_banque8',
     ];
+
+    public function paiements()
+    {
+        return $this->hasMany(Paiement::class);
+    }
 }

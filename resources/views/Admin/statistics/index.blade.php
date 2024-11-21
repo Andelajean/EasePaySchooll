@@ -3,6 +3,45 @@
 @section('content')
     <div class="container">
         <h1>Statistiques du Site</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">Total des Paiements</div>
+                        <div class="card-body">
+                            <p>{{ $totalPayments }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">Total des Écoles Inscrites</div>
+                        <div class="card-body">
+                            <p>{{ $totalSchools }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Paiements par École</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>École</th>
+                        <th>Nombre de Paiements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($paymentsBySchool as $school)
+                        <tr>
+                            <td>{{ $school->nom_ecole }}</td>
+                            <td>{{ $school->paiements_count }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <label for="lineChartDate">Sélectionner une date :</label>

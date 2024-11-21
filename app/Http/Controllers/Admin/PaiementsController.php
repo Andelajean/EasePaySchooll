@@ -12,7 +12,7 @@ class PaiementsController extends Controller
     //
 
     public function showAllPaiement($id){
-       $paiements=Paiement::where('id_ecole',$id)->get();
+       $paiements=Paiement::where('ecole_id',$id)->get();
        $id_ecole=$id;
        $ecoles=Ecole::all();
        $banques=Banque::all();
