@@ -58,7 +58,7 @@ public function dashboard() {
     // Si l'école est connectée
     if ($ecole) {
         // Vérifier si le niveau de l'école est "université"
-        if ($ecole->niveau === 'université') {
+        if ($ecole->niveau === 'universite') {
             // Récupérer le nombre de paiements de l'école connectée
             $nombrePaiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
                 ->whereDate('created_at', Carbon::today())
@@ -169,7 +169,7 @@ public function classe(Request $request)
   }
   $banque = $classes;
   // Retourner la vue avec les données
-  if ($ecole->niveau === 'université') {
+  if ($ecole->niveau === 'universite') {
       return view('AdminEcole.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   } else {
       return view('Primaire.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
@@ -231,7 +231,7 @@ public function banque(Request $request)
 
     $banque = $classes;
   // Retourner la vue avec les données
-  if ($ecole->niveau === 'université') {
+  if ($ecole->niveau === 'universite') {
       return view('AdminEcole.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   } else {
       return view('Primaire.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
@@ -401,7 +401,7 @@ public function tout(Request $request)
    // return view('AdminEcole.paiements', compact('paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     $banque =  $dateSelectionnee;
     // Retourner la vue avec les données
-    if ($ecole->niveau === 'université') {
+    if ($ecole->niveau === 'universite') {
         return view('AdminEcole.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     } else {
         return view('Primaire.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
@@ -462,8 +462,13 @@ public function tranche(Request $request)
           ->paginate(50);  // Paginer les résultats par 50
   }
   $banque = $classes;
-
+  if ($ecole->niveau === 'universite'){
     return view('AdminEcole.tranche',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
+  }
+  else{
+    return view('Primaire.tranche',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
+  }
+   
 }
 public function banque_classe(Request $request)
 {
@@ -532,9 +537,14 @@ public function banque_classe(Request $request)
   }
   
   // Retourner la vue avec les données
-  
-  return view('AdminEcole.classe_banque', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+  if ($ecole->niveau === 'universite') {
+    return view('AdminEcole.classe_banque', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
 
+  }
+  else{
+    return view('Primaire.banque_classe', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+
+  }
 }
 
 public function classe_tranche(Request $request)
@@ -604,9 +614,14 @@ public function classe_tranche(Request $request)
   }
   
   // Retourner la vue avec les données
-  
-  return view('AdminEcole.classe_tranche', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+  if ($ecole->niveau === 'universite'){
+    return view('AdminEcole.classe_tranche', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
 
+  }
+ else{
+    return view('Primaire.classe_tranche', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+
+ }
 }
 
 

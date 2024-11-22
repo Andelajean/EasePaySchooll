@@ -97,14 +97,14 @@
         </div>
         <div>
             <label for="classe">Classe</label>
-            <input type="text" id="classe" name="classe" class="border p-2 w-full" placeholder="Exemple : CM2" required>
+            <input type="text" id="classe" name="classe" class="border p-2 w-full" placeholder="Exemple : CM2, GL3D ..." required>
         </div>
         <div>
             <label for="niveau">Niveau</label>
             <select id="niveau" name="niveau" class="border p-2 w-full" required>
-                <option value="primaire_secondaire">Primaire</option>
+                <option value="primaire_secondaire"> Maternelle et Primaire </option>
                 <option value="primaire_secondaire">Secondaire</option>
-                <option value="université">Université</option>
+                <option value="universite">Université</option>
             </select>
         </div>
         <!-- Champs pour l'université -->
@@ -132,12 +132,24 @@
             <input type="text" id="motif" name="motif" class="border p-2 w-full" value="Frais de scolarité" readonly>
         </div>
         <div>
-            <label for="details">
-                Détails 
-                <span class="text-red-700">*indiquez s'il s'agit d'une tranche de la scolarité ou de la totalité</span>
-            </label>
-            <textarea id="details" name="details" class="border p-2 w-full" placeholder="Exemple première tranche, deuxième tranche..." required></textarea>
-        </div>
+    <label for="details">
+        Détails 
+        <span class="text-red-700">*indiquez s'il s'agit d'une tranche de la scolarité ou de la totalité</span>
+    </label>
+    <select id="details" name="details" class="border p-2 w-full" required>
+        <option value="" disabled selected>-- Sélectionnez une option --</option>
+        <option value="premiere-tranche">Première tranche</option>
+        <option value="deuxieme-tranche">Deuxième tranche</option>
+         <option value="premiere-tranche">Troisième tranche</option>
+        <option value="deuxieme-tranche">Quatrièeme tranche</option>
+         <option value="premiere-tranche">Cinquième tranche</option>
+        <option value="deuxieme-tranche">Sixième tranche</option>
+         <option value="premiere-tranche">Septième tranche</option>
+        <option value="deuxieme-tranche">Huitième tranche</option>
+        <option value="totalite">Totalité</option>
+    </select>
+</div>
+
         <div>
             <label for="date_paiement">Date de paiement</label>
             <input type="date-local" id="date_paiement" name="date_paiement" class="border p-2 w-full" value="{{ date('Y-m-d\TH:i') }}" readonly>

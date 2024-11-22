@@ -12,6 +12,10 @@ class PageController extends Controller
     public function recu(){
         return view('Page.recu');
     }
+
+    public function about(){
+        return view('Page.about');
+    }
     public function telechargerRecu($id_paiement)
     {
         // Récupérer les détails du paiement en fonction de l'ID

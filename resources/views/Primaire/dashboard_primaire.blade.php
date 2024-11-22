@@ -60,6 +60,9 @@
                                     <li class="active"><a href="{{route('dashboard_ecole')}}">Paiement D'Aujourd'hui</a></li>
                                     <li><a href="{{route('classe')}}">Paiement Par Classe</a></li>
                                     <li><a href="{{route('banque')}}">Paiement Par Banque</a></li>
+                                     <li><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
+                                    <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
                                     <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
@@ -204,6 +207,7 @@
                                                 <td class="buy">Banque de Paiement</td>
                                                 <td class="sell">Date Paiement</td>
                                                 <td class="trends">Heure Paiement</td>
+                                                <td class ="trends"> Detail </td>
                                                
                                             </tr>
                                             @forelse($paiementsAujourdhui as $paiement)
@@ -213,6 +217,7 @@
                 <td>{{ $paiement->banque }}</td>
                 <td>{{ $paiement->created_at->format('d/m/Y') }}</td>
                 <td>{{ $paiement->created_at->format('H:i') }}</td>
+                <td>{{$paiement->details}}
                
             </tr>
             @empty
@@ -254,7 +259,7 @@
        
         <footer>
     <div class="footer-area">
-        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
+        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="#">Smart Tech Engineering</a>.</p>
     </div>
 </footer>
 

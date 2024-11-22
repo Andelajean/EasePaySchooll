@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Rapport des Paiements pour la classe: {{ $banque }}</title>
+    <title>Rapport des Paiements pour la : {{ $banque }} </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -57,29 +57,28 @@
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Paiement</span></a>
                                 <ul class="collapse">
                                     <li><a href="{{route('dashboard_ecole')}}">Paiement D'Aujourd'hui</a></li>
-                                    <li class="active" ><a href="{{route('classe')}}">Paiement Par Classe</a></li>
+                                    <li><a href="{{route('classe')}}">Paiement Par Classe</a></li>
                                     <li ><a href="{{route('banque')}}">Paiement Par Banque</a></li>
-                                     <li><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li class="active"><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
+                                    <li ><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
                                     <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
-                                    <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
                                     <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                            <li >
+                           <li >
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Materiel</span></a>
                                 <ul class="collapse">
                                 <li ><a href="{{route('reception')}}">Receptionner le Materiel</a></li>
                                 <li ><a href="/materiel/ecole/recu">Materiel Recu</a></li>
                                 </ul>
                             </li>
-                             <li >
+                            <li >
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-slice"></i><span>Uniforme Scolaire</span></a>
                                 <ul class="collapse">
                                 <li ><a href="{{route('distribution')}}">Distribution Des Uniformes Scolaires</a></li>
                                 <li><a href="{{route('distribuer')}}">Liste Des Uniformes Distribués</a></li>
                                 </ul>
                             </li>
-                        </ul>
                         </ul>
                     </nav>
                 </div>
@@ -98,7 +97,7 @@
                             <span></span>
                             <span></span>
                         </div>
-                                           <div class="search-box pull-left">
+                                          <div class="search-box pull-left">
     <form action="#">
         <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
         <i class="ti-search"></i>
@@ -118,7 +117,7 @@
                 <h4 class="page-title pull-left">Dashboard</h4>
                 <ul class="breadcrumbs pull-left">
                     <li><a href="{{ route('dashboard_ecole') }}">Home</a></li>
-                    <li><span>Paiement Par Classe</span></li>
+                    <li><span>Paiement Par Tranche</span></li>
                 </ul>
             </div>
         </div>
@@ -126,7 +125,7 @@
             <!-- Sélection de la Banque -->
             <form action="{{ route('classe') }}" method="GET">
                 <div class="form-group">
-                    <label for="classe">Choisissez une Classe :</label>
+                    <label for="classe">Choisissez la Tranche :</label>
                     <select id="classe" name="classe" class="form-control" onchange="this.form.submit()">
                         @if ($classes->isNotEmpty())
                             @foreach ($classes as $classe)
@@ -135,7 +134,7 @@
                                 </option>
                             @endforeach
                         @else
-                            <option value="">Aucune Classe disponible</option>
+                            <option value="">Aucune Tranche disponible</option>
                         @endif
                     </select>
                 </div>
@@ -158,7 +157,7 @@
                     <select id="periode" name="periode" class="form-control" onchange="this.form.submit()">
                         <option value="today" {{ request('periode') == 'today' ? 'selected' : '' }}>Paiements Aujourd'hui</option>
                         <option value="yesterday" {{ request('periode') == 'yesterday' ? 'selected' : '' }}>Paiements Hier</option>
-                        <option value="all" {{ request('periode') == 'all' ? 'selected' : '' }} >Tous les Paiements</option>
+                        <option value="all" {{ request('periode') == 'all' ? 'selected' : '' }}>Tous les Paiements</option>
                     </select>
                 </div>
             </form>
@@ -210,7 +209,7 @@
                         <h4 class="header-title mb-0">Total Paiements</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                         <h2>{{ count($paiementsTotal) }}</h2>
+                        <h2>{{ count($paiementsTotal) }}</h2>
                     </div>
                 </div>
             </div>
@@ -236,6 +235,7 @@
                         @else
                             Paiements d'Aujourd'hui
                         @endif
+                       
                     </h4>
                     
                     <!-- Bouton Imprimer -->
@@ -251,7 +251,8 @@
                                 <td class="buy">Banque de Paiement</td>
                                 <td class="sell">Date Paiement</td>
                                 <td class="trends">Heure Paiement</td>
-                               <td class ="trends"> Deatil </td>
+                               
+                                 <td class="stats-chart">Detail</td>
                             </tr>
 
                             <!-- Paiements Aujourd'hui ou Date Sélectionnée -->
@@ -263,7 +264,8 @@
                                         <td>{{ $paiement->banque }}</td>
                                         <td>{{ $paiement->date_paiement }}</td>
                                         <td>{{ $paiement->heure_paiement }}</td>
-                                       <td> {{$paiement->details}} </td>
+                                        
+                                        <td>{{ $paiement->details }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -284,7 +286,8 @@
                                         <td>{{ $paiement->banque }}</td>
                                         <td>{{ $paiement->date_paiement }}</td>
                                         <td>{{ $paiement->heure_paiement }}</td>
-                                       <td>{{$paiement->details}} </td>
+                                       
+                                        <td>{{ $paiement->details }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -305,7 +308,8 @@
                                         <td>{{ $paiement->banque }}</td>
                                         <td>{{ $paiement->date_paiement }}</td>
                                         <td>{{ $paiement->heure_paiement }}</td>
-                                       <td>{{$paiement->details}} </td>
+                                        
+                                        <td>{{ $paiement->details }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -324,6 +328,7 @@
     </div>
 </div>
 <!-- main content end -->
+
 <!-- main content end -->
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -348,7 +353,7 @@
 </div>
 
 
-       
+
         <footer>
     <div class="footer-area">
         <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="#">Smart Tech Engineering</a>.</p>
@@ -357,7 +362,7 @@
 
         <!-- footer area end-->
     </div>
-    <script src="/jscript/search_paiement.js"></script>
+   
     <script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>
     <!-- bootstrap 4 js -->
     <script src="/assets/js/popper.min.js"></script>
@@ -366,7 +371,7 @@
     <script src="/assets/js/metisMenu.min.js"></script>
     <script src="/assets/js/jquery.slimscroll.min.js"></script>
     <script src="/assets/js/jquery.slicknav.min.js"></script>
-
+ <script src="/jscript/search_paiement.js"></script>
     <!-- start chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <!-- start highcharts js -->
@@ -386,5 +391,4 @@
     <script src="/assets/js/scripts.js"></script>
     <script src="/jscript/banque_impression.js"></script>
 </body>
-
 </html>

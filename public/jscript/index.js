@@ -177,3 +177,4 @@ document.addEventListener('DOMContentLoaded', function() {
     typeWriter();
 });
 
+//partenaire

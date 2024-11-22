@@ -135,63 +135,106 @@
   </div>
 </section>
 <!-- Section container -->
-<section class="px-4 py-8 ">
+<section class="px-4 py-8">
     <!-- Title -->
     <h2 class="text-2xl font-bold text-center mb-8" id="messa"></h2>
     <!-- Cards container -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-       <!-- Card 1 -->
-<div class="bg-white p-6 rounded-lg shadow-lg">
-    <h3 class="text-xl font-semibold mb-2">Gestion simplifiée</h3>
-    <p class="text-gray-700 mb-4">Avec EasePaySchool, centralisez toutes vos transactions scolaires en un seul endroit, ce qui simplifie la gestion pour les parents et les écoles.</p>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">En savoir plus</button>
-</div>
+        <!-- Card 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-2">Gestion simplifiée</h3>
+            <p class="text-gray-700 mb-4">Avec EasePaySchool, centralisez toutes vos transactions scolaires en un seul endroit, ce qui simplifie la gestion pour les parents et les écoles.</p>
+   
+            <div class="flex gap-2 mt-4">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="showMessage('Android')">Télécharger pour Android</button>
+                <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900" onclick="showMessage('iOS')">Télécharger pour Apple</button>
+            </div>
+        </div>
 
-<!-- Card 2 -->
-<div class="bg-white p-6 rounded-lg shadow-lg">
-    <h3 class="text-xl font-semibold mb-2">Paiements sécurisés</h3>
-    <p class="text-gray-700 mb-4">EasePaySchool garantit la sécurité des paiements, offrant aux parents et aux écoles une solution fiable pour toutes les transactions.</p>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">En savoir plus</button>
-</div>
+        <!-- Card 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-2">Paiements sécurisés</h3>
+            <p class="text-gray-700 mb-4">EasePaySchool garantit la sécurité des paiements, offrant aux parents et aux écoles une solution fiable pour toutes les transactions.</p>
+         
+            <div class="flex gap-2 mt-4">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="showMessage('Android')">Télécharger pour Android</button>
+                <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900" onclick="showMessage('iOS')">Télécharger pour Apple</button>
+            </div>
+        </div>
 
-<!-- Card 3 -->
-<div class="bg-white p-6 rounded-lg shadow-lg">
-    <h3 class="text-xl font-semibold mb-2">Suivi en temps réel</h3>
-    <p class="text-gray-700 mb-4">Suivez toutes les transactions en temps réel et gardez un historique clair et détaillé des paiements effectués pour chaque élève.</p>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">En savoir plus</button>
-</div>
-
+        <!-- Card 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-2">Suivi en temps réel</h3>
+            <p class="text-gray-700 mb-4">Suivez toutes les transactions en temps réel et gardez un historique clair et détaillé des paiements effectués pour chaque élève.</p>
+            <div class="flex gap-2 mt-4">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="showMessage('Android')">Télécharger pour Android</button>
+                <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900" onclick="showMessage('iOS')">Télécharger pour Apple</button>
+            </div>
+        </div>
     </div>
 </section>
-<!-- Section container -->
-<section class="px-4 py-8  space-y-8">
-<!-- Card 1 -->
-<div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-    <!-- Image of person using a phone at their desk -->
-    <div class="w-full md:w-1/2">
-        <img src="{{ asset('image/DALL·E 2024-11-04 04.00.59 - A professional setting with a person sitting at their desk using a smartphone. The background shows a clean, organized office space with a computer an.webp') }}" alt="Personne utilisant son téléphone depuis son bureau" class="w-full h-96 object-cover border-r-2 border-gray-200">
-    </div>
-    <!-- Text content -->
-    <div class="p-6 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-2xl font-semibold mb-4">Paiement simplifié depuis votre bureau</h3>
-        <p class="text-gray-700 mb-4">Avec EasePaySchool, les parents peuvent régler les frais de scolarité en toute simplicité depuis leur bureau. L'application permet un suivi en temps réel des transactions et offre une solution de paiement rapide et sécurisée.</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">En savoir plus</button>
-    </div>
-</div>
 
-<!-- Card 2 -->
-<div class="flex flex-col md:flex-row-reverse bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-    <!-- Image of person paying from their vehicle -->
-    <div class="w-full md:w-1/2">
-        <img src="{{ asset('image/DALL·E 2024-11-04 04.00.48 - A person sitting in their vehicle using a smartphone, making an online payment. The background shows a modern car interior, with the person focused on.webp') }}" alt="Personne effectuant un paiement depuis son véhicule" class="w-full h-96 object-cover border-l-2 border-gray-200">
+<script>
+    function showMessage(platform) {
+        alert(`La version ${platform} n'est pas encore disponible.`);
+    }
+</script>
+
+<!-- Section container -->
+<!-- Section container -->
+<section class="px-4 py-8 space-y-8">
+    <!-- Card 1 -->
+    <div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+        <!-- Image of person using a phone at their desk -->
+        <div class="w-full md:w-1/2">
+            <img src="{{ asset('image/DALL·E 2024-11-04 04.00.59 - A professional setting with a person sitting at their desk using a smartphone. The background shows a clean, organized office space with a computer an.webp') }}" 
+                 alt="Personne utilisant son téléphone depuis son bureau" 
+                 class="w-full h-96 object-cover border-r-2 border-gray-200">
+        </div>
+        <!-- Text content -->
+        <div class="p-6 md:w-1/2 flex flex-col justify-between">
+            <div>
+                <h3 class="text-2xl font-semibold mb-4">Paiement simplifié depuis votre bureau</h3>
+                <p class="text-gray-700 mb-4">Avec EasePaySchool, les parents peuvent régler les frais de scolarité en toute simplicité depuis leur bureau. L'application permet un suivi en temps réel des transactions et offre une solution de paiement rapide et sécurisée.</p>
+            </div>
+            <!-- Stars -->
+            <div class="flex justify-center text-yellow-500 text-4xl mt-4">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9734;</span>
+            </div>
+        </div>
     </div>
-    <!-- Text content -->
-    <div class="p-6 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-2xl font-semibold mb-4">Paiement mobile, même en déplacement</h3>
-        <p class="text-gray-700 mb-4">EasePaySchool permet aux parents de payer les frais de scolarité même lorsqu’ils sont en déplacement, directement depuis leur véhicule. Une solution flexible et adaptée à un mode de vie actif.</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">En savoir plus</button>
+
+    <!-- Card 2 -->
+    <div class="flex flex-col md:flex-row-reverse bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+        <!-- Image of person paying from their vehicle -->
+        <div class="w-full md:w-1/2">
+            <img src="{{ asset('image/DALL·E 2024-11-04 04.00.48 - A person sitting in their vehicle using a smartphone, making an online payment. The background shows a modern car interior, with the person focused on.webp') }}" 
+                 alt="Personne effectuant un paiement depuis son véhicule" 
+                 class="w-full h-96 object-cover border-l-2 border-gray-200">
+        </div>
+        <!-- Text content -->
+        <div class="p-6 md:w-1/2 flex flex-col justify-between">
+            <div>
+                <h3 class="text-2xl font-semibold mb-4">Paiement mobile, même en déplacement</h3>
+                <p class="text-gray-700 mb-4">EasePaySchool permet aux parents de payer les frais de scolarité même lorsqu’ils sont en déplacement, directement depuis leur véhicule. Une solution flexible et adaptée à un mode de vie actif.</p>
+            </div>
+            <!-- Stars -->
+            <div class="flex justify-center text-yellow-500 text-4xl mt-4">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9734;</span>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+@include('Page.footer')
+
 
  <script src="/jscript/index.js"></script>
 </body>

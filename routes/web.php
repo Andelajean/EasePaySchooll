@@ -126,6 +126,7 @@ Route::get('/login/ecole',[EcoleController::class,'login'])->name('login.ecole')
 Route::post('/login-ecole', [AdminEcoleController::class, 'login'])->name('login-ecole');
 
 Route::get('/help',[PageController::class,'help'])->name('help');
+Route::get('/about',[PageController::class,'about'])->name('about');
 Route::get('/index',[PageController::class,'index'])->name('index');
 
 Route::middleware(['auth.ecole'])->group(function () {
