@@ -88,9 +88,9 @@
     <!-- Footer Section -->
     <div class="email-footer">
         <p>Développé par <strong>Smart Tech Engineering</strong>.</p>
-        <p>Si vous avez des questions, n'hésitez pas à nous contacter à support@smarttech.com.</p>
+        <p>Si vous avez des questions, n'hésitez pas à nous contacter à easepayschool@gmail.com.</p>
     </div>
 </div>
-
+@include('Page.footer')
 </body>
 </html>

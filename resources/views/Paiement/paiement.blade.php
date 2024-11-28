@@ -19,7 +19,7 @@
   <!-- Icon Font Stylesheet -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.tailwindcss.com"></script>
+ 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -112,7 +112,17 @@
             <label for="filiere">Filière</label>
             <input type="text" id="filiere" name="filiere" class="border p-2 w-full" placeholder="Exemple : Génie logiciel" >
             <label for="niveau_universite">Niveau Universitaire</label>
-            <input type="text" id="niveau_universite" name="niveau_universite" class="border p-2 w-full" placeholder="Exemple : Niveau 1">
+             <select id="niveau_universite" name="niveau_universite" class="border p-2 w-full" required>
+        <option value="" disabled selected>-- Sélectionnez une option --</option>
+        <option value="Niveau 1">Niveau 1</option>
+        <option value="Niveau 2">Niveau 2</option>
+         <option value="Niveau 3">Niveau 3</option>
+        <option value="Niveau 4">Niveau 4</option>
+         <option value="Niveau 5">Niveau 5</option>
+        <option value="Niveau 6">Niveau 6</option>
+         <option value="Niveau 7">Niveau 7</option>
+        
+    </select>
         </div>
     </div>
 
@@ -167,9 +177,9 @@
     </div>
 </form>
 </div>
-  
+ @include('Page.footer')
  <script src="/jscript/paiement.js"></script>
- 
+   <script src="https://cdn.tailwindcss.com"></script>
 
 </body>
 </html>

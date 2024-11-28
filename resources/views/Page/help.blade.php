@@ -93,12 +93,12 @@
         </button>
         <div id="answer-4" class="mt-2 hidden">
             <p class="p-4 bg-white border border-gray-300 rounded-lg shadow-sm">
-                Vous pouvez contacter le support Administrateur via notre page de <a href="{{ route('paiement') }}" class="text-blue-500 underline">Contact</a> ou en envoyant un email à support@exemple.com.
+                Vous pouvez contacter le support Administrateur via notre page de <a href="{{ route('ecole.contact.admin') }}" class="text-blue-500 underline">Contact</a> ou en envoyant un email à <a href="mailto:easepayschool@gmail.com" class="hover:text-blue-500">easepayschool@gmail.com</a>
             </p>
         </div>
     </div>
 </div>
-
+@include('Page.footer')
 
  <script src="/jscript/help.js"></script>
 </body>

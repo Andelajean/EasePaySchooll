@@ -13,7 +13,7 @@
     </div>
     <ul class="nav-links">
         <li><a href="/">Accueil</a></li>
-        <li><a href="#">Apropos</a></li>
+        <li><a href="{{route('about')}}">Apropos</a></li>
         <li><a href="{{route('paiement')}}">Paiement</a></li>
         <li><a href="{{route('ecole.contact.admin')}}">Contact</a></li>
         <li><a href="{{route('help')}}"> Aide</a></li>

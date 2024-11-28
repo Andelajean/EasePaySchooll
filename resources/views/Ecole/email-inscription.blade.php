@@ -95,6 +95,6 @@
         <p>Si vous avez des questions, n'hésitez pas à nous contacter à support@smarttech.com.</p>
     </div>
 </div>
-
+@include('Page.footer')
 </body>
 </html>

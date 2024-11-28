@@ -13,13 +13,10 @@
   <!-- Google Web Fonts -->
   <link href="/style/recu.css" rel="stylesheet">
   <!-- Icon Font Stylesheet -->
-  
 </head>
 <body>
-
     <div class="container">
         <h1 style="text-align: center;">Reçu de Paiement Des Frais De Scolarité</h1>
-
         <!-- Première section : Informations de l'école -->
         <div class="section">
             <h2>Informations de l'école</h2>
@@ -27,7 +24,6 @@
             <p><strong>Ville :</strong> {{ $ville }}</p>
             <p><strong>Téléphone :</strong> {{ $telephone }}</p>
         </div>
-
         <!-- Deuxième section : Détails du paiement -->
         <div class="section">
             <h2>Détails du paiement</h2>
@@ -43,18 +39,15 @@
             <p><strong>Heure Paiement:</strong> {{ $heure_paiement }}</p>
             <p><strong>Niveau Université :</strong> {{ $niveau_universite }}</p>
         </div>
-
         <!-- QR code -->
         <div class="qr-code">
             <img src="{{ asset('qrcodes/' . $qr_code) }}" alt="QR Code">
         </div>
-
-    
         <!-- Footer -->
         <div class="footer">
             <p>Reçu délivré par : <strong>EasePaySchool.com</strong></p>
             <p>Développé par <strong>Smart Tech Engineering</strong></p>
-            <p>Tel : +237 620 699 733 / 659 454 737</p>
+            <p>Tel : +237 620 699 733 / 659 454 737 / 679 091 819</p>
         </div>
          <!-- Bouton de téléchargement du reçu -->
         <div style="text-align: center;">

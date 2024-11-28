@@ -164,6 +164,7 @@
 </div>
     </form>
   </div>
+  @include('Page.footer')
  <script src="/jscript/style.js">
   </script>
 </body>
