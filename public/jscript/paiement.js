@@ -40,74 +40,31 @@
         }, 300); // 300ms de délai
     });
 
-    $(document).on('click', '#result-list li', function() {
-        var schoolId = $(this).data('id');
-    
-        // Requête pour récupérer les détails complets de l'école
-        $.ajax({
-            url: '/school/' + schoolId,  // Utilise la même route
-            method: 'GET',
-            success: function(data) {
-                if (data) {
-                    // Pré-remplir les champs avec les détails de l'école
-                    $('#nom_ecole').val(data.nom_ecole);
-                    $('#telephone').val(data.telephone);
-                    $('#ville').val(data.ville);
-                    $('#montant_total').val(data.montant_total); // Champ Montant total
-    
-                    // Remplir la liste des banques (nom uniquement)
-                    var banqueSelect = $('#banque');
-                    banqueSelect.empty().append('<option value="">Sélectionnez une banque</option>');
-                    for (var i = 1; i <= 6; i++) {
-                        if (data['nom_banque' + i]) {
-                            banqueSelect.append('<option value="' + data['nom_banque' + i] + '">' + data['nom_banque' + i] + '</option>');
-                        }
-                    }
-    
-                    // Masquer la liste des suggestions et afficher le formulaire
-                    $('#result-list').empty().addClass('hidden');
-                    $('#schoolForm').removeClass('hidden');
-    
-                    // Remplir automatiquement la date et l'heure actuelles
-                    var now = new Date();
-                    var date = now.toISOString().split('T')[0]; // Format YYYY-MM-DD
-                    var time = now.toTimeString().split(' ')[0]; // Format HH:MM:SS
-                    $('#date_paiement').val(date);
-                    $('#heure_paiement').val(time);
-    
-                    // Comparer le niveau sélectionné avec le niveau de l'école
-                    var ecoleNiveau = data.niveau;
-                    var niveauSelect = $('#niveau');
-                    var errorMessage = $('#error-message');
-    
-                    // Lorsqu'un niveau est sélectionné, vérifier s'il correspond à celui de l'école
-                    niveauSelect.on('change', function() {
-                        var selectedNiveau = this.value;
-                        if (selectedNiveau !== ecoleNiveau) {
-                            errorMessage.text(`Erreur : Le niveau sélectionné (${selectedNiveau}) ne correspond pas au niveau de l'école (${ecoleNiveau}).`);
-                            errorMessage.show();
-    
-                            // Réinitialiser la sélection
-                            niveauSelect.val('');
-                        } else {
-                            errorMessage.hide(); // Cacher le message si tout va bien
-                        }
-                    });
-                }
-            }
-        });
-    });
-    
+  // Lorsque l'utilisateur clique sur un élément de la liste
+  $(document).on('click', '#result-list li', function() {
+    var schoolId = $(this).data('id');
 
-    // Afficher les champs spécifiques à l'université
-    $('#niveau').on('change', function() {
-        if ($(this).val() === 'université') {
-            $('#university-fields').removeClass('hidden');
-        } else {
-            $('#university-fields').addClass('hidden');
+    // Requête pour récupérer les détails complets de l'école
+    $.ajax({
+        url: '/school/' + schoolId, // URL de la route pour récupérer les détails
+        method: 'GET',
+        success: function(data) {
+            if (data.view) {
+                // Rediriger vers la vue appropriée après avoir stocké les données dans la session
+                window.location.href = data.view;
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 404) {
+                alert('École introuvable.');
+            } else {
+                alert('Une erreur s\'est produite. Veuillez réessayer.');
+            }
         }
     });
+});
 
+    
     // Bouton Annuler
     $('#annuler').on('click', function() {
         $('#form-container').addClass('hidden');
@@ -143,6 +100,7 @@ document.getElementById('montant').addEventListener('input', function() {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    const currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    const currentDateTime = `${year}-${month}-${day}-${hours}:${minutes}`;
     document.getElementById('date_paiement').value = currentDateTime;
 });
+

@@ -20,4 +20,9 @@ class Ecole extends Model
     {
         return $this->hasMany(Paiement::class);
     }
+    public function classes()
+{
+    return $this->hasMany(Classe::class, 'id_ecole', 'id');
+}
+
 }

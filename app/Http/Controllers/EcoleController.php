@@ -8,7 +8,10 @@ use App\Models\Ecole;
 use App\Models\Banque;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class EcoleController extends Controller
 {
@@ -98,11 +101,15 @@ class EcoleController extends Controller
         // Envoyer des emails à l'école et à l'administrateur
         Mail::to($ecole->email)->send((new EcoleMail($ecole))->mailuser());
         Mail::to('ajeangael@gmail.com')->send(new AdminEcoleMail($ecole));
-        Mail::to('danielotomo34@gmail.com')->send(new AdminEcoleMail($ecole));
-
-    
+        //Mail::to('danielotomo34@gmail.com')->send(new AdminEcoleMail($ecole));
         // Retourner une réponse de succès avec l'identifiant unique
-        return redirect()->back()->with('success', 'École enregistrée avec succès! Votre Identifiant vous a été envoyé par mail, consultez vos mails.');
+       // if($ecole->niveau==='universite'){
+         //   return redirect('/ecole/compte/classe/universite')->with('success', 'École enregistrée avec succès! Votre Identifiant vous a été envoyé par mail, consultez vos mails.');
+       // }
+
+        return redirect("/ecole/compte/classe/primaire_secondaire/{$ecole->id}")
+        ->with('success', 'École enregistrée avec succès! Votre Identifiant vous a été envoyé par mail, consultez vos mails.');
+    
     }
     
     public function email_inscription_ecole(){
@@ -125,32 +132,145 @@ class EcoleController extends Controller
     }
     
     public function getSchoolDetails($id)
-    {
-        // Trouver l'école
-        $ecole = Ecole::find($id);
-    
-        if ($ecole) {
-            // Préparer les détails à envoyer au frontend
-            $ecoleDetails = [
-                'nom_ecole' => $ecole->nom_ecole,
-                'telephone' => $ecole->telephone,
-                'ville' => $ecole->ville,
-                'niveau' => $ecole->niveau, // Montant total
-            ];
-    
-            // Ajouter les banques (nom uniquement)
-            for ($i = 1; $i <= 8; $i++) {
-                if ($ecole->{'nom_banque' . $i}) {
-                    $ecoleDetails['nom_banque' . $i] = $ecole->{'nom_banque' . $i};
-                }
-            }
+{
+    $ecole = Ecole::find($id);
 
-            return response()->json($ecoleDetails);
+    if ($ecole) {
+        Log::info('Niveau trouvé pour l\'école (ID: ' . $ecole->id . ') : ' . $ecole->niveau);
+        
+        // Stocker les données de l'école dans la session
+        Session::put('school_data', [
+            'nom_ecole' => $ecole->nom_ecole,
+            'telephone' => $ecole->telephone,
+            'ville' => $ecole->ville,
+            'niveau' => $ecole->niveau,
+            'banques' => [
+                $ecole->nom_banque1, $ecole->nom_banque2, $ecole->nom_banque3, // Ajoutez toutes les banques disponibles ici
+            ],
+        ]);
+
+        // Renvoie une réponse JSON avec l'URL de la vue correspondante
+        if ($ecole->niveau === 'primaire_secondaire') {
+            return response()->json(['view' => route('primaire')]);
         }
-    
-        return response()->json(null, 404);
+
+        return response()->json(['view' => route('universite')]);
     }
+
+    Log::error('École introuvable pour l\'ID : ' . $id);
+    return response()->json(['error' => 'École introuvable'], 404);
+}
+    
     public function login(){
         return view('Ecole.login');
     }
+    public function classe_primaire($id)
+    {
+        return view('Ecole.classe_primaire', ['id' => $id]);
+    }
+    
+    /*public function classe_uni(){
+        return view('Ecole.classe_universite');
+    }
+*/
+public function traitement_classe(Request $request, $id)
+{
+    try {
+        // Ajouter l'ID de l'école à la requête
+        $request->merge(['id_ecole' => $id]);
+
+        // Valider les données
+        $validatedData = $request->validate([
+            'id_ecole' => 'required|exists:ecoles,id',
+            'nom_classe.*' => 'required|string',
+            'indice.*' => 'required|string',
+            'nombre.*' => 'required|integer|min:1',
+            'montants.*' => 'nullable|string',
+            'totalite.*' => 'nullable|numeric',
+        ]);
+
+        // Extraction des données validées
+        $idEcole = $validatedData['id_ecole'];
+        $classes = $validatedData['nom_classe'];
+        $indices = $validatedData['indice'];
+        $nombres = $validatedData['nombre'];
+
+        // Transformation des montants en tableaux numériques
+        $montantsParClasse = [];
+        if (!empty($validatedData['montants'])) {
+            foreach ($validatedData['montants'] as $montants) {
+                $montantsParClasse[] = array_map('floatval', explode(',', $montants));
+            }
+        }
+
+        $totalites = $validatedData['totalite'] ?? [];
+
+        // Enregistrement des classes dans la base de données
+        foreach ($classes as $index => $nomClasse) {
+            $indiceDepart = $indices[$index];
+            $nombreClasses = $nombres[$index];
+            $montants = $montantsParClasse[$index] ?? [];
+            $totalite = $totalites[$index] ?? null;
+
+            $indiceASCII = ord($indiceDepart);
+
+            for ($i = 0; $i < $nombreClasses; $i++) {
+                $indiceClasse = chr($indiceASCII + $i);
+                $nomClasseComplet = $nomClasse . ' ' . $indiceClasse;
+
+                // Vérifier si la classe existe déjà pour cette école
+                $existingClasse = DB::table('classes')
+                    ->where('id_ecole', $idEcole)
+                    ->where('nom_classe', $nomClasseComplet)
+                    ->first();
+
+                if ($existingClasse) {
+                    // Si la classe existe déjà, retourner un message d'erreur
+                    return redirect()->back()->with('error', 
+                        'La classe "' . $nomClasseComplet . '" existe déjà pour cette école.'
+                    );
+                }
+
+                // Si la classe n'existe pas, procéder à l'insertion
+                DB::table('classes')->insert([
+                    'id_ecole' => $idEcole,
+                    'nom_classe' => $nomClasseComplet,
+                    'premiere_tranche' => $montants[0] ?? null,
+                    'deuxieme_tranche' => $montants[1] ?? null,
+                    'troisieme_tranche' => $montants[2] ?? null,
+                    'quatrieme_tranche' => $montants[3] ?? null,
+                    'cinquieme_tranche' => $montants[4] ?? null,
+                    'sixieme_tranche' => $montants[5] ?? null,
+                    'septieme_tranche' => $montants[6] ?? null,
+                    'huitieme_tranche' => $montants[7] ?? null,
+                    'totalite' => $totalite,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        // Retour en cas de succès
+        return redirect()->back()->with('success', 
+            'Classes ajoutées avec succès. Cliquez <a href="' . route('dashboard_ecole') . '" class="text-blue-500 font-bold">ici 🚀</a> pour accéder à votre tableau de bord.'
+        );
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Retour en cas d'erreur de validation
+        return redirect()->back()
+            ->withErrors($e->validator)
+            ->withInput();
+    } catch (\Exception $e) {
+        // Retour en cas d'erreur inattendue
+        return redirect()->back()
+            ->with('error', 'Une erreur est survenue lors du traitement : ' . $e->getMessage())
+            ->withInput();
+    }
 }
+
+}
+
+        
+    
+
+

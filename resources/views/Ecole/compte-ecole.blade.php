@@ -44,18 +44,19 @@
   </div>
   <!-- Titre principal -->
   <div class="text-center mt-20 text-white text-4xl font-bold">Formulaire d'Inscription des Écoles</div>
+  <div class="messages-container">
   @if(session('success'))
-    <div class="text-green-500 font-bold mb-4">
+    <div class="text-green-500 font-bold mb-4 p-3 bg-green-100 border border-green-300 rounded">
       {{ session('success') }}
     </div>
   @endif
   @if(session('error'))
-    <div class="text-red-500 font-bold mb-4">
+    <div class="text-red-500 font-bold mb-4 p-3 bg-red-100 border border-red-300 rounded">
       {{ session('error') }}
     </div>
   @endif
   @if ($errors->any())
-    <div class="text-red-500 font-bold mb-4">
+    <div class="text-red-500 font-bold mb-4 p-3 bg-red-100 border border-red-300 rounded">
       <ul>
         @foreach ($errors->all() as $error)
           <li>{{ $error }}</li>
@@ -63,6 +64,8 @@
       </ul>
     </div>
   @endif
+</div>
+
   <!-- Formulaire École et Banques Partenaires -->
   <div class="max-w-4xl mx-auto mt-10 p-6 border border-yellow-500 rounded-lg relative z-10 bg-gray-900 bg-opacity-75">
     <h2 class="text-xl font-semibold mb-4 text-white">Informations de l'École</h2>

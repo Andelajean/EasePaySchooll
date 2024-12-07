@@ -12,14 +12,53 @@
         <img src="{{ asset('image/logofin.jpg') }}" alt="Logo" class="logo-img">
     </div>
     <ul class="nav-links">
-        <li><a href="/">Accueil</a></li>
-        <li><a href="{{route('about')}}">Apropos</a></li>
-        <li><a href="{{route('paiement')}}">Paiement</a></li>
-        <li><a href="{{route('ecole.contact.admin')}}">Contact</a></li>
-        <li><a href="{{route('help')}}"> Aide</a></li>
-         <li><a href="{{route('login')}}">Se Connecter</a></li>
-        <li><a href="{{route('register')}}"> Créer Un Compte</a></li>
-    </ul>
+    <li>
+        <a href="/" class="
+            @if(Request::is('/')) bg-blue-500 text-white @endif p-2 rounded">
+            Accueil
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('about') }}" class="
+            @if(Request::is('about')) bg-blue-500 text-white @endif p-2 rounded">
+            À propos
+        </a>
+    </li>
+    <li>
+    <a href="{{ route('paiement') }}" class=" 
+        @if(Request::is('paiement') || Request::is('paiement/primaire') || Request::is('paiement/universite')) 
+            bg-blue-500 text-white 
+        @endif p-2 rounded">
+        Paiement
+    </a>
+</li>
+
+    <li>
+        <a href="{{ route('ecole.contact.admin') }}" class=" 
+            @if(Request::is('ecole/contact/admin')) bg-blue-500 text-white @endif p-2 rounded">
+            Contact
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('help') }}" class=" 
+            @if(Request::is('help')) bg-blue-500 text-white @endif p-2 rounded">
+            Aide
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('login') }}" class=" 
+            @if(Request::is('login')) bg-blue-500 text-white @endif p-2 rounded">
+            Se Connecter
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('register') }}" class=" 
+            @if(Request::is('register')) bg-blue-500 text-white @endif p-2 rounded">
+            Créer Un Compte
+        </a>
+    </li>
+</ul>
+
     <div class="search-bar">
         <form id="searchForm" action="{{ route('verifier.paiement') }}" method="GET">
             <input type="text" name="id_paiement" id="id_paiement" placeholder="Entrez le ID du paiement..." required>

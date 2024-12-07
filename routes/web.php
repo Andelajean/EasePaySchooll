@@ -116,6 +116,8 @@ Route::post('/traitement_compte_ecole',[EcoleController::class,'traitement_compt
 Route::get('/email/inscription/ecole',[EcoleController::class,'email_inscription_ecole'])->name('ecole.email.inscription');
 Route::get('/email/admin/inscription/ecole',[AdminController::class,'email_incription_ecole'])->name('admin.emial.inscription.ecole');
 Route::get('/paiement',[PaiementController::class,'formulaire_paiement'])->name('paiement');
+Route::get('/paiement/primaire',[PaiementController::class,'primaire'])->name('primaire');
+Route::get('/paiement/universite',[PaiementController::class,'universite'])->name('universite');
 Route::get('/search-school', [EcoleController::class, 'searchSchool']);
 Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
 Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
@@ -128,6 +130,10 @@ Route::post('/login-ecole', [AdminEcoleController::class, 'login'])->name('login
 Route::get('/help',[PageController::class,'help'])->name('help');
 Route::get('/about',[PageController::class,'about'])->name('about');
 Route::get('/index',[PageController::class,'index'])->name('index');
+
+Route::get('/ecole/compte/classe/primaire_secondaire/{id}', [EcoleController::class, 'classe_primaire'])->name('classe.primaire');
+Route::get('/ecole/compte/classe/universite/{id}', [EcoleController::class, 'classe_univ'])->name('classe.univ');
+Route::post('/ecole/compte/classe/traitement/{id}', [EcoleController::class, 'traitement_classe'])->name('traitement.classe');
 
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');

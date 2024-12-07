@@ -16,7 +16,12 @@ class PaiementController extends Controller
     {
         return view('Paiement.paiement');
     }
-
+    public function primaire(){
+        return view('Paiement.primaire');
+    }
+public function universite(){
+    return view('Paiement.universite');
+}
     public function payer(Request $request)
     {
 
@@ -127,7 +132,7 @@ class PaiementController extends Controller
         if ($request->has('niveau')) {
             $paiementData['niveau'] = $request->niveau;
             // Si le niveau est 'université', ajouter les champs spécifiques à l'université
-            if ($request->input('niveau') === 'université') {
+            if ($request->input('niveau') === 'universite') {
                 if ($request->has('filiere')) {
                     $paiementData['filiere'] = $request->filiere;
                 }
@@ -180,23 +185,23 @@ class PaiementController extends Controller
         curl_close($curl);
     
         // Simuler le succès du paiement pour cet exemple
-        $success = true; // Changez cela en fonction de votre logique
+        $success = true; // 
     
         if ($success) {
             // Créer le contenu du QR code avec tous les détails du paiement
             $qrContent = [
-                'ID Paiement' => $id_paiement,
-                'Nom École' => $request->nom_ecole,
-                'Nom Complet' => $request->nom_complet,
-                'Téléphone' => $request->telephone,
+                'ID_Paiement' => $id_paiement,
+                'Nom_Ecole' => $request->nom_ecole,
+                'Nom_Complet' => $request->nom_complet,
+                'Telephone' => $request->telephone,
                 'Ville' => $request->ville,
                 'Banque' => $request->banque,
                 'Classe' => $request->classe,
                 'Niveau' => $request->niveau,
-                'Filière' => $request->filiere,
-                'Niveau Université' => $request->niveau_universite,
+                'Filiere' => $request->filiere,
+                'Niveau_Universite' => $request->niveau_universite,
                 'Montant' => $request->montant,
-                'Détails' => $request->details,
+                'Details' => $request->details,
                 'date_paiement' => $request->date_paiement,
                 'heure_paiement' => $request->heure_paiement,
             ];

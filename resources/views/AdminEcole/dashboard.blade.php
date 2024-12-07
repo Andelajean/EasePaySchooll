@@ -211,7 +211,7 @@
                                             </tr>
                                             @forelse($paiementsAujourdhui as $paiement)
             <tr>
-                <td>{{ $paiement->nom_etudiant }}</td>
+                <td>{{ $paiement->nom_complet }}</td>
                 <td>{{ $paiement->classe }}</td>
                 <td>{{ $paiement->banque }}</td>
                 <td>{{ $paiement->created_at->format('d/m/Y') }}</td>
