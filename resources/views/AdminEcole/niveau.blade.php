@@ -123,10 +123,10 @@
         </div>
         <div class="col-sm-6 clearfix">
             <!-- Sélection de la Banque -->
-            <form action="{{ route('classe') }}" method="GET">
+            <form action="{{ route('niveau') }}" method="GET">
                 <div class="form-group">
                     <label for="classe">Choisissez un Niveau :</label>
-                    <select id="classe" name="classe" class="form-control" onchange="this.form.submit()">
+                    <select id="classe" name="classe" class="form-control">
                         @if ($classes->isNotEmpty())
                             @foreach ($classes as $classe)
                                 <option value="{{ $classe }}" {{ $classe == $classeSelectionnee ? 'selected' : '' }}>
@@ -138,11 +138,11 @@
                         @endif
                     </select>
                 </div>
-            </form>
+           
             <!-- Sélection de la Date -->
             <div class="form-group mb-2">
     <label for="date" class="mr-2">Date:</label>
-    <form action="{{ route('classe') }}" method="GET">
+    
         <input type="date" class="form-control" id="date" name="date" required>
         <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
     </form>
@@ -151,7 +151,7 @@
         </div>
         <!-- Sélection Période de Paiement -->
         <div class="col-sm-6 clearfix">
-            <form action="{{ route('classe') }}" method="GET">
+            <form action="{{ route('niveau') }}" method="GET">
                 <div class="form-group">
                     <label for="periode">Choisissez la Période de Paiement :</label>
                     <select id="periode" name="periode" class="form-control" onchange="this.form.submit()">

@@ -123,7 +123,7 @@
         </div>
         <div class="col-sm-6 clearfix">
             <!-- Sélection de la Banque -->
-            <form action="{{ route('classe') }}" method="GET">
+            <form action="{{ route('tranche') }}" method="GET">
                 <div class="form-group">
                     <label for="classe">Choisissez la Tranche :</label>
                     <select id="classe" name="classe" class="form-control" onchange="this.form.submit()">
@@ -142,7 +142,7 @@
             <!-- Sélection de la Date -->
             <div class="form-group mb-2">
     <label for="date" class="mr-2">Date:</label>
-    <form action="{{ route('classe') }}" method="GET">
+    <form action="{{ route('tranche') }}" method="GET">
         <input type="date" class="form-control" id="date" name="date" required>
         <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
     </form>
@@ -151,7 +151,7 @@
         </div>
         <!-- Sélection Période de Paiement -->
         <div class="col-sm-6 clearfix">
-            <form action="{{ route('classe') }}" method="GET">
+            <form action="{{ route('tranche') }}" method="GET">
                 <div class="form-group">
                     <label for="periode">Choisissez la Période de Paiement :</label>
                     <select id="periode" name="periode" class="form-control" onchange="this.form.submit()">
@@ -241,6 +241,8 @@
                     <!-- Bouton Imprimer -->
                     <button class="btn btn-primary" onclick="printTable()">Imprimer</button>
                 </div>
+
+                
 
                 <div class="market-status-table mt-4">
                     <div class="table-responsive">

@@ -134,13 +134,14 @@
                             <div class="dropdown-menu">
                                
                                 <a class="dropdown-item" href="{{route('logoute')}}">Se Deconnecter</a>
+                                <a class="dropdown-item" href="{{route('profil')}}">Profil</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         
-   <div class="main-content-inner">
+            <div class="main-content-inner">
                 <!-- sales report area start -->
                 <div class="sales-report-area mt-5 mb-5">
                     <div class="row">
@@ -187,7 +188,119 @@
                         </div>
                     </div>
                 </div>
-
+                
+                  <!-- row area start -->
+                  <div class="row">
+                    <!-- Live Crypto Price area start -->
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">deatails</h4>
+                                <div class="cripto-live mt-5">
+                                    <ul>
+                                        <li>
+                                            <div class="icon b">MT</div> Montant Total<span><i class="fa fa-long-arrow-up"></i>{{ number_format($montantTotal, 2) }} FCFA</span></li>
+                                        <li>
+                                            <div class="icon l">MA</div>Montant d'aujourd'hui<span><i class="fa fa-long-arrow-up"></i>{{ number_format($montantAujourdhui, 2) }} FCFA</span></li>
+                                        <li>
+                                            <div class="icon d">MH</div>Montant d'hier<span><i class="fa fa-long-arrow-up"></i>{{ number_format($montantHier, 2) }} FCFA</span></li>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Live Crypto Price area end -->
+                    <!-- trading history area start -->
+                    <div class="col-lg-8 mt-sm-30 mt-xs-30">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-center">
+                                    <h4 class="header-title">Montant Des Paiements</h4>
+                                    <div class="trd-history-tabs">
+                                        <ul class="nav" role="tablist">
+                                            <li>
+                                                <a class="active" data-toggle="tab" href="#buy_order" role="tab">classe</a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                    <form method="GET" action="{{ route('dashboard_ecole') }}">
+                <label for="classe">Choisir une classe :</label>
+                <select name="classe" id="classe" class="form-control" onchange="this.form.submit()">
+                    <option value="">-- Sélectionnez une classe --</option>
+                    @foreach($classes as $classe)
+                        <option value="{{ $classe->nom_classe }}" {{ request('classe') == $classe->nom_classe ? 'selected' : '' }}>
+                            {{ $classe->nom_classe }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+                                </div>
+                                <div class="trad-history mt-4">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="buy_order" role="tabpanel">
+                                            <div class="table-responsive">
+                                            @if($paiementsParClasse)
+                                                <table class="dbkit-table">
+                                                    <tr class="heading-td">
+                                                        <td>Nom_classe</td>
+                                                        <td>nombre paiement</td>
+                                                       
+                                                        <td>montant total</td>
+                                                        <td>1ere Tranche</td>
+                                                        <td>2eme Tranche</td>
+                                                        <td>3eme Tranche</td>
+                                                        <td>4eme Tranche</td>
+                                                        <td>5eme Tranche</td>
+                                                        <td>6eme Tranche</td>
+                                                        <td>7eme Tranche</td>
+                                                        <td>8eme Tranche</td>
+                                                        <td>Totalité</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ $paiementsParClasse['classe'] }}</td>
+                                                        <td>{{ $paiementsParClasse['nombre_paiements_classe'] }}</td>
+                                                        <td>{{ number_format($paiementsParClasse['montant_total_classe'], 2) }} FCFA</td>
+                                                        @foreach($paiementsParClasse['paiements_par_tranche'] as $tranche => $montant)
+                        <td>{{ number_format($montant, 2) }} FCFA</td>
+                        @endforeach
+                                                    </tr>
+                                                   
+                                                </table>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="sell_order" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <table class="dbkit-table">
+                                                    <tr class="heading-td">
+                                                        <td>Trading ID</td>
+                                                        <td>Time</td>
+                                                        <td>Status</td>
+                                                        <td>Amount</td>
+                                                        <td>Last Trade</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>8964978</td>
+                                                        <td>4.00 AM</td>
+                                                        <td>Pending</td>
+                                                        <td>$445.90</td>
+                                                        <td>$094545.090</td>
+                                                    </tr>
+                                                   
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- trading history area end -->
+                </div>
+                <!-- row area end -->
               
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
@@ -203,22 +316,24 @@
                                                 <td class="mv-icon">Nom Etudiant/Eleve</td>
                                                 <td class="coin-name">Classe</td>
                                                 <td class="buy">Banque de Paiement</td>
+                                                <td class="sell">Filière</td>
+                                                <td class="trends">Niveau</td>
                                                 <td class="sell">Date Paiement</td>
                                                 <td class="trends">Heure Paiement</td>
-                                                <td class="attachments">Filière</td>
-                                                <td class="stats-chart">Niveau</td>
-                                                <td class="stats-chart">Details</td>
+                                                <td class ="trends"> Detail </td>
+                                               
                                             </tr>
                                             @forelse($paiementsAujourdhui as $paiement)
             <tr>
                 <td>{{ $paiement->nom_complet }}</td>
                 <td>{{ $paiement->classe }}</td>
                 <td>{{ $paiement->banque }}</td>
+                <td>{{ $paiement->filiere }}</td>
+                <td>{{ $paiement->niveau_universite }}</td>
                 <td>{{ $paiement->created_at->format('d/m/Y') }}</td>
                 <td>{{ $paiement->created_at->format('H:i') }}</td>
-                <td>{{ $paiement->filiere }}</td>
-                <td>{{ $paiement->niveau }}</td>
-                   <td>{{ $paiement->details }}</td>
+                <td>{{$paiement->details}}
+               
             </tr>
             @empty
             <tr>

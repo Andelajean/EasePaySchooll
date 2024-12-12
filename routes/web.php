@@ -137,6 +137,9 @@ Route::post('/ecole/compte/classe/traitement/{id}', [EcoleController::class, 'tr
 
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
+
+    Route::get('ecole/dashboard/profil', [AdminEcoleController::class, 'profil'])->name('profil');
+
     Route::get('/paiement/ecole/classe', [AdminEcoleController::class, 'classe'])->name('classe');
     Route::get('/paiement/ecole/tranche', [AdminEcoleController::class, 'tranche'])->name('tranche');
     Route::get('/paiement/ecole/niveau', [AdminEcoleController::class, 'niveau'])->name('niveau');

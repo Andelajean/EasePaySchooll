@@ -99,8 +99,85 @@ document.getElementById('montant').addEventListener('input', function() {
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-
+    const currentTime = `${hours}:${minutes}`;
+    document.getElementById('heure_paiement').value = currentTime;
     const currentDateTime = `${year}-${month}-${day}-${hours}:${minutes}`;
     document.getElementById('date_paiement').value = currentDateTime;
 });
 
+
+
+//
+document.addEventListener('DOMContentLoaded', function () {
+    const classeSelect = document.getElementById('classe');
+    const detailsSelect = document.getElementById('details');
+    const montantInput = document.getElementById('montant');
+    const montantTotalInput = document.getElementById('montant_total');
+
+    // Fonction pour calculer le montant total
+    function calculateTotalAmount(montant) {
+        let montantTotal;
+        if (montant <= 50000) {
+            montantTotal = montant + 500;
+        } else {
+            montantTotal = montant + 1000;
+        }
+        montantTotalInput.value = montantTotal.toFixed(2); // Afficher avec deux décimales
+    }
+
+    // Gestion du changement de classe
+    classeSelect.addEventListener('change', function () {
+        const selectedOption = classeSelect.options[classeSelect.selectedIndex];
+        const montants = JSON.parse(selectedOption.getAttribute('data-montants') || '{}');
+
+        // Réinitialiser les tranches
+        detailsSelect.innerHTML = '<option value="" disabled selected>-- Sélectionnez une tranche --</option>';
+        Object.keys(montants).forEach(tranche => {
+            detailsSelect.innerHTML += `<option value="${tranche}" data-montant="${montants[tranche]}">${tranche.replace('_', ' ')}</option>`;
+        });
+
+        montantInput.value = ''; // Réinitialiser le montant
+        montantTotalInput.value = ''; // Réinitialiser le montant total
+    });
+
+    // Gestion du changement de tranche
+    detailsSelect.addEventListener('change', function () {
+        const selectedOption = detailsSelect.options[detailsSelect.selectedIndex];
+        const montant = parseFloat(selectedOption.getAttribute('data-montant')) || 0;
+        montantInput.value = montant; // Afficher le montant de la tranche
+
+        // Calculer le montant total
+        calculateTotalAmount(montant);
+    });
+});
+
+
+//empecher le clic droit
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault(); // Empêche l'affichage du menu contextuel
+});
+document.addEventListener('keydown', function (e) {
+    // Empêcher certains raccourcis
+    if (e.ctrlKey || e.metaKey) {
+        // Ctrl + S
+        if (e.key === 's') {
+            e.preventDefault();
+        }
+        // Ctrl + U
+        if (e.key === 'u') {
+            e.preventDefault();
+        }
+        // F12 (dev tools)
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        if (e.key === 'r') {
+            e.preventDefault();
+        }
+    }
+    
+    // Empêcher la touche F12 (pour les outils de développeur) et F5 (recharger la page)
+    if (e.key === 'F12' || e.key === 'F5') {
+        e.preventDefault();
+    }
+});

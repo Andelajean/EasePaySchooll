@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use App\Models\Paiement;
+use App\Models\Classe;
 use Illuminate\Support\Facades\DB;
 
 class AdminEcoleController extends Controller
@@ -47,72 +48,123 @@ public function logout(Request $request)
     $request->session()->regenerateToken();
 
     // Rediriger vers la page de connexion avec un message de déconnexion réussie
-    return redirect()->route('home')->with('success', 'Déconnexion réussie!');
+    return redirect()->route('login.ecole')->with('success', 'Déconnexion réussie!');
 
-}
+} 
+ public function profil(){
+    
+    $ecole = Session::get('ecole');
+    if ($ecole) {
+        $compte = Ecole::where('id', $ecole->id)->first();
+        $classe = Classe::where('id_ecole', $ecole->id)->get();
+        return view('Ecole.profil', compact('compte', 'classe'));
+    }
+    return redirect()->route('login.ecole');
+    
+ }
 
-public function dashboard() {
+public function dashboard(Request $request)
+{
     // Récupérer l'école connectée depuis la session
     $ecole = Session::get('ecole');
 
-    // Si l'école est connectée
     if ($ecole) {
-        // Vérifier si le niveau de l'école est "université"
-        if ($ecole->niveau === 'universite') {
-            // Récupérer le nombre de paiements de l'école connectée
-            $nombrePaiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::today())
-                ->count(); // Nombre de paiements d'aujourd'hui
+        $nomEcole = $ecole->nom_ecole;
 
-            $nombrePaiementsHier = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::yesterday())
-                ->count(); // Nombre de paiements d'hier
+        // Données générales
+        $nombrePaiementsAujourdhui = Paiement::where('nom_ecole', $nomEcole)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
 
-            $totalNombrePaiements = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->count(); // Total des paiements de l'école
+        $nombrePaiementsHier = Paiement::where('nom_ecole', $nomEcole)
+            ->whereDate('created_at', Carbon::yesterday())
+            ->count();
 
-            // Récupérer tous les paiements d'aujourd'hui
-            $paiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::today())
+        $totalNombrePaiements = Paiement::where('nom_ecole', $nomEcole)->count();
+
+        $montantAujourdhui = Paiement::where('nom_ecole', $nomEcole)
+            ->whereDate('created_at', Carbon::today())
+            ->sum('montant');
+
+        $montantHier = Paiement::where('nom_ecole', $nomEcole)
+            ->whereDate('created_at', Carbon::yesterday())
+            ->sum('montant');
+
+        $montantTotal = Paiement::where('nom_ecole', $nomEcole)->sum('montant');
+
+        // Récupérer les classes de l'école
+        $classes = Classe::where('id_ecole', $ecole->id)->get();
+
+        // Gestion de la classe choisie
+        $classeChoisie = $request->input('classe');
+        $paiementsParClasse = null;
+
+        if ($classeChoisie) {
+            // Paiements de la classe choisie
+            $paiements = Paiement::where('nom_ecole', $nomEcole)
+                ->where('classe', $classeChoisie)
                 ->get();
 
-            // Passer les données à la vue
-            return view('AdminEcole.dashboard', [
-                'nombrePaiementsAujourdhui' => $nombrePaiementsAujourdhui,
-                'nombrePaiementsHier' => $nombrePaiementsHier,
-                'totalNombrePaiements' => $totalNombrePaiements,
-                'paiementsAujourdhui' => $paiementsAujourdhui, // Paiements à afficher dans le tableau
-            ]);
-        } else {
-            // Si le niveau de l'école n'est pas "université", rediriger vers une autre vue avec les mêmes données
-            $nombrePaiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::today())
-                ->count(); // Nombre de paiements d'aujourd'hui
+            $paiementsParTranche = [
+                'premiere_tranche' => $paiements->where('details', 'premiere_tranche')->sum('montant'),
+                'deuxieme_tranche' => $paiements->where('details', 'deuxieme_tranche')->sum('montant'),
+                'troisieme_tranche' => $paiements->where('details', 'troisieme_tranche')->sum('montant'),
+                'quatrieme_tranche' => $paiements->where('details', 'quatrieme_tranche')->sum('montant'),
+                'cinquieme_tranche' => $paiements->where('details', 'cinquieme_tranche')->sum('montant'),
+                'sixieme_tranche' => $paiements->where('details', 'sixieme_tranche')->sum('montant'),
+                'septieme_tranche' => $paiements->where('details', 'septieme_tranche')->sum('montant'),
+                'huitieme_tranche' => $paiements->where('details', 'huitieme_tranche')->sum('montant'),
+                'totalite' => $paiements->where('details', 'toatlite')->sum('montant'),
+                // Ajoutez d'autres tranches si nécessaire
+            ];
 
-            $nombrePaiementsHier = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::yesterday())
-                ->count(); // Nombre de paiements d'hier
-
-            $totalNombrePaiements = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->count(); // Total des paiements de l'école
-
-            $paiementsAujourdhui = Paiement::where('nom_ecole', $ecole->nom_ecole)
-                ->whereDate('created_at', Carbon::today())
-                ->get();
-
-            // Rediriger vers une autre vue (par exemple 'AdminEcole.niveaux_inferieurs') avec les mêmes informations
-            return view('Primaire.dashboard_primaire', [
-                'nombrePaiementsAujourdhui' => $nombrePaiementsAujourdhui,
-                'nombrePaiementsHier' => $nombrePaiementsHier,
-                'totalNombrePaiements' => $totalNombrePaiements,
-                'paiementsAujourdhui' => $paiementsAujourdhui, // Paiements à afficher dans le tableau
-            ]);
+            $paiementsParClasse = [
+                'classe' => $classeChoisie,
+                'paiements_par_tranche' => $paiementsParTranche,
+                'montant_total_classe' => $paiements->sum('montant'),
+                'nombre_paiements_classe' => $paiements->count(),
+            ];
         }
+
+        // Paiements d'aujourd'hui
+        $paiementsAujourdhui = Paiement::where('nom_ecole', $nomEcole)
+            ->whereDate('created_at', Carbon::today())
+            ->get();
+              
+          if($ecole->niveau==='universite'){
+            // Retourner les données à la vue
+        return view('AdminEcole.dashboard', [
+            'nombrePaiementsAujourdhui' => $nombrePaiementsAujourdhui,
+            'nombrePaiementsHier' => $nombrePaiementsHier,
+            'totalNombrePaiements' => $totalNombrePaiements,
+            'montantAujourdhui' => $montantAujourdhui,
+            'montantHier' => $montantHier,
+            'montantTotal' => $montantTotal,
+            'classes' => $classes,
+            'paiementsParClasse' => $paiementsParClasse,
+            'paiementsAujourdhui' => $paiementsAujourdhui,
+        ]);
+          }
+
+        // Retourner les données à la vue
+        return view('Primaire.dashboard_primaire', [
+            'nombrePaiementsAujourdhui' => $nombrePaiementsAujourdhui,
+            'nombrePaiementsHier' => $nombrePaiementsHier,
+            'totalNombrePaiements' => $totalNombrePaiements,
+            'montantAujourdhui' => $montantAujourdhui,
+            'montantHier' => $montantHier,
+            'montantTotal' => $montantTotal,
+            'classes' => $classes,
+            'paiementsParClasse' => $paiementsParClasse,
+            'paiementsAujourdhui' => $paiementsAujourdhui,
+        ]);
     }
 
     // Rediriger vers la page de connexion si l'école n'est pas connectée
     return redirect()->route('login.ecole');
 }
+
+
 
 public function classe(Request $request)
 {
@@ -253,7 +305,7 @@ public function niveau(Request $request)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->distinct()
       ->get()
-      ->pluck('niveau');
+      ->pluck('niveau_universite');
 
   // Classe (banque) sélectionnée
   $classeSelectionnee = $request->query('classe', $classes->first());

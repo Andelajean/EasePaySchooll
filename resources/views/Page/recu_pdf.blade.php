@@ -56,6 +56,7 @@
             <h2>Informations de l'école</h2>
             <p><strong>Nom de l'école :</strong> {{ $nom_ecole }}</p>
             <p><strong>Ville :</strong> {{ $ville }}</p>
+            
             <p><strong>Téléphone :</strong> {{ $telephone }}</p>
         </div>
 

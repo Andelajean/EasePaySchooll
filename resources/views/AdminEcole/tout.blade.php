@@ -228,7 +228,7 @@
                                     <td>{{ $paiement->classe }}</td>
                                     <td>{{ $paiement->banque }}</td>
                                     <td>{{ $paiement->date_paiement }}</td>
-                                    <td>{{ $paiement->heure_paiement }}</td>
+                                        <td>{{ $paiement->heure_paiement }}</td>
                                     <td>{{ $paiement->filiere }}</td>
                                     <td>{{ $paiement->niveau_universite }}</td>
                                 </tr>

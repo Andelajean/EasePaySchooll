@@ -62,39 +62,65 @@
 
   <div class="max-w-3xl mx-auto p-6">
    
-
-    <form id="schoolForm"  method="POST" action="{{ route('payer') }}">
+  <form id="schoolForm" method="POST" action="{{ route('payer') }}">
     @csrf
     <!-- Section 1: Informations sur l'école -->
     <h2 class="text-lg font-bold mb-4">Informations sur l'école</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    <div>
+        <div>
             <label for="nom_ecole">Nom de l'école</label>
             <input type="text" id="nom_ecole" name="nom_ecole" value="{{ session('school_data.nom_ecole') }}" class="border p-2 w-full" readonly>
         </div>
         <div>
             <label for="telephone">Téléphone</label>
-            <input type="text" id="telephone" name="telephone"value="{{ session('school_data.telephone') }}" class="border p-2 w-full" readonly>
+            <input type="text" id="telephone" name="telephone" value="{{ session('school_data.telephone') }}" class="border p-2 w-full" readonly>
         </div>
         <div>
             <label for="ville">Ville</label>
             <input type="text" id="ville" name="ville" value="{{ session('school_data.ville') }}" class="border p-2 w-full" readonly>
         </div>
-        <div  class="hidden">
-            <label for="ville">Niveau</label>
-            <input type="text" id="niveau" name="niveau" value="{{ session('school_data.niveau') }}" readonly>
+        <div>
+            <label for="banque">Banque</label>
+            <select id="banque" name="banque" class="border p-2 w-full" required>
+                <option value="" disabled selected>-- Sélectionnez une banque --</option>
+                @foreach(session('school_data.banques', []) as $banque)
+                    <option value="{{ $banque }}">{{ $banque }}</option>
+                @endforeach
+            </select>
         </div>
-         <div>
-         <label for="ville">Banque</label>
-         <select id="banque" name="banque" class="border p-2 w-full">
-    <option value="" disabled selected>Veuillez choisir</option> <!-- Option "Veuillez choisir" -->
-    @foreach(session('school_data.banques', []) as $banque)
-        <option value="{{ $banque }}">{{ $banque }}</option>
-    @endforeach
-</select>
-
-         </div>
     </div>
+
+    <!-- Section 2: Classe -->
+    <h2 class="text-lg font-bold mb-4">Sélection de la classe</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+            <label for="classe">Classe</label>
+            <select id="classe" name="classe" class="border p-2 w-full" required>
+                <option value="" disabled selected>-- Sélectionnez une classe --</option>
+                @foreach(session('school_data.classes', []) as $classe)
+                    <option value="{{ $classe['nom_classe'] }}" data-montants='@json($classe['montants'])'>
+                        {{ $classe['nom_classe'] }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="details">Détails</label>
+            <select id="details" name="details" class="border p-2 w-full" required>
+                <option value="" disabled selected>-- Sélectionnez une tranche --</option>
+            </select>
+        </div>
+        <div>
+            <label for="montant">Montant</label>
+            <input type="text" id="montant" name="montant" class="border p-2 w-full" readonly>
+        </div>
+        <div>
+            <label for="montant_total">Montant Total</label>
+            <input type="text" id="montant_total" name="montant_total" class="border p-2 w-full" value="{{ session('school_data.classes.0.montants.total', '') }}" readonly>
+        
+    </div>
+    </div>
+
 
     <!-- Section 2: Informations de l'étudiant -->
     <h2 class="text-lg font-bold mb-4">Informations de l'étudiant</h2>
@@ -104,53 +130,27 @@
             <input type="text" id="nom_complet" name="nom_complet" class="border p-2 w-full" placeholder="Exemple : NGA NGA Benoit" required>
         </div>
         <div>
-            <label for="classe">Classe</label>
-            <input type="text" id="classe" name="classe" class="border p-2 w-full" placeholder="Exemple : CM2, GL3D ..." required>
+            <label for="motif">Motif</label>
+            <input type="text" id="motif" name="motif" class="border p-2 w-full" value="Frais de scolarité" readonly>
         </div>
-        
     </div>
 
     <!-- Section 3: Paiement -->
     <h2 class="text-lg font-bold mb-4">Détails du paiement</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div>
-            <label for="montant">Montant</label>
-            <input type="text" id="montant" name="montant" class="border p-2 w-full" placeholder="Exemple : 100 000" required>
-        </div>
-        <div>
-            <label for="montant_total">Montant Total</label>
-            <input type="text" id="montant_total" name="montant_total" class="border p-2 w-full" readonly>
-        </div>
-        <div>
-            <label for="motif">Motif</label>
-            <input type="text" id="motif" name="motif" class="border p-2 w-full" value="Frais de scolarité" readonly>
-        </div>
-        <div>
-    <label for="details">
-        Détails 
-        <span class="text-red-700">*indiquez s'il s'agit d'une tranche de la scolarité ou de la totalité</span>
-    </label>
-    <select id="details" name="details" class="border p-2 w-full" required>
-        <option value="" disabled selected>-- Sélectionnez une option --</option>
-        <option value="premiere-tranche">Première tranche</option>
-        <option value="deuxieme-tranche">Deuxième tranche</option>
-         <option value="troisieme-tranche">Troisième tranche</option>
-        <option value="quatrieme-tranche">Quatrième tranche</option>
-         <option value="cinquieme-tranche">Cinquième tranche</option>
-        <option value="sixieme-tranche">Sixième tranche</option>
-         <option value="septieme-tranche">Septième tranche</option>
-        <option value="huitieme-tranche">Huitième tranche</option>
-        <option value="totalite">Totalité</option>
-    </select>
-</div>
-
+   
         <div>
             <label for="date_paiement">Date de paiement</label>
             <input type="date-local" id="date_paiement" name="date_paiement" class="border p-2 w-full" value="{{ date('Y-m-d\TH:i') }}" readonly>
         </div>
         <div>
             <label for="heure_paiement">Heure de paiement</label>
-            <input type="text" id="heure_paiement" name="heure_paiement" class="border p-2 w-full" value="{{ date('H:i') }}" readonly>
+            <input type="time-local" id="heure_paiement" name="heure_paiement" class="border p-2 w-full" value="{{ date('H:i') }}" readonly>
+        </div>
+       
+        <div>
+            <label for="heure_paiement"  class="hidden">Heure de paiement</label>
+            <input type="niveau" id="niveau" name="niveau" class="hidden" value="{{ session('school_data.niveau') }}" readonly>
         </div>
     </div>
 

@@ -130,36 +130,67 @@ class EcoleController extends Controller
     
         return response()->json([]);
     }
-    
     public function getSchoolDetails($id)
 {
-    $ecole = Ecole::find($id);
+    $ecole = Ecole::with('classes')->find($id); // Charge l'école avec ses classes
 
     if ($ecole) {
         Log::info('Niveau trouvé pour l\'école (ID: ' . $ecole->id . ') : ' . $ecole->niveau);
-        
+
+        // Filtrer les banques non nulles
+        $banques = collect([
+            $ecole->nom_banque1,
+            $ecole->nom_banque2,
+            $ecole->nom_banque3,
+            $ecole->nom_banque4,
+            $ecole->nom_banque5,
+            $ecole->nom_banque6,
+            $ecole->nom_banque7,
+            $ecole->nom_banque8,
+        ])->filter()->values();
+
+        // Préparer les données des classes avec montants dynamiques
+        $classes = $ecole->classes->map(function ($classe) {
+            $tranches = collect([
+                'premiere_tranche' => $classe->premiere_tranche,
+                'deuxieme_tranche' => $classe->deuxieme_tranche,
+                'troisieme_tranche' => $classe->troisieme_tranche,
+                'quatrieme_tranche' => $classe->quatrieme_tranche,
+                'cinquieme_tranche' => $classe->cinquieme_tranche,
+                'sixieme_tranche' => $classe->sixieme_tranche,
+                'septieme_tranche' => $classe->septieme_tranche,
+                'huitieme_tranche' => $classe->huitieme_tranche,
+                'totalite' => $classe->totalite,
+            ])->filter()->toArray();
+
+            return [
+                'nom_classe' => $classe->nom_classe,
+                'montants' => $tranches,
+            ];
+        });
+
         // Stocker les données de l'école dans la session
         Session::put('school_data', [
             'nom_ecole' => $ecole->nom_ecole,
             'telephone' => $ecole->telephone,
             'ville' => $ecole->ville,
             'niveau' => $ecole->niveau,
-            'banques' => [
-                $ecole->nom_banque1, $ecole->nom_banque2, $ecole->nom_banque3, // Ajoutez toutes les banques disponibles ici
-            ],
+            'banques' => $banques,
+            'classes' => $classes,
         ]);
 
-        // Renvoie une réponse JSON avec l'URL de la vue correspondante
-        if ($ecole->niveau === 'primaire_secondaire') {
-            return response()->json(['view' => route('primaire')]);
-        }
-
-        return response()->json(['view' => route('universite')]);
+        return response()->json([
+            'view' => $ecole->niveau === 'primaire_secondaire' ? route('primaire') : route('universite'),
+            'banques' => $banques,
+            'classes' => $classes,
+        ]);
     }
 
     Log::error('École introuvable pour l\'ID : ' . $id);
     return response()->json(['error' => 'École introuvable'], 404);
 }
+
+    
     
     public function login(){
         return view('Ecole.login');

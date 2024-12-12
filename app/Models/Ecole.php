@@ -24,5 +24,4 @@ class Ecole extends Model
 {
     return $this->hasMany(Classe::class, 'id_ecole', 'id');
 }
-
 }
