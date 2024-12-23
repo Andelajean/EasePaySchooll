@@ -51,7 +51,7 @@
     <!-- Titre principal -->
     <header class="text-center py-8">
       <h1 class="text-4xl font-bold text-gray-900" id="messa"></span> </h1>
-      <p class="mt-2 text-lg text-white" id="messag"></p>
+      <p class="mt-2 text-lg text-white" id="mess"></p>
     </header>
 
 <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

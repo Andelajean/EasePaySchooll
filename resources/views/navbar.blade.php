@@ -64,7 +64,7 @@
             <input type="text" name="id_paiement" id="id_paiement" placeholder="Entrez le ID du paiement..." required>
             <button type="submit">Vérifier</button>
         </form>
-        <div class="hover-text">Entrez le ID du paiement pour le vérifier</div>
+        
     </div>
     <div class="burger" id="burger">
         <div class="line"></div>

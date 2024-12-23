@@ -78,32 +78,24 @@ $(document).ready(function() {
 });
 
 
-//empecher le clic droit
+// Empêcher le clic droit
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault(); // Empêche l'affichage du menu contextuel
 });
+
+// Empêcher certaines combinaisons de touches
 document.addEventListener('keydown', function (e) {
-    // Empêcher certains raccourcis
+    const key = e.key.toLowerCase(); // Normalise la touche en minuscule
+
+    // Empêcher certains raccourcis clavier
     if (e.ctrlKey || e.metaKey) {
-        // Ctrl + S
-        if (e.key === 's') {
-            e.preventDefault();
-        }
-        // Ctrl + U
-        if (e.key === 'u') {
-            e.preventDefault();
-        }
-        // F12 (dev tools)
-        if (e.key === 'F12') {
-            e.preventDefault();
-        }
-        if (e.key === 'r') {
+        if (key === 's' || key === 'u' || key === 'r') {
             e.preventDefault();
         }
     }
-    
-    // Empêcher la touche F12 (pour les outils de développeur) et F5 (recharger la page)
-    if (e.key === 'F12' || e.key === 'F5') {
+
+    // Empêcher les touches spécifiques (F12, F5)
+    if (key === 'f12' || key === 'f5') {
         e.preventDefault();
     }
 });
