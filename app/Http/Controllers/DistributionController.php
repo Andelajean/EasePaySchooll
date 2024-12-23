@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class DistributionController extends Controller
 {
     public function polo(Request $request){
+        try{
         // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -32,9 +33,13 @@ $paiement = DB::table('paiements')
 ->where('classe',$classeSelectionnee)
 ->whereNotIn('nom_complet', $etudiantsAvecPolo)
 ->paginate(50); 
-return view('Distribution.distribuer_polo', compact('classes','paiement'));
+return view('Distribution.distribuer_polo', compact('classes','paiement'));}
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
     }
     public function badge(Request $request){
+        try{
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -55,10 +60,14 @@ return view('Distribution.distribuer_polo', compact('classes','paiement'));
  ->where('classe',$classeSelectionnee)
  ->whereNotIn('nom_complet', $etudiantsAvecPolo)
  ->paginate(50); 
- return view('Distribution.distribuer_badge', compact('classes','paiement'));
+ return view('Distribution.distribuer_badge', compact('classes','paiement'));}
+ catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
 
     }
     public function polo_recu(Request $request){
+        try{
         // Vérifier si l'école est bien présente dans la session
         $ecole = Session::get('ecole');
         if (!$ecole) {
@@ -77,10 +86,14 @@ return view('Distribution.distribuer_polo', compact('classes','paiement'));
     ->where('nom_ecole', $ecole->nom_ecole)
     ->where('classe',$classeSelectionnee)
     ->paginate(50); 
-    return view('Distribution.polo', compact('classes','paiement'));
+    return view('Distribution.polo', compact('classes','paiement'));}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
    
        }
     public function badge_recu(Request $request){
+        try{
         // Vérifier si l'école est bien présente dans la session
         $ecole = Session::get('ecole');
         if (!$ecole) {
@@ -99,11 +112,16 @@ return view('Distribution.distribuer_polo', compact('classes','paiement'));
     ->where('nom_ecole', $ecole->nom_ecole)
     ->where('classe',$classeSelectionnee)
     ->paginate(50); 
-    return view('Distribution.badge', compact('classes','paiement'));
+    return view('Distribution.badge', compact('classes','paiement'));}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
    
        }
     public function distribuer_polo($id_paiement)
+    
 {
+    try{
     // Récupérer les informations du paiement par son id
     $paiement = DB::table('paiements')->where('id_paiement', $id_paiement)->first();
 
@@ -122,10 +140,14 @@ return view('Distribution.distribuer_polo', compact('classes','paiement'));
         'niveau_université' => $paiement->niveau_universite,
     ]);
 
-    return redirect()->back()->with('success', 'Polo distribué avec succès.');
+    return redirect()->back()->with('success', 'Polo distribué avec succès.');}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
 }
 public function distribuer_badge($id_paiement)
 {
+    try{
     // Récupérer les informations du paiement par son id
     $paiement = DB::table('paiements')->where('id_paiement', $id_paiement)->first();
     // Enregistrer les informations dans la table polos
@@ -139,10 +161,14 @@ public function distribuer_badge($id_paiement)
         'niveau_université' => $paiement->niveau_universite,
     ]);
 
-    return redirect()->back()->with('success', 'badge distribué avec succès.');
+    return redirect()->back()->with('success', 'badge distribué avec succès.');}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
 }
 public function search_polo(Request $request)
 {
+    try{
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -157,11 +183,15 @@ public function search_polo(Request $request)
 
     // Retour des résultats sous forme de JSON
     return response()->json($students);
+    }
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
 }
 
 // Méthode pour récupérer les détails d'un élève spécifique
 public function show_polo($id)
-{
+{  try{
     // Recherche de l'élève par ID
     $student = Polo::find($id);
 
@@ -172,10 +202,13 @@ public function show_polo($id)
 
     // Retour des détails de l'élève sous forme de JSON
     return response()->json($student);
+}catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
 }
 public function search_badge(Request $request)
 {
-
+try{
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -189,12 +222,16 @@ public function search_badge(Request $request)
                       -> where('nom_etudiant', 'LIKE', '%' . $query . '%')->get(['id', 'nom_etudiant']);
 
     // Retour des résultats sous forme de JSON
-    return response()->json($students);
+    return response()->json($students);}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
 }
 
 // Méthode pour récupérer les détails d'un élève spécifique
 public function show_badge($id)
 {
+    try{
     // Recherche de l'élève par ID
     $student =Badge::find($id);
 
@@ -205,5 +242,8 @@ public function show_badge($id)
 
     // Retour des détails de l'élève sous forme de JSON
     return response()->json($student);
+}
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
 }

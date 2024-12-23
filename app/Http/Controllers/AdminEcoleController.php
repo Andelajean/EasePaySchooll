@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class AdminEcoleController extends Controller
 {
     public function login(Request $request)
-{
+{  try{
     // Valider les données du formulaire
     $request->validate([
         'email' => 'required|email',
@@ -35,9 +35,13 @@ class AdminEcoleController extends Controller
         'email' => 'Les informations de connexion sont incorrectes.',
     ])->withInput();
 }
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 public function logout(Request $request)
-{
+{ try{
     // Supprimer les données de l'école de la session
     Session::forget('ecole');
 
@@ -49,22 +53,30 @@ public function logout(Request $request)
 
     // Rediriger vers la page de connexion avec un message de déconnexion réussie
     return redirect()->route('login.ecole')->with('success', 'Déconnexion réussie!');
+}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
 
 } 
  public function profil(){
-    
+    try{
     $ecole = Session::get('ecole');
     if ($ecole) {
         $compte = Ecole::where('id', $ecole->id)->first();
         $classe = Classe::where('id_ecole', $ecole->id)->get();
         return view('Ecole.profil', compact('compte', 'classe'));
     }
-    return redirect()->route('login.ecole');
+    return redirect()->route('login.ecole');}
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
     
  }
 
 public function dashboard(Request $request)
 {
+    try{
     // Récupérer l'école connectée depuis la session
     $ecole = Session::get('ecole');
 
@@ -163,11 +175,15 @@ public function dashboard(Request $request)
     // Rediriger vers la page de connexion si l'école n'est pas connectée
     return redirect()->route('login.ecole');
 }
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 
 
 public function classe(Request $request)
-{
+{ try{
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -227,9 +243,13 @@ public function classe(Request $request)
       return view('Primaire.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
 }
+  catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 public function banque(Request $request)
-{
+{ try{
     $ecole = Session::get('ecole');
     if (!$ecole) {
         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
@@ -289,10 +309,14 @@ public function banque(Request $request)
       return view('Primaire.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
 }
+  catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 
 public function niveau(Request $request)
-{
+{ try{
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -348,9 +372,13 @@ public function niveau(Request $request)
 
     return view('AdminEcole.niveau', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 public function filiere(Request $request)
-{
+{  try{
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -406,8 +434,12 @@ public function filiere(Request $request)
 
     return view('AdminEcole.filiere',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
+}
 public function tout(Request $request)
-{
+{ try{
     // Récupérer l'école actuellement connectée
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -459,9 +491,13 @@ public function tout(Request $request)
         return view('Primaire.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     }
 }
+    catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+    }
+}
 
 public function tranche(Request $request)
-{
+{ try{
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -520,10 +556,14 @@ public function tranche(Request $request)
   else{
     return view('Primaire.tranche',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
+}
+  catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
    
 }
 public function banque_classe(Request $request)
-{
+{ try{
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -598,9 +638,14 @@ public function banque_classe(Request $request)
 
   }
 }
+  catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 public function classe_tranche(Request $request)
 {
+    try {
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -675,111 +720,125 @@ public function classe_tranche(Request $request)
 
  }
 }
-
+catch (\Exception $e) {
+    return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+}
+}
 
 public function filiere_classe(Request $request)
 {
-    // Vérifier si l'école est bien présente dans la session
-    $ecole = Session::get('ecole');
-    if (!$ecole) {
-        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    try {
+        // Vérifier si l'école est bien présente dans la session
+        $ecole = Session::get('ecole');
+        if (!$ecole) {
+            return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+        }
+
+        // Récupérer toutes les classes distinctes (banques) associées à cette école
+        $classes = DB::table('paiements')
+            ->select('classe')
+            ->where('nom_ecole', $ecole->nom_ecole)
+            ->distinct()
+            ->get()
+            ->pluck('classe');
+
+        $banque = DB::table('paiements')
+            ->select('filiere')
+            ->where('nom_ecole', $ecole->nom_ecole)
+            ->distinct()
+            ->get()
+            ->pluck('filiere');
+
+        // Classe (banque) sélectionnée
+        $classeSelectionnee = $request->query('classe', $classes->first());
+        $banqueSelectionnee = $request->query('banque', $banque->first());
+        $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
+        $today = Carbon::today();
+        $yesterday = Carbon::yesterday();
+
+        // Paiements pour aujourd'hui
+        $paiementsAujourdhui = DB::table('paiements')
+            ->where('classe', $classeSelectionnee)
+            ->where('filiere', $banqueSelectionnee)
+            ->where('nom_ecole', $ecole->nom_ecole)
+            ->where('created_at', '>=', $today)
+            ->paginate(50);
+
+        // Paiements pour hier
+        $paiementsHier = DB::table('paiements')
+            ->where('classe', $classeSelectionnee)
+            ->where('filiere', $banqueSelectionnee)
+            ->where('nom_ecole', $ecole->nom_ecole)
+            ->whereBetween('created_at', [$yesterday, $today])
+            ->paginate(50);
+
+        // Total des paiements (sans prendre en compte la date)
+        $paiementsTotal = DB::table('paiements')
+            ->where('classe', $classeSelectionnee)
+            ->where('filiere', $banqueSelectionnee)
+            ->where('nom_ecole', $ecole->nom_ecole)
+            ->paginate(50); // Ici on récupère le nombre total de paiements
+
+        // Si une date est sélectionnée, récupérer les paiements pour cette date
+        if ($dateSelectionnee) {
+            $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
+            $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
+
+            $paiementsAujourdhui = DB::table('paiements')
+                ->where('classe', $classeSelectionnee)
+                ->where('filiere', $banqueSelectionnee)
+                ->where('nom_ecole', $ecole->nom_ecole)
+                ->whereBetween('created_at', [$startOfDay, $endOfDay])
+                ->paginate(50); // Paginer les résultats par 50
+        }
+
+        // Retourner la vue avec les données
+        return view('AdminEcole.classe_filiere', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
-
-      // Récupérer toutes les classes distinctes (banques) associées à cette école
-      $classes = DB::table('paiements')
-      ->select('classe')
-      ->where('nom_ecole', $ecole->nom_ecole)
-      ->distinct()
-      ->get()
-      ->pluck('classe');
-
-      $banque= DB::table('paiements')
-      ->select('filiere')
-      ->where('nom_ecole', $ecole->nom_ecole)
-      ->distinct()
-      ->get()
-      ->pluck('filiere');
-
-  // Classe (banque) sélectionnée
-  $classeSelectionnee = $request->query('classe', $classes->first());
-  $banqueSelectionnee = $request->query('banque', $classes->first());
-  $dateSelectionnee = $request->input('date'); // Récupère la date sélectionnée
-  $today = Carbon::today();
-  $yesterday = Carbon::yesterday();
-
-  // Paiements pour aujourd'hui
-  $paiementsAujourdhui = DB::table('paiements')
-      ->where('classe', $classeSelectionnee)
-      ->where('filiere', $banqueSelectionnee)
-      ->where('nom_ecole', $ecole->nom_ecole)
-      ->where('created_at', '>=', $today)
-      ->paginate(50);
-
-  // Paiements pour hier
-  $paiementsHier = DB::table('paiements')
-      ->where('classe', $classeSelectionnee)
-      ->where('filiere', $banqueSelectionnee)
-      ->where('nom_ecole', $ecole->nom_ecole)
-      ->whereBetween('created_at', [$yesterday, $today])
-      ->paginate(50);
-
-  // Total des paiements (sans prendre en compte la date)
-  $paiementsTotal = DB::table('paiements')
-      ->where('classe', $classeSelectionnee)
-      ->where('filiere', $banqueSelectionnee)
-      ->where('nom_ecole', $ecole->nom_ecole)
-      ->paginate(50); // Ici on récupère le nombre total de paiements
-
-  // Si une date est sélectionnée, récupérer les paiements pour cette date
-  if ($dateSelectionnee) {
-      $startOfDay = Carbon::parse($dateSelectionnee)->startOfDay();
-      $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
-
-      $paiementsAujourdhui = DB::table('paiements')
-          ->where('classe', $classeSelectionnee)
-          ->where('filiere', $banqueSelectionnee)
-          ->where('nom_ecole', $ecole->nom_ecole)
-          ->whereBetween('created_at', [$startOfDay, $endOfDay])
-          ->paginate(50);  // Paginer les résultats par 50
-  }
-  
-  // Retourner la vue avec les données
-  
-  return view('AdminEcole.classe_filiere', compact('banque', 'classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee', 'banqueSelectionnee'));
-
 }
+
 public function search_paiement(Request $request)
 {
+    try {
+        // Vérifier si l'école est bien présente dans la session
+        $ecole = Session::get('ecole');
+        if (!$ecole) {
+            return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+        }
 
-     // Vérifier si l'école est bien présente dans la session
-     $ecole = Session::get('ecole');
-     if (!$ecole) {
-         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
-     }
-    // Récupération du paramètre de recherche
-    $query = $request->input('query');
+        // Récupération du paramètre de recherche
+        $query = $request->input('query');
 
-    // Recherche des élèves dont le nom contient le texte recherché
-    $students = Paiement::  where('nom_ecole', $ecole->nom_ecole)
-                      -> where('nom_complet', 'LIKE', '%' . $query . '%')->get(['id_paiement', 'nom_complet']);
+        // Recherche des élèves dont le nom contient le texte recherché
+        $students = Paiement::where('nom_ecole', $ecole->nom_ecole)
+            ->where('nom_complet', 'LIKE', '%' . $query . '%')
+            ->get(['id_paiement', 'nom_complet']);
 
-    // Retour des résultats sous forme de JSON
-    return response()->json($students);
+        // Retour des résultats sous forme de JSON
+        return response()->json($students);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Une erreur est survenue : ' . $e->getMessage()], 500);
+    }
 }
 
-// Méthode pour récupérer les détails d'un élève spécifique
 public function show_paiement($nom_complet)
 {
-    // Rechercher les paiements associés au nom complet
-    $students = Paiement::where('nom_complet', $nom_complet)->get();
+    try {
+        // Rechercher les paiements associés au nom complet
+        $students = Paiement::where('nom_complet', $nom_complet)->get();
 
-    // Vérifier si des enregistrements existent
-    if ($students->isEmpty()) {
-        return response()->json(['error' => 'Élève non trouvé'], 404);
+        // Vérifier si des enregistrements existent
+        if ($students->isEmpty()) {
+            return response()->json(['error' => 'Élève non trouvé'], 404);
+        }
+
+        // Retourner tous les détails des paiements pour cet élève
+        return response()->json($students);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Une erreur est survenue : ' . $e->getMessage()], 500);
     }
-
-    // Retourner tous les détails des paiements pour cet élève
-    return response()->json($students);
 }
 
 }
