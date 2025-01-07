@@ -71,7 +71,7 @@
 
             ecoleSearch.addEventListener('input', function () {
                 const query = ecoleSearch.value;
-                if (query.length > 2) {
+                if (query.length > 0) {
                     fetch(`/search-ecoles?q=${query}`)
                         .then(response => response.json())
                         .then(data => {
