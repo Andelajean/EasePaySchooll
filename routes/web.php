@@ -177,3 +177,17 @@ Route::middleware(['auth.ecole'])->group(function () {
 Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::class, 'show_paiement']);
 });
 
+
+use App\Models\Classe;
+
+Route::get('/search-ecoles', function (Request $request) {
+    $query = $request->get('q');
+    $ecoles = Ecole::where('nom_ecole', 'LIKE', "%{$query}%")->get();
+    return response()->json($ecoles);
+});
+
+Route::get('/get-classes', function (Request $request) {
+    $ecoleId = $request->get('ecole_id');
+    $classes = Classe::where('id_ecole', $ecoleId)->get();
+    return response()->json($classes);
+});
