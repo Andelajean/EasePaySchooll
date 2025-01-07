@@ -54,7 +54,7 @@
             <a href="{{ route('telecharger_recu', ['id_paiement' => $id_paiement]) }}" class="download-btn">Télécharger le Reçu</a>
         </div>
     </div>
- <script src="/jscript/about.js"></script>
+
  <script src="/jscript/style.js">
   </script>
  
