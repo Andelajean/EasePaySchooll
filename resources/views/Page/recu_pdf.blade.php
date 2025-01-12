@@ -128,10 +128,21 @@ th {
 </head>
 <body>
     <div class="container">
+
        
         <!-- Logo -->
         <div class="header">
             <img src="{{ public_path('image/logofin.jpg') }}" alt="Logo">
+        <h1 style="text-align: center;">Reçu de Paiement Des Frais de scolarité</h1>
+
+        <!-- Première section : Informations de l'école -->
+        <div class="section">
+            <h2>Informations de l'école</h2>
+            <p><strong>Nom de l'école :</strong> {{ $nom_ecole }}</p>
+            <p><strong>Ville :</strong> {{ $ville }}</p>
+
+            <p><strong>Téléphone :</strong> {{ $telephone }}</p>
+
         </div>
 
         <!-- Informations entreprise et école -->
@@ -206,5 +217,9 @@ th {
             <img src="{{ public_path('qrcodes/' . $qr_code) }}" alt="QR Code">
         </div>
     </div>
+
+
+ <script src="/jscript/about.js"></script>
+
 </body>
 </html>

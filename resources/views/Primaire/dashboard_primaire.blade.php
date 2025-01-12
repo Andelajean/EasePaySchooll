@@ -136,11 +136,13 @@
                             <div class="dropdown-menu">
                                 
                                 <a class="dropdown-item" href="{{route('logoute')}}">Se Deconnecter</a>
+
                                 @if(Session::has('ecole'))
                 <a class="dropdown-item" href="{{ route('profil', ['id' => Session::get('ecole')->id]) }}">Profil</a>
             @else
                 <a class="dropdown-item" href="#">Profil</a>
             @endif
+
                             </div>
                         </div>
                     </div>

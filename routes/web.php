@@ -19,12 +19,17 @@ use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
+
 use App\Http\Controllers\ProfilEcole;
+
+use App\Models\Classe;
+
 use App\Models\Ecole;
 use App\Models\Role;
 
 use App\Mail\UserNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
 
 Route::get('/', function () {
     return view('Page.index');
@@ -71,7 +76,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
  Route::post('/execute-sql', [SqlController::class, 'execute']);
  Route::get('/request', function () {
         $ecoles=Ecole::all();
-        return view('admin.requetesql.sqlrequest',compact('ecoles'));
+        return view('Admin.requetesql.sqlrequest',compact('ecoles'));
     })->middleware(['auth', 'verified'])->name('sql');
 
  //** GESTION DES STATISTIQUES ADMIN **//
@@ -190,5 +195,19 @@ Route::middleware(['auth.ecole'])->group(function () {
 
     Route::get('/search-student/paiement', [AdminEcoleController::class, 'search_paiement'])->name('search-student');
 Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::class, 'show_paiement']);
+});
+
+
+
+Route::get('/search-ecoles', function (Request $request) {
+    $query = $request->get('q');
+    $ecoles = Ecole::where('nom_ecole', 'LIKE', "%{$query}%")->get();
+    return response()->json($ecoles);
+});
+
+Route::get('/get-classes', function (Request $request) {
+    $ecoleId = $request->get('ecole_id');
+    $classes = Classe::where('id_ecole', $ecoleId)->get();
+    return response()->json($classes);
 });
 

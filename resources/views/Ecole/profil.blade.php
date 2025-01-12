@@ -1,27 +1,33 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <title>Gérer Votre Profil</title>
 </head>
 <body class="bg-gray-100 h-screen">
   <div class="flex h-full">
     <!-- Sidebar -->
     <div class="w-1/4 bg-gray-800 text-white flex flex-col p-4 space-y-4">
+
       <h1 class="text-2xl font-bold mb-6">Gestion Du Profil</h1>
       <button id="btn-school-info" class="w-full bg-gray-700 hover:bg-blue-600 py-2 px-4 rounded">Informations de l'école</button>
       <button id="btn-bank-management" class="w-full bg-gray-700 hover:bg-blue-600 py-2 px-4 rounded">Gestion des banques</button>
       <button id="btn-class-management" class="w-full bg-gray-700 hover:bg-blue-600 py-2 px-4 rounded">Gestion des classes</button>
       <button id="btn-security" class="w-full bg-gray-700 hover:bg-blue-600 py-2 px-4 rounded">Sécurité</button>
         <a href="{{route('dashboard_ecole')}}"class="w-full bg-gray-700 hover:bg-blue-600 text-center py-2 px-4 rounded">Retour</a>
+
     </div>
 
     <!-- Main content -->
     <div id="content" class="flex-1 bg-white p-6 overflow-y-auto">
       <!-- Content dynamically injected here -->
+
        
 <div class="messages-container">
   @if(session('success'))
@@ -157,11 +163,13 @@
         <button type="button" class="bg-red-500 text-white px-4 py-2 rounded mr-2" onclick="toggleModal('security-modal')">Annuler</button>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Confirmer</button>
     </div>
+
       </form>
     </div>
   </div>
 
   <script>
+
     document.addEventListener('DOMContentLoaded', () => {
   const trancheInputs = document.querySelectorAll('.tranche');
   const totalInput = document.getElementById('totalite');
@@ -177,6 +185,7 @@
   });
 });
 
+
     const content = document.getElementById('content');
 
     const toggleModal = (id) => {
@@ -188,6 +197,7 @@
       schoolInfo: `
         <section class="p-6">
           <h2 class="text-xl font-semibold text-gray-700 mb-4">Informations de l'école</h2>
+
           <form class="grid grid-cols-2 gap-4" method ="POST" action ="/ecole/{{$ecole->id}}">
            @csrf
             <div>
@@ -209,6 +219,7 @@
             <div>
               <label class="block text-sm font-medium text-gray-700">Niveau</label>
               <input type="text" name="niveau" value="{{ $ecole->niveau }}" class="w-full border border-gray-300 p-2 rounded mt-1">
+
             </div>
             <div class="col-span-2 flex justify-end">
               <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Mettre à jour</button>
@@ -227,6 +238,7 @@
                 <th class="border border-gray-300 px-4 py-2">Action</th>
               </tr>
             </thead>
+
            <tbody>
   @for ($i = 1; $i <= 8; $i++)
         @php
@@ -280,6 +292,7 @@
       </form>
     </div>
   </div>
+
           <div class="flex justify-end mt-4">
             <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="toggleModal('bank-modal')">Ajouter une banque</button>
           </div>
@@ -289,6 +302,7 @@
         <section class="p-6">
           <h2 class="text-xl font-semibold text-gray-700 mb-4">Gestion des classes</h2>
           <table class="w-full border-collapse border border-gray-300">
+
           <thead class="bg-gray-200">
         <tr>
           <th class="px-4 py-2 border">Nom de la Classe</th>
@@ -342,6 +356,7 @@
           <div class="flex justify-end mt-4">
            
              <a href="/ecole/compte/classe/universite/{{$ecole->id}}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Ajouter Plusieurs Classes</a>
+
           </div>
         </section>
       `,
@@ -358,6 +373,7 @@
     document.getElementById('btn-school-info').addEventListener('click', () => {
       content.innerHTML = sections.schoolInfo;
     });
+
 
     document.getElementById('btn-bank-management').addEventListener('click', () => {
       content.innerHTML = sections.bankManagement;
@@ -390,6 +406,7 @@ function closeEditModal() {
 
 
   </script>
+
 
 </body>
 </html>

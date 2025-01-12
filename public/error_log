@@ -1,0 +1,10 @@
+[30-Nov-2024 16:07:47 UTC] PHP Warning:  require(/home/napo3015/easepayschool.com/andela/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/napo3015/easepayschool.com/andela/public/index.php on line 13
+[30-Nov-2024 16:07:47 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/napo3015/easepayschool.com/andela/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/napo3015/easepayschool.com/andela/public/index.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/napo3015/easepayschool.com/andela/public/index.php on line 13
+[30-Nov-2024 16:07:55 UTC] PHP Warning:  require(/home/napo3015/easepayschool.com/andela/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/napo3015/easepayschool.com/andela/public/index.php on line 13
+[30-Nov-2024 16:07:55 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/napo3015/easepayschool.com/andela/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/napo3015/easepayschool.com/andela/public/index.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/napo3015/easepayschool.com/andela/public/index.php on line 13

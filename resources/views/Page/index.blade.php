@@ -236,6 +236,8 @@
 @include('Page.footer')
 
 
+ <script src="/jscript/about.js"></script>
+
  <script src="/jscript/index.js"></script>
 </body>
 </html>

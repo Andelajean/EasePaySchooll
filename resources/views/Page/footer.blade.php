@@ -95,5 +95,8 @@
             </div>
         </div>
     </footer>
+
+ <script src="/jscript/about.js"></script>
+
 </body>
 </html>

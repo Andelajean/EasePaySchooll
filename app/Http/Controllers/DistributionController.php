@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\DB;
 class DistributionController extends Controller
 {
     public function polo(Request $request){
+<<<<<<< HEAD
         try{
+=======
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
         // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -33,6 +36,7 @@ $paiement = DB::table('paiements')
 ->where('classe',$classeSelectionnee)
 ->whereNotIn('nom_complet', $etudiantsAvecPolo)
 ->paginate(50); 
+<<<<<<< HEAD
 return view('Distribution.distribuer_polo', compact('classes','paiement'));}
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -40,6 +44,11 @@ catch (\Exception $e) {
     }
     public function badge(Request $request){
         try{
+=======
+return view('Distribution.distribuer_polo', compact('classes','paiement'));
+    }
+    public function badge(Request $request){
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -60,6 +69,7 @@ catch (\Exception $e) {
  ->where('classe',$classeSelectionnee)
  ->whereNotIn('nom_complet', $etudiantsAvecPolo)
  ->paginate(50); 
+<<<<<<< HEAD
  return view('Distribution.distribuer_badge', compact('classes','paiement'));}
  catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -68,6 +78,12 @@ catch (\Exception $e) {
     }
     public function polo_recu(Request $request){
         try{
+=======
+ return view('Distribution.distribuer_badge', compact('classes','paiement'));
+
+    }
+    public function polo_recu(Request $request){
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
         // Vérifier si l'école est bien présente dans la session
         $ecole = Session::get('ecole');
         if (!$ecole) {
@@ -86,6 +102,7 @@ catch (\Exception $e) {
     ->where('nom_ecole', $ecole->nom_ecole)
     ->where('classe',$classeSelectionnee)
     ->paginate(50); 
+<<<<<<< HEAD
     return view('Distribution.polo', compact('classes','paiement'));}
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -94,6 +111,12 @@ catch (\Exception $e) {
        }
     public function badge_recu(Request $request){
         try{
+=======
+    return view('Distribution.polo', compact('classes','paiement'));
+   
+       }
+    public function badge_recu(Request $request){
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
         // Vérifier si l'école est bien présente dans la session
         $ecole = Session::get('ecole');
         if (!$ecole) {
@@ -112,6 +135,7 @@ catch (\Exception $e) {
     ->where('nom_ecole', $ecole->nom_ecole)
     ->where('classe',$classeSelectionnee)
     ->paginate(50); 
+<<<<<<< HEAD
     return view('Distribution.badge', compact('classes','paiement'));}
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -122,6 +146,13 @@ catch (\Exception $e) {
     
 {
     try{
+=======
+    return view('Distribution.badge', compact('classes','paiement'));
+   
+       }
+    public function distribuer_polo($id_paiement)
+{
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Récupérer les informations du paiement par son id
     $paiement = DB::table('paiements')->where('id_paiement', $id_paiement)->first();
 
@@ -140,6 +171,7 @@ catch (\Exception $e) {
         'niveau_université' => $paiement->niveau_universite,
     ]);
 
+<<<<<<< HEAD
     return redirect()->back()->with('success', 'Polo distribué avec succès.');}
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -148,6 +180,12 @@ catch (\Exception $e) {
 public function distribuer_badge($id_paiement)
 {
     try{
+=======
+    return redirect()->back()->with('success', 'Polo distribué avec succès.');
+}
+public function distribuer_badge($id_paiement)
+{
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Récupérer les informations du paiement par son id
     $paiement = DB::table('paiements')->where('id_paiement', $id_paiement)->first();
     // Enregistrer les informations dans la table polos
@@ -161,6 +199,7 @@ public function distribuer_badge($id_paiement)
         'niveau_université' => $paiement->niveau_universite,
     ]);
 
+<<<<<<< HEAD
     return redirect()->back()->with('success', 'badge distribué avec succès.');}
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -169,6 +208,12 @@ public function distribuer_badge($id_paiement)
 public function search_polo(Request $request)
 {
     try{
+=======
+    return redirect()->back()->with('success', 'badge distribué avec succès.');
+}
+public function search_polo(Request $request)
+{
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -183,15 +228,22 @@ public function search_polo(Request $request)
 
     // Retour des résultats sous forme de JSON
     return response()->json($students);
+<<<<<<< HEAD
     }
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
+=======
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
 }
 
 // Méthode pour récupérer les détails d'un élève spécifique
 public function show_polo($id)
+<<<<<<< HEAD
 {  try{
+=======
+{
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Recherche de l'élève par ID
     $student = Polo::find($id);
 
@@ -202,6 +254,7 @@ public function show_polo($id)
 
     // Retour des détails de l'élève sous forme de JSON
     return response()->json($student);
+<<<<<<< HEAD
 }catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -209,6 +262,12 @@ public function show_polo($id)
 public function search_badge(Request $request)
 {
 try{
+=======
+}
+public function search_badge(Request $request)
+{
+
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
      // Vérifier si l'école est bien présente dans la session
      $ecole = Session::get('ecole');
      if (!$ecole) {
@@ -222,16 +281,23 @@ try{
                       -> where('nom_etudiant', 'LIKE', '%' . $query . '%')->get(['id', 'nom_etudiant']);
 
     // Retour des résultats sous forme de JSON
+<<<<<<< HEAD
     return response()->json($students);}
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
+=======
+    return response()->json($students);
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
 }
 
 // Méthode pour récupérer les détails d'un élève spécifique
 public function show_badge($id)
 {
+<<<<<<< HEAD
     try{
+=======
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Recherche de l'élève par ID
     $student =Badge::find($id);
 
@@ -243,7 +309,10 @@ public function show_badge($id)
     // Retour des détails de l'élève sous forme de JSON
     return response()->json($student);
 }
+<<<<<<< HEAD
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
+=======
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
 }
