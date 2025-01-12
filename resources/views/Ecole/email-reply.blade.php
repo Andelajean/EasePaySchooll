@@ -82,12 +82,12 @@
         <p>{{ $message }}</p>
         <p>Avec EasePaySchool, <em>"Payer une fois et enregistrer pour toujours"</em>.</p>
 
-        <a href="https://easepayschool.com" class="cta-button">Accéder à votre compte</a>
+        <a href="https://easepayschool.com/dasboard" class="cta-button">Accéder à votre compte</a>
     </div>
 
     <!-- Footer Section -->
     <div class="email-footer">
-        <p>Développé par <strong>Smart Tech Engineering</strong>.</p>
+        <p>Développé par <strong>TrueSiteTechnology</strong>.</p>
         <p>Si vous avez des questions, n'hésitez pas à nous contacter à easepayschool@gmail.com.</p>
     </div>
 </div>

@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
-
+use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
 use App\Models\Role;
 
@@ -121,7 +121,7 @@ Route::get('/paiement/universite',[PaiementController::class,'universite'])->nam
 Route::get('/search-school', [EcoleController::class, 'searchSchool']);
 Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
 Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
-Route::get('/recu-paiement',[PageController::class,'recu'])->name('recu');
+Route::get('/recu-paiement/{id_paiement}',[PageController::class,'recu'])->name('recu');
 Route::get('/telecharger-recu/{id_paiement}', [PageController::class, 'telechargerRecu'])->name('telecharger_recu');
 Route::get('/verifier-paiement', [PageController::class, 'verifierPaiement'])->name('verifier.paiement');
 Route::get('/login/ecole',[EcoleController::class,'login'])->name('login.ecole');
@@ -134,11 +134,26 @@ Route::get('/index',[PageController::class,'index'])->name('index');
 Route::get('/ecole/compte/classe/primaire_secondaire/{id}', [EcoleController::class, 'classe_primaire'])->name('classe.primaire');
 Route::get('/ecole/compte/classe/universite/{id}', [EcoleController::class, 'classe_univ'])->name('classe.univ');
 Route::post('/ecole/compte/classe/traitement/{id}', [EcoleController::class, 'traitement_classe'])->name('traitement.classe');
+Route::post('/ecole/compte/classe/traitement/{id}/profil', [EcoleController::class, 'traitement_classe_profil'])->name('traitement.classe.profil');
 
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
 
-    Route::get('ecole/dashboard/profil', [AdminEcoleController::class, 'profil'])->name('profil');
+    Route::get('ecole/dashboard/profil/{id}', [ProfilEcole::class, 'profil'])->name('profil');
+    //Route::get('/ecole/{id}', [EcoleController::class, 'show'])->name('ecole.profil');
+    Route::post('/ecole/{id}', [ProfilEcole::class, 'update'])->name('ecole.update');
+    Route::post('/ecoles/{id}/banques', [ProfilEcole::class, 'updateBanque']);
+    Route::post('/ecole/{id}/classe', [ProfilEcole::class, 'addClass'])->name('ecole.addClass');
+    Route::get('/classes/{id}/edit', [ProfilEcole::class, 'edit'])->name('classes.edit');
+    Route::delete('/classes/{id}', [ProfilEcole::class, 'destroy'])->name('classes.destroy');
+    Route::post('/ecoles/{id}/add-bank', [ProfilEcole::class, 'addBank'])->name('ecoles.add-bank');
+    Route::get('/classes/{id}/edit', [ProfilEcole::class, 'edit'])->name('classes.edit');
+    Route::post('/classes/{id}/update', [ProfilEcole::class, 'updateClasse'])->name('classes.update');
+    Route::post('/classes/store', [ProfilEcole::class, 'store'])->name('classes.store');
+    Route::delete('/ecoles/{ecole}/banques/{index}', [ProfilEcole::class, 'deleteBank'])->name('ecoles.deleteBank');
+    Route::post('/ecoles/generer-identifiant', [ProfilEcole::class, 'generateIdentifiant'])->name('ecoles.generateIdentifiant');
+
+
 
     Route::get('/paiement/ecole/classe', [AdminEcoleController::class, 'classe'])->name('classe');
     Route::get('/paiement/ecole/tranche', [AdminEcoleController::class, 'tranche'])->name('tranche');

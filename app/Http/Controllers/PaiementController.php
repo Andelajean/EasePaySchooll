@@ -22,34 +22,36 @@ class PaiementController extends Controller
 public function universite(){
     return view('Paiement.universite');
 }
-    public function payer(Request $request)
-    {
+public function payer(Request $request)
+{
+    // Validation des données
+    $validator = Validator::make($request->all(), $this->validationRules($request));
 
-        // Validation des données
-       $validator = Validator::make($request->all(), $this->validationRules($request));
-
-        if ($validator->fails()) {
-         return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Générer un ID de paiement unique ici
-        $id_paiement = Paiement::generateIdPaiement(); 
-
-        // Effectuer le paiement via l'API MOMO
-        $paymentResponse = $this->callMomoApi($request, $id_paiement);
-        $ecole=Ecole::where('nom_ecole',$request->nom_ecole)->first();
-        $id_ecole=$ecole->id;
-        // Vérifier le statut du paiement
-        if ($paymentResponse['status'] === 'success') {
-            // Enregistrer le paiement dans la base de données
-            $paiement = $this->createPaiementRecord($request, $paymentResponse['qr_code'], $id_paiement,$id_ecole);
-
-            // Retourner la vue de reçu avec toutes les informations de paiement
-            return $this->returnPaymentView($paiement, $request);
-        }
-
-        return redirect()->back()->withErrors('error','Échec du paiement, veuillez réessayer.');
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
     }
+
+    // Générer un ID de paiement unique
+    $id_paiement = Paiement::generateIdPaiement();
+
+    // Effectuer le paiement via l'API MOMO
+    $paymentResponse = $this->callMomoApi($request, $id_paiement);
+    $ecole = Ecole::where('nom_ecole', $request->nom_ecole)->first();
+    $id_ecole = $ecole->id;
+
+    // Vérifier le statut du paiement
+    if ($paymentResponse['status'] === 'success') {
+        // Enregistrer le paiement dans la base de données
+        $paiement = $this->createPaiementRecord($request, $paymentResponse['qr_code'], $id_paiement, $id_ecole);
+
+        // Rediriger vers la page du reçu
+        return redirect()->route('recu', ['id_paiement' => $paiement->id_paiement]);
+    }
+
+    // Gestion des erreurs de paiement
+   return redirect()->back()->withErrors('error','une erreur s\'est produite ');
+}
+
 
     private function validationRules(Request $request)
     {

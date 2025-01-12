@@ -59,20 +59,7 @@ public function logout(Request $request)
     }
 
 } 
- public function profil(){
-    try{
-    $ecole = Session::get('ecole');
-    if ($ecole) {
-        $compte = Ecole::where('id', $ecole->id)->first();
-        $classe = Classe::where('id_ecole', $ecole->id)->get();
-        return view('Ecole.profil', compact('compte', 'classe'));
-    }
-    return redirect()->route('login.ecole');}
-    catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
-    }
-    
- }
+
 
 public function dashboard(Request $request)
 {
@@ -126,7 +113,7 @@ public function dashboard(Request $request)
                 'sixieme_tranche' => $paiements->where('details', 'sixieme_tranche')->sum('montant'),
                 'septieme_tranche' => $paiements->where('details', 'septieme_tranche')->sum('montant'),
                 'huitieme_tranche' => $paiements->where('details', 'huitieme_tranche')->sum('montant'),
-                'totalite' => $paiements->where('details', 'toatlite')->sum('montant'),
+                'totalite' => $paiements->where('details', 'totalite')->sum('montant'),
                 // Ajoutez d'autres tranches si nécessaire
             ];
 
@@ -325,7 +312,7 @@ public function niveau(Request $request)
 
       // Récupérer toutes les classes distinctes (banques) associées à cette école
       $classes = DB::table('paiements')
-      ->select('niveau')
+      ->select('niveau_universite')
       ->where('nom_ecole', $ecole->nom_ecole)
       ->distinct()
       ->get()
@@ -339,21 +326,21 @@ public function niveau(Request $request)
 
   // Paiements pour aujourd'hui
   $paiementsAujourdhui = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->where('created_at', '>=', $today)
       ->paginate(50);
 
   // Paiements pour hier
   $paiementsHier = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->whereBetween('created_at', [$yesterday, $today])
       ->paginate(50);
 
   // Total des paiements (sans prendre en compte la date)
   $paiementsTotal = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->paginate(50); // Ici on récupère le nombre total de paiements
 
@@ -363,7 +350,7 @@ public function niveau(Request $request)
       $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
 
       $paiementsAujourdhui = DB::table('paiements')
-          ->where('niveau', $classeSelectionnee)
+          ->where('niveau_universite', $classeSelectionnee)
           ->where('nom_ecole', $ecole->nom_ecole)
           ->whereBetween('created_at', [$startOfDay, $endOfDay])
           ->paginate(50);  // Paginer les résultats par 50
