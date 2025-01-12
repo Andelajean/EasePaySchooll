@@ -70,10 +70,10 @@
 </div>
  @include('Page.footer')
  <script src="/jscript/paiement.js"></script>
-<<<<<<< HEAD
-=======
+
+
  <script src="/jscript/about.js"></script>
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
    <script src="https://cdn.tailwindcss.com"></script>
 
 </body>

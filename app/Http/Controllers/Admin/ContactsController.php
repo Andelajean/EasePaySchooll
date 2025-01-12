@@ -17,7 +17,7 @@ class ContactsController extends Controller
     {
         $contacts = Contact::where('lue',false)->get();
         $ecoles=Ecole::all();
-        return view('admin.contact.showAll',compact('contacts','ecoles'));
+        return view('Admin.contact.showAll',compact('contacts','ecoles'));
     }
 
 

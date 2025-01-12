@@ -92,12 +92,15 @@
         <!-- Telephone -->
         <div class="flex flex-col">
           <label for="telephone" class="mb-2 font-medium text-white">Téléphone</label>
-<<<<<<< HEAD
+
           <input type="text" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required>
         </div>
-=======
-          <input type="tel" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le num�ro de t�l�phone" required value="+237" maxlength="13">        </div>
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
+          <input type="tel" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le num�ro de t�l�phone" required value="+237" maxlength="13">        </div>
+
+          <input type="text" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required>
+        </div>
+
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

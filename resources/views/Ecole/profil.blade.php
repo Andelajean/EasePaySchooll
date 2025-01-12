@@ -1,121 +1,222 @@
 
-<!doctype html>
-<html class="no-js" lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Profil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/themify-icons.css">
-    <link rel="stylesheet" href="/assets/css/metisMenu.css">
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/slicknav.min.css">
-    <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <!-- others css -->
-    <link rel="stylesheet" href="/assets/css/typography.css">
-    <link rel="stylesheet" href="/assets/css/default-css.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
-    <!-- modernizr css -->
-    <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Gérer Votre Profil</title>
 </head>
-
-<body>
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start -->
-    <div id="preloader">
-        <div class="loader"></div>
+<body class="bg-gray-100 h-screen">
+  <div class="flex h-full">
+    <!-- Sidebar -->
+    <div class="w-1/4 bg-gray-800 text-white flex flex-col p-4 space-y-4">
+      <h1 class="text-2xl font-bold mb-6">Tableau de bord</h1>
+      <button id="btn-school-info" class="w-full bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">Informations de l'école</button>
+      <button id="btn-bank-management" class="w-full bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">Gestion des banques</button>
+      <button id="btn-class-management" class="w-full bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">Gestion des classes</button>
+      <button id="btn-security" class="w-full bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">Sécurité</button>
     </div>
-    
-        <!-- main content area start -->
-        <div class="main-content">
-            <!-- header area start -->
-            <div class="header-area">
-                <div class="row align-items-center">
-                   
-              <h1> Gerer Votre Profil ici !</h1>
-           
-                    <!-- Progress Table start -->
-                    <div class="col-12 mt-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title">Information sur vos classes</h4>
-                                <div class="single-table">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover progress-table text-center">
-                                            <thead class="text-uppercase">
-                                                <tr>
-                                                    <th scope="col">Nom Classe</th>
-                                                    <th scope="col">Premiere Tranche</th>
-                                                    <th scope="col">Deuxieme Tranche</th>
-                                                    <th scope="col">Troisieme Tranche</th>
-                                                    <th scope="col">Quatrieme Tranche</th>
-                                                    <th scope="col">action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                               
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Mark</td>
-                                                    <td>09 / 07 / 2018</td>
-                                                    <td>
-                                                        <div class="progress" style="height: 8px;">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="status-p bg-success">complate</span></td>
-                                                    <td>
-                                                        <ul class="d-flex justify-content-center">
-                                                            <li class="mr-3"><a href="#" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                            <li><a href="#" class="text-danger"><i class="ti-trash"></i></a></li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                               
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Progress Table end -->
-                </div>
-            </div>
+
+    <!-- Main content -->
+    <div id="content" class="flex-1 bg-white p-6 overflow-y-auto">
+      <!-- Content dynamically injected here -->
+    </div>
+  </div>
+
+  <!-- Modal for adding a bank -->
+  <div id="bank-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <h3 class="text-lg font-semibold mb-4">Ajouter une banque</h3>
+      <form>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Nom de la banque</label>
+          <input type="text" class="w-full border border-gray-300 p-2 rounded">
         </div>
-        <!-- main content area end -->
-        <!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Numéro de compte</label>
+          <input type="text" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="bg-red-500 text-white px-4 py-2 rounded mr-2" onclick="toggleModal('bank-modal')">Annuler</button>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Confirmer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for class management -->
+  <div id="class-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <h3 class="text-lg font-semibold mb-4">Modifier une classe</h3>
+      <form>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Nom de la classe</label>
+          <input type="text" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Première tranche</label>
+          <input type="text" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <!-- Ajoutez des champs pour les autres tranches -->
+        <div class="flex justify-end">
+          <button type="button" class="bg-red-500 text-white px-4 py-2 rounded mr-2" onclick="toggleModal('class-modal')">Annuler</button>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for security -->
+  <div id="security-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <h3 class="text-lg font-semibold mb-4">Générer un nouvel identifiant</h3>
+      <form>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
+          <input type="tel" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="bg-red-500 text-white px-4 py-2 rounded mr-2" onclick="toggleModal('security-modal')">Annuler</button>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Confirmer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const content = document.getElementById('content');
+
+    const toggleModal = (id) => {
+      const modal = document.getElementById(id);
+      modal.classList.toggle('hidden');
+    };
+
+    const sections = {
+      schoolInfo: `
+        <section class="p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Informations de l'école</h2>
+          <form class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Nom de l'établissement</label>
+              <input type="text" class="w-full border border-gray-300 p-2 rounded mt-1">
             </div>
-        </footer>
-        <!-- footer area end-->
-    
-    <!-- page container area end -->
-    
-    <!-- offset area end -->
-    <!-- jquery latest version -->
-    <script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>
-    <!-- bootstrap 4 js -->
-    <script src="/assets/js/popper.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/owl.carousel.min.js"></script>
-    <script src="/assets/js/metisMenu.min.js"></script>
-    <script src="/assets/js/jquery.slimscroll.min.js"></script>
-    <script src="/assets/js/jquery.slicknav.min.js"></script>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Ville</label>
+              <input type="text" class="w-full border border-gray-300 p-2 rounded mt-1">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Téléphone</label>
+              <input type="tel" class="w-full border border-gray-300 p-2 rounded mt-1">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Email</label>
+              <input type="email" class="w-full border border-gray-300 p-2 rounded mt-1">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Niveau</label>
+              <input type="text" class="w-full border border-gray-300 p-2 rounded mt-1">
+            </div>
+            <div class="col-span-2 flex justify-end">
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Mettre à jour</button>
+            </div>
+          </form>
+        </section>
+      `,
+      bankManagement: `
+        <section class="p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Gestion des banques</h2>
+          <table class="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-4 py-2">Nom de la banque</th>
+                <th class="border border-gray-300 px-4 py-2">Numéro de compte</th>
+                <th class="border border-gray-300 px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-300 px-4 py-2">Banque 1</td>
+                <td class="border border-gray-300 px-4 py-2">123456789</td>
+                <td class="border border-gray-300 px-4 py-2">
+                  <button class="text-blue-500 hover:underline">Modifier</button> |
+                  <button class="text-red-500 hover:underline">Supprimer</button>
+                </td>
+              </tr>
+              <!-- Ajoutez d'autres lignes ici -->
+              <tr>
+                <td class="border border-gray-300 px-4 py-2">Banque 2</td>
+                <td class="border border-gray-300 px-4 py-2">987654321</td>
+                <td class="border border-gray-300 px-4 py-2">
+                  <button class="text-blue-500 hover:underline">Modifier</button> |
+                  <button class="text-red-500 hover:underline">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="flex justify-end mt-4">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="toggleModal('bank-modal')">Ajouter une banque</button>
+          </div>
+        </section>
+      `,
+      classManagement: `
+        <section class="p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Gestion des classes</h2>
+          <table class="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-4 py-2">Nom de la classe</th>
+                <th class="border border-gray-300 px-4 py-2">Première tranche</th>
+                <th class="border border-gray-300 px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-300 px-4 py-2">Classe 1</td>
+                <td class="border border-gray-300 px-4 py-2">50000 FCFA</td>
+                <td class="border border-gray-300 px-4 py-2">
+                  <button class="text-blue-500 hover:underline">Modifier</button> |
+                  <button class="text-red-500 hover:underline">Supprimer</button> |
+                  <button class="text-red-500 hover:underline">Supprimer une tranche</button>
+                </td>
+              </tr>
+              <!-- Ajoutez d'autres lignes ici -->
+            </tbody>
+          </table>
+          <div class="flex justify-end mt-4">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="toggleModal('class-modal')">Ajouter une classe</button>
+          </div>
+        </section>
+      `,
+      security: `
+        <section class="p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Sécurité</h2>
+          <div class="flex justify-end">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="toggleModal('security-modal')">Générer un nouvel identifiant</button>
+          </div>
+        </section>
+      `,
+    };
 
-    <!-- others plugins -->
-    <script src="/assets/js/plugins.js"></script>
-    <script src="/assets/js/scripts.js"></script>
+    document.getElementById('btn-school-info').addEventListener('click', () => {
+      content.innerHTML = sections.schoolInfo;
+    });
+
+    document.getElementById('btn-bank-management').addEventListener('click', () => {
+      content.innerHTML = sections.bankManagement;
+    });
+
+    document.getElementById('btn-class-management').addEventListener('click', () => {
+      content.innerHTML = sections.classManagement;
+    });
+
+    document.getElementById('btn-security').addEventListener('click', () => {
+      content.innerHTML = sections.security;
+    });
+  </script>
 </body>
-
 </html>

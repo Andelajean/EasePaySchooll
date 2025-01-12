@@ -135,7 +135,9 @@
                                
                                 <a class="dropdown-item" href="{{route('logoute')}}">Se Deconnecter</a>
 
+
                                 <a class="dropdown-item" href="{{route('profil')}}">Profil</a>
+
 
                             </div>
                         </div>

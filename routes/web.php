@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
  Route::post('/execute-sql', [SqlController::class, 'execute']);
  Route::get('/request', function () {
         $ecoles=Ecole::all();
-        return view('admin.requetesql.sqlrequest',compact('ecoles'));
+        return view('Admin.requetesql.sqlrequest',compact('ecoles'));
     })->middleware(['auth', 'verified'])->name('sql');
 
  //** GESTION DES STATISTIQUES ADMIN **//

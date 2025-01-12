@@ -136,11 +136,10 @@
                             <div class="dropdown-menu">
                                 
                                 <a class="dropdown-item" href="{{route('logoute')}}">Se Deconnecter</a>
-<<<<<<< HEAD
+
                                 <a class="dropdown-item" href="{{route('profil')}}">Profil</a>
-=======
-                                <a class="dropdown-item" href="{{route('logoute')}}">Profil</a>
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
+
                             </div>
                         </div>
                     </div>

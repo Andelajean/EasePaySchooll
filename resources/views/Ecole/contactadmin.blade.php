@@ -154,10 +154,9 @@
 
   <!-- Main JS File -->
   <script src="{{ asset('js/main1.js') }}"></script>
-<<<<<<< HEAD
-=======
+
  <script src="/jscript/about.js"></script>
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
 
 </body>
 

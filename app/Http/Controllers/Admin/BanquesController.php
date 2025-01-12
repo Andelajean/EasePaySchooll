@@ -17,7 +17,7 @@ class BanquesController extends Controller
      {    
          $nom=Banque::select('id','nom')->get();
          $ecoles=Ecole::all();
-         return view('admin.banque.addBank',compact('nom','ecoles'));
+         return view('Admin.banque.addBank',compact('nom','ecoles'));
        
      }
     // la fonction qui permet d'afficher les information  des Banques 
@@ -26,7 +26,7 @@ class BanquesController extends Controller
          $banks=Banque::all();
          $ecoles=Ecole::all();
           //return $matieres;
-         return view('admin.banque.showAll',compact('banks','ecoles'));
+         return view('Admin.banque.showAll',compact('banks','ecoles'));
      }
      //la fonction qui permet d'ajouter et enregistrer les Banque 
      public function saveBank(Request $request){
@@ -96,7 +96,7 @@ class BanquesController extends Controller
           
             $banques=Banque::find($id); //select('id')->get();
             $ecoles=Ecole::all();
-         return view('admin.banque.update',compact('banques','id','ecoles'));
+         return view('Admin.banque.update',compact('banques','id','ecoles'));
      }
  
      //la fonction permet de modifier les données des étudiants
