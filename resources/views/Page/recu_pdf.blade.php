@@ -56,7 +56,10 @@
             <h2>Informations de l'école</h2>
             <p><strong>Nom de l'école :</strong> {{ $nom_ecole }}</p>
             <p><strong>Ville :</strong> {{ $ville }}</p>
+<<<<<<< HEAD
             
+=======
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
             <p><strong>Téléphone :</strong> {{ $telephone }}</p>
         </div>
 
@@ -87,6 +90,10 @@
             <p>Tel : +237 620 699 733 / 659 454 737</p>
         </div>
     </div>
+<<<<<<< HEAD
 
+=======
+ <script src="/jscript/about.js"></script>
+>>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
 </body>
 </html>
