@@ -9,8 +9,28 @@ use PDF;
 
 class PageController extends Controller
 {
-    public function recu(){
-        return view('Page.recu');
+    public function recu($id_paiement){
+        // Rechercher le paiement dans la base de données
+    $paiement = Paiement::where('id_paiement', $id_paiement)->firstOrFail();
+
+    // Retourner la vue de reçu avec les données du paiement
+    return view('Page.recu', [
+        'id_paiement' => $paiement->id_paiement,
+        'nom_ecole' => $paiement->nom_ecole,
+        'nom_complet' => $paiement->nom_complet,
+        'montant' => $paiement->montant,
+        'details' => $paiement->details,
+        'qr_code' => $paiement->qr_code,
+        'telephone' => $paiement->telephone,
+        'ville' => $paiement->ville,
+        'banque' => $paiement->banque,
+        'classe' => $paiement->classe,
+        'niveau' => $paiement->niveau,
+        'filiere' => $paiement->filiere,
+        'niveau_universite' => $paiement->niveau_universite,
+        'date_paiement' => $paiement->date_paiement,
+        'heure_paiement' => $paiement->heure_paiement,
+    ]);
     }
 
     public function about(){

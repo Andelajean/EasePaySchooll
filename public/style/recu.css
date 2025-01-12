@@ -1,41 +1,119 @@
-/* recu*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
 .container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    font-family: Arial, sans-serif;
-  }
-  .section {
-    margin-bottom: 20px;
-  }
-  .section h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    text-decoration: underline;
-  }
-  .section p {
-    margin: 5px 0;
-  }
-  .qr-code {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .download-btn {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 10px 20px;
-    background-color: blue;
-    color: white;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 16px;
-  }
-  .footer {
-    margin-top: 40px;
-    font-size: 12px;
-    text-align: center;
-    color: #555;
-  }
+  background: #fff;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 800px;
+}
+
+.container::before {
+  content: "easepayschool.com";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg); /* Rotation de -45 degrés pour un affichage diagonal */
+  font-size: 60px;
+  color: rgba(0, 120, 255, 0.1); /* Bleu clair et transparent */
+  z-index: 0;
+  white-space: nowrap;
+  pointer-events: none; /* Évite toute interaction avec le filigrane */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.info {
+  width: 45%;
+  background-color: #f2f2f2;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.info h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #0078ff;
+}
+
+.details-paiement {
+  margin-top: 20px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.details-paiement h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-align: center;
+  justify-content: center;
+  color: #0078ff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
   
+  color: black;
+}
+
+.qr-code {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.qr-code img {
+  max-width: 150px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0078ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.download-btn:hover {
+  background-color: #005bb5;
+}

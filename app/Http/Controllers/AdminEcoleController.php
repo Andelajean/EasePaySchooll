@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\DB;
 class AdminEcoleController extends Controller
 {
     public function login(Request $request)
-<<<<<<< HEAD
+
 {  try{
-=======
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Valider les données du formulaire
     $request->validate([
         'email' => 'required|email',
@@ -39,7 +37,7 @@ class AdminEcoleController extends Controller
         'email' => 'Les informations de connexion sont incorrectes.',
     ])->withInput();
 }
-<<<<<<< HEAD
+
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -47,11 +45,11 @@ catch (\Exception $e) {
 
 public function logout(Request $request)
 { try{
-=======
+
 
 public function logout(Request $request)
 {
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Supprimer les données de l'école de la session
     Session::forget('ecole');
 
@@ -63,13 +61,14 @@ public function logout(Request $request)
 
     // Rediriger vers la page de connexion avec un message de déconnexion réussie
     return redirect()->route('login.ecole')->with('success', 'Déconnexion réussie!');
-<<<<<<< HEAD
+
 }
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
 
 } 
+
  public function profil(){
     try{
     $ecole = Session::get('ecole');
@@ -83,21 +82,20 @@ public function logout(Request $request)
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
     
-=======
+
 
 } 
  public function profil(){
     $infosecole = Ecole::all();
-    $ecoleclass= Classe::all();
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
  }
+
 
 public function dashboard(Request $request)
 {
-<<<<<<< HEAD
+
     try{
-=======
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Récupérer l'école connectée depuis la session
     $ecole = Session::get('ecole');
 
@@ -147,7 +145,7 @@ public function dashboard(Request $request)
                 'sixieme_tranche' => $paiements->where('details', 'sixieme_tranche')->sum('montant'),
                 'septieme_tranche' => $paiements->where('details', 'septieme_tranche')->sum('montant'),
                 'huitieme_tranche' => $paiements->where('details', 'huitieme_tranche')->sum('montant'),
-                'totalite' => $paiements->where('details', 'toatlite')->sum('montant'),
+                'totalite' => $paiements->where('details', 'totalite')->sum('montant'),
                 // Ajoutez d'autres tranches si nécessaire
             ];
 
@@ -196,22 +194,19 @@ public function dashboard(Request $request)
     // Rediriger vers la page de connexion si l'école n'est pas connectée
     return redirect()->route('login.ecole');
 }
-<<<<<<< HEAD
+
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
 }
-=======
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
 
 
 
 public function classe(Request $request)
-<<<<<<< HEAD
+
 { try{
-=======
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -271,7 +266,7 @@ public function classe(Request $request)
       return view('Primaire.classe', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
 }
-<<<<<<< HEAD
+
   catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -279,11 +274,7 @@ public function classe(Request $request)
 
 public function banque(Request $request)
 { try{
-=======
 
-public function banque(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     $ecole = Session::get('ecole');
     if (!$ecole) {
         return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
@@ -343,7 +334,7 @@ public function banque(Request $request)
       return view('Primaire.banque', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
 }
-<<<<<<< HEAD
+
   catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -352,12 +343,7 @@ public function banque(Request $request)
 
 public function niveau(Request $request)
 { try{
-=======
 
-
-public function niveau(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -366,7 +352,7 @@ public function niveau(Request $request)
 
       // Récupérer toutes les classes distinctes (banques) associées à cette école
       $classes = DB::table('paiements')
-      ->select('niveau')
+      ->select('niveau_universite')
       ->where('nom_ecole', $ecole->nom_ecole)
       ->distinct()
       ->get()
@@ -380,21 +366,21 @@ public function niveau(Request $request)
 
   // Paiements pour aujourd'hui
   $paiementsAujourdhui = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->where('created_at', '>=', $today)
       ->paginate(50);
 
   // Paiements pour hier
   $paiementsHier = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->whereBetween('created_at', [$yesterday, $today])
       ->paginate(50);
 
   // Total des paiements (sans prendre en compte la date)
   $paiementsTotal = DB::table('paiements')
-      ->where('niveau', $classeSelectionnee)
+      ->where('niveau_universite', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->paginate(50); // Ici on récupère le nombre total de paiements
 
@@ -404,7 +390,7 @@ public function niveau(Request $request)
       $endOfDay = Carbon::parse($dateSelectionnee)->endOfDay();
 
       $paiementsAujourdhui = DB::table('paiements')
-          ->where('niveau', $classeSelectionnee)
+          ->where('niveau_universite', $classeSelectionnee)
           ->where('nom_ecole', $ecole->nom_ecole)
           ->whereBetween('created_at', [$startOfDay, $endOfDay])
           ->paginate(50);  // Paginer les résultats par 50
@@ -413,7 +399,7 @@ public function niveau(Request $request)
 
     return view('AdminEcole.niveau', compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
-<<<<<<< HEAD
+
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -421,11 +407,7 @@ catch (\Exception $e) {
 
 public function filiere(Request $request)
 {  try{
-=======
 
-public function filiere(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -481,17 +463,14 @@ public function filiere(Request $request)
 
     return view('AdminEcole.filiere',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
 }
-<<<<<<< HEAD
+
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
 }
 public function tout(Request $request)
 { try{
-=======
-public function tout(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Récupérer l'école actuellement connectée
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -543,7 +522,7 @@ public function tout(Request $request)
         return view('Primaire.tout', compact('banque','paiementsAujourdhui', 'paiementsHier', 'paiementsTotal'));
     }
 }
-<<<<<<< HEAD
+
     catch (\Exception $e) {
         return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
     }
@@ -551,11 +530,7 @@ public function tout(Request $request)
 
 public function tranche(Request $request)
 { try{
-=======
 
-public function tranche(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -614,7 +589,7 @@ public function tranche(Request $request)
   else{
     return view('Primaire.tranche',compact('banque','classes', 'paiementsAujourdhui', 'paiementsHier', 'paiementsTotal', 'classeSelectionnee'));
   }
-<<<<<<< HEAD
+
 }
   catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
@@ -623,12 +598,7 @@ public function tranche(Request $request)
 }
 public function banque_classe(Request $request)
 { try{
-=======
-   
-}
-public function banque_classe(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -703,7 +673,7 @@ public function banque_classe(Request $request)
 
   }
 }
-<<<<<<< HEAD
+
   catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -712,11 +682,7 @@ public function banque_classe(Request $request)
 public function classe_tranche(Request $request)
 {
     try {
-=======
 
-public function classe_tranche(Request $request)
-{
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
     // Vérifier si l'école est bien présente dans la session
     $ecole = Session::get('ecole');
     if (!$ecole) {
@@ -791,7 +757,7 @@ public function classe_tranche(Request $request)
 
  }
 }
-<<<<<<< HEAD
+
 catch (\Exception $e) {
     return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
 }
@@ -911,7 +877,7 @@ public function show_paiement($nom_complet)
     } catch (\Exception $e) {
         return response()->json(['error' => 'Une erreur est survenue : ' . $e->getMessage()], 500);
     }
-=======
+
 
 
 public function filiere_classe(Request $request)
@@ -1017,7 +983,7 @@ public function show_paiement($nom_complet)
 
     // Retourner tous les détails des paiements pour cet élève
     return response()->json($students);
->>>>>>> b610dc2e03e1e8e3ac1f8dc2b2bd7a69a7e63053
+
 }
 
 }
