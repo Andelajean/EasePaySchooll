@@ -29,7 +29,8 @@ class StatisticsController extends Controller
         $paymentsBySchool = Ecole::withCount('paiements')->get();
 
         //return view('admin.dashboard', compact('totalPayments', 'totalSchools', 'paymentsBySchool'));
-        return view('admin.statistics.index', compact('totalUsers', 'onlineUsers', 'newRegistrations', 'totalVisits', 'ecoles','totalPayments', 'totalSchools', 'paymentsBySchool'));
+        return view('admin.statistics.index', compact('totalUsers', 'onlineUsers', 'newRegistrations', 'totalVisits', 
+'ecoles','totalPayments', 'totalSchools', 'paymentsBySchool'));
     }
     
 

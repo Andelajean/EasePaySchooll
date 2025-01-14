@@ -60,14 +60,14 @@
   
       <!-- Begin Navbar -->
       
-       @include('Admin.includes.navbar')
+       @include('admin.includes.navbar')
       
       <!--End  Navbar -->
  
 
   <!-- Begin Sidebar  -->
   
-      @include('Admin.includes.sidebar')
+      @include('admin.includes.sidebar')
 <!-- End Sidebar  -->
 
   
@@ -85,7 +85,7 @@
   
   <!-- Main Footer -->
     
-   @include('Admin.includes.footer')
+   @include('admin.includes.footer')
 
 
 </div>

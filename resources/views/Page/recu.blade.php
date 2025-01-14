@@ -3,60 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Re√ßu de paiement</title>
-    
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/apple-touch-icon.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
-  <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
-  <!-- Google Web Fonts -->
-  <link href="/style/recu.css" rel="stylesheet">
-  <!-- Icon Font Stylesheet -->
+    <title>ReÁu de paiement</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
+
+    <!-- Google Web Fonts -->
+    <link href="/style/recu.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 210mm; /* Taille A4 */
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+        }
+        .header img {
+            width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .info {
+            width: 48%;
+            font-size: 14px;
+        }
+        .details-paiement table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .details-paiement table th, 
+        .details-paiement table td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: left;
+        }
+        .qr-code img {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+        }
+        .download-btn {
+        display: inline-block;
+        margin: 20px auto;
+        padding: 10px 15px; /* RÈduit les dimensions du bouton */
+        background-color: blue;
+        color: white;
+        border: none;
+        text-decoration: none;
+        font-size: 14px; /* Taille de police ajustÈe */
+        cursor: pointer;
+        text-align: center;
+        border-radius: 5px; /* Ajout de coins arrondis pour un style moderne */
+        width: auto; /* Ajustement automatique ‡ la taille du texte */
+    }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1 style="text-align: center;">Re√ßu de Paiement Des Frais De Scolarit√©</h1>
-        <!-- Premi√®re section : Informations de l'√©cole -->
-        <div class="section">
-            <h2>Informations de l'√©cole</h2>
-            <p><strong>Nom de l'√©cole :</strong> {{ $nom_ecole }}</p>
-            <p><strong>Ville :</strong> {{ $ville }}</p>
-            <p><strong>T√©l√©phone :</strong> {{ $telephone }}</p>
+    <div class="container" id="recu-container">
+        <!-- Logo -->
+        <div class="header">
+            <img src="{{ asset('image/logofin.jpg') }}" alt="Logo">
         </div>
-        <!-- Deuxi√®me section : D√©tails du paiement -->
-        <div class="section">
-            <h2>D√©tails du paiement</h2>
-            <p><strong>ID Paiement :</strong> {{ $id_paiement }}</p>
-            <p><strong>Nom complet :</strong> {{ $nom_complet }}</p>
-            <p><strong>Montant :</strong> {{ $montant }} FCFA</p>
-            <p><strong>D√©tails :</strong> {{ $details }}</p>
-            <p><strong>Banque :</strong> {{ $banque }}</p>
-            <p><strong>Classe :</strong> {{ $classe }}</p>
-            <p><strong>Niveau :</strong> {{ $niveau }}</p>
-            <p><strong>Fili√®re :</strong> {{ $filiere }}</p>
-              <p><strong>Date Paiement :</strong> {{ $date_paiement }}</p>
-            <p><strong>Heure Paiement:</strong> {{ $heure_paiement }}</p>
-            <p><strong>Niveau Universit√© :</strong> {{ $niveau_universite }}</p>
+
+        <!-- Informations de l'entreprise et de l'Ècole -->
+        <div class="info-section">
+            <div class="info">
+                <h2>Informations de l'entreprise</h2>
+                <p><strong>TrueSiteTechnology SARL</strong></p>
+                <p>Site web : <strong>www.truesitetechnology.com</strong></p>
+                <p>Email : <strong>contact@truesitetechnology.com</strong></p>
+                <p>Tel : <strong>+237 620 699 733 / 659 454 737 / 679 091 819</strong></p>
+            </div>
+            <div class="info">
+                <h2>Informations de l'Ècole</h2>
+                <p><strong>Nom de l'Ècole : {{ $nom_ecole }}</strong></p>
+                <p>Ville :<strong> {{ $ville }}</strong></p>
+                <p>TÈlÈphone :<strong>{{ $telephone }}</strong></p>
+            </div>
         </div>
-        <!-- QR code -->
+
+        <!-- DÈtails du paiement -->
+        <div class="details-paiement">
+            <h2>DÈtails du Paiement</h2>
+            <table>
+                <tr><th>ID Paiement</th><td>{{ $id_paiement }}</td></tr>
+                <tr><th>Nom complet</th><td>{{ $nom_complet }}</td></tr>
+                <tr><th>Montant</th><td>{{ $montant }} FCFA</td></tr>
+                <tr><th>DÈtails</th><td>{{ $details }}</td></tr>
+                <tr><th>Banque</th><td>{{ $banque }}</td></tr>
+                <tr><th>Classe</th><td>{{ $classe }}</td></tr>
+                <tr><th>Niveau</th><td>{{ $niveau }}</td></tr>
+                <tr><th>FiliËre</th><td>{{ $filiere }}</td></tr>
+                <tr><th>Date Paiement</th><td>{{ $date_paiement }}</td></tr>
+                <tr><th>Heure Paiement</th><td>{{ $heure_paiement }}</td></tr>
+                <tr><th>Niveau UniversitÈ</th><td>{{ $niveau_universite }}</td></tr>
+            </table>
+        </div>
+
+        <!-- QR Code -->
         <div class="qr-code">
             <img src="{{ asset('qrcodes/' . $qr_code) }}" alt="QR Code">
         </div>
-        <!-- Footer -->
-        <div class="footer">
-            <p>Re√ßu d√©livr√© par : <strong>EasePaySchool.com</strong></p>
-            <p>D√©velopp√© par <strong>Smart Tech Engineering</strong></p>
-            <p>Tel : +237 620 699 733 / 659 454 737 / 679 091 819</p>
-        </div>
-         <!-- Bouton de t√©l√©chargement du re√ßu -->
+
+        <!-- Bouton de tÈlÈchargement du reÁu -->
         <div style="text-align: center;">
-            <a href="{{ route('telecharger_recu', ['id_paiement' => $id_paiement]) }}" class="download-btn">T√©l√©charger le Re√ßu</a>
+            <a id="download-btn" class="download-btn">TÈlÈcharger le ReÁu</a>
         </div>
     </div>
- <script src="/jscript/about.js"></script>
- <script src="/jscript/style.js">
-  </script>
- 
+
+    <!-- Script html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadBtn = document.getElementById('download-btn');
+            const recuContainer = document.getElementById('recu-container');
+
+            downloadBtn.addEventListener('click', () => {
+                // Masquer le bouton avant la gÈnÈration du PDF
+                downloadBtn.style.display = 'none';
+
+                // Options pour html2pdf
+                const options = {
+                    margin: [10, 10, 10, 10],
+                    filename: 'recu_paiement.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // GÈnÈrer et tÈlÈcharger le PDF
+                html2pdf().set(options).from(recuContainer).save().then(() => {
+                    // RÈafficher le bouton aprËs la gÈnÈration
+                    downloadBtn.style.display = 'block';
+                });
+            });
+        });
+            
+// EmpÍcher le clic droit
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault(); // EmpÍche l'affichage du menu contextuel
+});
+
+// EmpÍcher certaines combinaisons de touches
+document.addEventListener('keydown', function (e) {
+    const key = e.key.toLowerCase(); // Normalise la touche en minuscule
+
+    // EmpÍcher certains raccourcis clavier
+    if (e.ctrlKey || e.metaKey) {
+        if (key === 's' || key === 'u' || key === 'r') {
+            e.preventDefault();
+        }
+    }
+
+    // EmpÍcher les touches spÈcifiques (F12, F5)
+    if (key === 'f12' || key === 'f5') {
+        e.preventDefault();
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', () => {
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Traitement...";
+            }
+        });
+    }
+});
+
+
+    </script>
 </body>
 </html>

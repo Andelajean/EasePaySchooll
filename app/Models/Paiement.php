@@ -11,7 +11,7 @@ class Paiement extends Model
     use HasFactory;
     protected $fillable = [
         'nom_ecole',
-        'ecole_id',
+        'id_ecole',
         'telephone',
         'ville',
         'banque',
