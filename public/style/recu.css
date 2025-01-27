@@ -13,7 +13,8 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
-  max-width: 800px;
+  max-width: 90%; /* Utilisation d'un pourcentage pour la largeur */
+  width: 800px; /* Largeur maximale pour les écrans larges */
 }
 
 .container::before {
@@ -21,12 +22,12 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-45deg); /* Rotation de -45 degrés pour un affichage diagonal */
-  font-size: 60px;
-  color: rgba(0, 120, 255, 0.1); /* Bleu clair et transparent */
+  transform: translate(-50%, -50%) rotate(-45deg); /* Filigrane diagonal */
+  font-size: 50px; /* Ajuste la taille du texte selon les besoins */
+  color: rgba(0, 120, 255, 0.1);
   z-index: 0;
   white-space: nowrap;
-  pointer-events: none; /* Évite toute interaction avec le filigrane */
+  pointer-events: none;
 }
 
 .header {
@@ -35,18 +36,22 @@ body {
 }
 
 .header img {
-  max-width: 150px;
+  max-width: 120px; /* Taille dynamique pour les images */
+  width: 100%; /* Ajustement à la taille disponible */
   border-radius: 10px;
 }
 
 .info-section {
   display: flex;
+  flex-wrap: wrap; /* Permet un retour à la ligne sur les petits écrans */
   justify-content: space-between;
+  gap: 10px; /* Espacement entre les blocs */
   margin-bottom: 20px;
 }
 
 .info {
-  width: 45%;
+  width: 100%; /* Par défaut, prend toute la largeur */
+  flex: 1; /* Laisse chaque bloc s'adapter */
   background-color: #f2f2f2;
   padding: 15px;
   border-radius: 8px;
@@ -71,7 +76,6 @@ body {
   font-size: 18px;
   margin-bottom: 15px;
   text-align: center;
-  justify-content: center;
   color: #0078ff;
 }
 
@@ -85,10 +89,10 @@ th, td {
   text-align: left;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  font-size: 14px; /* Texte ajusté pour petits écrans */
 }
 
 th {
-  
   color: black;
 }
 
@@ -98,22 +102,81 @@ th {
 }
 
 .qr-code img {
-  max-width: 150px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  max-width: 120px; /* Taille réduite pour petits écrans */
+  width: 80%; /* Proportionnel à la largeur du conteneur */
+ /* border: 1px solid #ddd;
+  border-radius: 8px;*/
 }
 
 .download-btn {
   display: inline-block;
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   background-color: #0078ff;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: 16px;
+  text-align: center;
 }
 
 .download-btn:hover {
   background-color: #005bb5;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px; /* Réduction des marges internes */
+  }
+
+  .container::before {
+    font-size: 40px; /* Réduction du filigrane */
+  }
+
+  .header img {
+    max-width: 100px; /* Réduction de la taille de l'image */
+  }
+
+  .info-section {
+    gap: 5px; /* Réduction de l'espacement entre les sections */
+  }
+
+  .info {
+    width: 100%; /* Les sections passent sur toute la largeur */
+    margin-bottom: 10px; /* Ajout d'espacement entre les blocs */
+  }
+
+  table th, 
+  table td {
+    font-size: 12px; /* Texte réduit */
+    padding: 8px;
+  }
+
+  .qr-code img {
+    max-width: 100px; /* Réduction du QR code */
+  }
+
+  .download-btn {
+    font-size: 14px; /* Taille réduite pour le bouton */
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 10px; /* Réduction des marges externes */
+  }
+
+  .container::before {
+    font-size: 30px; /* Filigrane plus petit pour s'adapter */
+  }
+
+  .header img {
+    max-width: 80px; /* Taille encore plus petite */
+  }
+
+  .download-btn {
+    font-size: 12px; /* Texte plus petit pour le bouton */
+    padding: 6px 10px;
+  }
 }

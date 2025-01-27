@@ -99,15 +99,26 @@
                             <span></span>
                         </div>
                        <div class="search-box pull-left">
-    <form action="#">
-        <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
-        <i class="ti-search"></i>
-    </form>
-    <ul id="suggestions" class="list-group" style="display: none;"></ul>
-</div>
+                            <form action="#">
+                                <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
+                                    <i class="ti-search"></i>
+                            </form>
+                            <ul id="suggestions" class="list-group" style="display: none;"></ul>
+                        </div>
                     </div>
-                  </div> 
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            <li class="settings-btn">
+                              <a class="ti-settings "href="{{route('penalite')}}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+        
+            
             <!-- header area end -->
             <!-- page title area start -->
             <div class="page-title-area">

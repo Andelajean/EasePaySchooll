@@ -15,61 +15,109 @@
     <link href="/style/recu.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 210mm; /* Taille A4 */
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-        }
-        .header img {
-            width: 100px;
-            display: block;
-            margin: 0 auto;
-        }
-        .info-section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .info {
-            width: 48%;
-            font-size: 14px;
-        }
-        .details-paiement table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .details-paiement table th, 
-        .details-paiement table td {
-            border: 1px solid #ddd;
-            padding: 5px;
-            text-align: left;
-        }
-        .qr-code img {
-            display: block;
-            margin: 20px auto;
-            width: 150px;
-        }
-        .download-btn {
-        display: inline-block;
-        margin: 20px auto;
-        padding: 10px 15px; /* Réduit les dimensions du bouton */
-        background-color: blue;
-        color: white;
-        border: none;
-        text-decoration: none;
-        font-size: 14px; /* Taille de police ajustée */
-        cursor: pointer;
-        text-align: center;
-        border-radius: 5px; /* Ajout de coins arrondis pour un style moderne */
-        width: auto; /* Ajustement automatique à la taille du texte */
+       body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 95%; /* Utilisation d'un pourcentage pour la largeur */
+    max-width: 210mm; /* Taille maximale pour A4 */
+    margin: 10px auto; /* Marges flexibles */
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 10px; /* Coins arrondis pour un effet moderne */
+}
+
+.header img {
+    width: 80px; /* Ajuste la taille des images selon l'écran */
+    display: block;
+    margin: 0 auto;
+}
+
+.info-section {
+    display: flex;
+    flex-wrap: wrap; /* Permet de passer à une disposition en colonne si nécessaire */
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px; /* Espacement entre les sections */
+}
+
+.info {
+    width: 100%; /* Par défaut, prend toute la largeur */
+    flex: 1; /* Laisse chaque bloc s'adapter automatiquement */
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.details-paiement table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-paiement table th, 
+.details-paiement table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+    font-size: 12px; /* Police ajustée pour un écran plus petit */
+}
+
+.qr-code img {
+    display: block;
+    margin: 20px auto;
+    max-width: 150px;
+    width: 50%; /* Taille relative à l'écran */
+}
+
+.download-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: blue;
+    color: white;
+    border: none;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    width: auto; /* Taille ajustée au texte */
+}
+
+@media (max-width: 768px) {
+    .header img {
+        width: 60px; /* Réduction de la taille pour les petits écrans */
     }
+
+    .info {
+        width: 100%; /* Chaque bloc prend toute la largeur */
+    }
+
+    .details-paiement table th, 
+    .details-paiement table td {
+        font-size: 12px; /* Texte plus petit pour s'adapter aux écrans étroits */
+    }
+
+    .qr-code img {
+        width: 100px; /* Réduction de la taille du QR code */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px; /* Réduction des marges et des espaces */
+    }
+
+    .download-btn {
+        font-size: 12px; /* Réduction de la taille du texte pour s'adapter */
+        padding: 8px 10px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -126,7 +174,8 @@
     </div>
 
     <!-- Script html2pdf.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const downloadBtn = document.getElementById('download-btn');

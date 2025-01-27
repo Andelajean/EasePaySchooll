@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Penalite;
 use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
 use App\Models\Role;
@@ -138,10 +139,11 @@ Route::post('/ecole/compte/classe/traitement/{id}/profil', [EcoleController::cla
 
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
-
+    Route::get('/ecole/penalite',[Penalite::class,'penalite'])->name('penalite');
+    Route::post('/penalites/ecole', [Penalite::class,'store'])->name('penalites.store');
     Route::get('ecole/dashboard/profil/{id}', [ProfilEcole::class, 'profil'])->name('profil');
     //Route::get('/ecole/{id}', [EcoleController::class, 'show'])->name('ecole.profil');
-    Route::post('/ecole/{id}', [ProfilEcole::class, 'update'])->name('ecole.update');
+    Route::post('/ecole/{id}', [ProfilEcole::class,'update'])->name('ecole.update');
     Route::post('/ecoles/{id}/banques', [ProfilEcole::class, 'updateBanque']);
     Route::post('/ecole/{id}/classe', [ProfilEcole::class, 'addClass'])->name('ecole.addClass');
     Route::get('/classes/{id}/edit', [ProfilEcole::class, 'edit'])->name('classes.edit');

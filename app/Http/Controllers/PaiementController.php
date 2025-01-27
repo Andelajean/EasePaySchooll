@@ -9,6 +9,7 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
+use App\Models\Classe; 
 
 class PaiementController extends Controller
 {
@@ -128,9 +129,7 @@ public function payer(Request $request)
         if ($request->has('nom_complet')) {
             $paiementData['nom_complet'] = $request->nom_complet;
         }
-        if ($request->has('classe')) {
-            $paiementData['classe'] = $request->classe;
-        }
+       
         if ($request->has('niveau')) {
             $paiementData['niveau'] = $request->niveau;
             // Si le niveau est 'université', ajouter les champs spécifiques à l'université
@@ -143,17 +142,59 @@ public function payer(Request $request)
                 }
             }
         }
-        if ($request->has('montant')) {
-            $paiementData['montant'] = $request->montant;
-        } 
+      // Assurez-vous que le modèle Classe est importé
+
+        // Vérifiez si 'classe' et 'details' sont présents dans la requête
+        if ($request->has('classe') && $request->has('details')) {
+            $classe = $request->classe;
+            $details = $request->details;
+        
+            // Recherchez les informations de la classe dans la table 'classes'
+            $classeData = Classe::where('nom_classe', $classe)->first();
+        
+            if ($classeData) {
+                // Vérifiez si le détail correspond à une tranche valide
+                $validDetails = [
+                    'premiere_tranche',
+                    'deuxieme_tranche',
+                    'troisieme_tranche',
+                    'quatrieme_tranche',
+                    'cinquieme_tranche',
+                    'sixieme_tranche',
+                    'septieme_tranche',
+                    'huitieme_tranche',
+                    'totalite',
+                ];
+        
+                if (!in_array($details, $validDetails)) {
+                    // Retourner une erreur si le détail est invalide
+                    return redirect()->back()->with('error' , 'Le détail fourni est invalide.');
+                }
+        
+                // Définissez le montant en fonction du détail
+                $paiementData['montant'] = $classeData->$details;
+            } else {
+                // Si la classe n'est pas trouvée, retourner une erreur
+                return redirect()->back()->with(['error' => 'Classe introuvable.'], 404);
+            }
+        } else {
+            // Si 'classe' ou 'details' manquent dans la requête
+            return redirect()->back()->with(['error' => 'Les champs classe et details sont requis.'], 400);
+        }
+        
+        // Traitez les autres champs comme d'habitude
+        if ($request->has('classe')) {
+            $paiementData['classe'] = $request->classe;
+        }
         if ($request->has('details')) {
             $paiementData['details'] = $request->details;
-        }  
+        }
+          
         if ($request->has('date_paiement')) {
-            $paiementData['date_paiement'] = $request->date_paiement;
+            $paiementData['date_paiement'] = now();
         }
         if ($request->has('heure_paiement')) {
-            $paiementData['heure_paiement'] = $request->heure_paiement;
+            $paiementData['heure_paiement'] = now()->format('H:i:s'); 
         }
         // Ajout du QR Code et de l'ID de paiement
         $paiementData['qr_code'] = $qrCode;
@@ -216,7 +257,7 @@ public function payer(Request $request)
                 ->setMargin(10)
                 ->setEncoding(new Encoding('UTF-8'))
                 ->setForegroundColor(new Color(0, 0, 0)) // Couleur noire
-                ->setBackgroundColor(new Color(0, 0, 255)); // Couleur bleue
+                ->setBackgroundColor(new Color(255, 255, 255)); // Couleur bleue
     
             // Vérifier si le dossier pour les QR codes existe, sinon le créer
             $qrCodeDir = public_path('qrcodes');
