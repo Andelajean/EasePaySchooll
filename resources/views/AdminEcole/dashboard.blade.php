@@ -79,6 +79,13 @@
                                      <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
+                            <li >
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Penalité  
+                                    </span></a>
+                                     <ul class="collapse">
+                                     <li  ><a href="{{route('calculer_penalites')}}">Penalité Par classe</a></li>
+                                </ul>
+                            </li>
                            
                         </ul>
                     </nav>

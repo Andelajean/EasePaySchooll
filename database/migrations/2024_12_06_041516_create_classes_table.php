@@ -13,7 +13,7 @@ return new class extends Migration
 {
     Schema::create('classes', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('id_ecole'); // Clé étrangère doit correspondre au type de la clé primaire de la table 'ecoles'
+        $table->unsignedBigInteger('id_ecole'); 
         $table->string('nom_classe');
         $table->string('premiere_tranche')->nullable();
         $table->string('deuxieme_tranche')->nullable();

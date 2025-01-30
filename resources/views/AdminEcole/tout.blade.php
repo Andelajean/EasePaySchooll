@@ -19,6 +19,8 @@
   <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- others css -->
     <link rel="stylesheet" href="/assets/css/typography.css">
     <link rel="stylesheet" href="/assets/css/default-css.css">
@@ -191,11 +193,12 @@
 
 
     <!-- Tableau des Paiements -->
-<div class="row mt-5 mb-5">
+    <div class="row mt-5 mb-5">
     <div class="col-12">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
-                <div class="d-sm-flex justify-content-between align-items-center">
+                <!-- En-tête -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="header-title mb-0" id="table-header">
                         @if(request('date'))
                             Paiements du {{ request('date') }}
@@ -203,45 +206,50 @@
                             Paiements d'Aujourd'hui
                         @endif
                     </h4>
-                    
-                    <!-- Bouton Imprimer -->
-                    <button class="btn btn-primary" onclick="printTable()">Imprimer</button>
+                    <button class="btn btn-primary btn-sm" onclick="printTable()">Imprimer</button>
                 </div>
 
+                <!-- Tableau des paiements -->
                 <div class="market-status-table mt-4">
                     <div class="table-responsive">
-                        <table class="dbkit-table">
-                            <tr class="heading-td">
-                                <td class="mv-icon">Nom Étudiant/Élève</td>
-                                <td class="coin-name">Classe</td>
-                                <td class="buy">Banque de Paiement</td>
-                                <td class="sell">Date Paiement</td>
-                                <td class="trends">Heure Paiement</td>
-                                <td class="attachments">Filière</td>
-                                <td class="stats-chart">Niveau</td>
-                            </tr>
-
-                            <!-- Affichage des paiements -->
-                            @forelse($paiementsAujourdhui as $paiement)
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td>{{ $paiement->nom_complet }}</td>
-                                    <td>{{ $paiement->classe }}</td>
-                                    <td>{{ $paiement->banque }}</td>
-                                    <td>{{ $paiement->date_paiement }}</td>
+                                    <th>Nom Étudiant/Élève</th>
+                                    <th>Classe</th>
+                                    <th>Banque de Paiement</th>
+                                    <th>Date Paiement</th>
+                                    <th>Heure Paiement</th>
+                                    <th>Filière</th>
+                                    <th>Niveau</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($paiementsAujourdhui as $paiement)
+                                    <tr>
+                                        <td>{{ $paiement->nom_complet }}</td>
+                                        <td>{{ $paiement->classe }}</td>
+                                        <td>{{ $paiement->banque }}</td>
+                                        <td>{{ $paiement->date_paiement }}</td>
                                         <td>{{ $paiement->heure_paiement }}</td>
-                                    <td>{{ $paiement->filiere }}</td>
-                                    <td>{{ $paiement->niveau_universite }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7">Aucun paiement trouvé pour cette date.</td>
-                                </tr>
-                            @endforelse
+                                        <td>{{ $paiement->filiere }}</td>
+                                        <td>{{ $paiement->niveau_universite }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Aucun paiement trouvé pour cette date.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
                         </table>
+                    </div>
 
-                        <!-- Pagination -->
-                        <div class="mt-4">
-                            {{ $paiementsAujourdhui->links() }}
+                    
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        
+                        <div>
+                            {{ $paiementsAujourdhui->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </div>
@@ -249,7 +257,7 @@
         </div>
     </div>
 </div>
-<!-- main content end -->
+
 <!-- main content end -->
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -277,7 +285,7 @@
        
         <footer>
     <div class="footer-area">
-        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
+        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://www.truesitetechnology.com">True Site Technology</a>.</p>
     </div>
 </footer>
 

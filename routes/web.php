@@ -140,8 +140,12 @@ Route::post('/ecole/compte/classe/traitement/{id}/profil', [EcoleController::cla
 Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
     Route::get('/ecole/penalite',[Penalite::class,'penalite'])->name('penalite');
-    Route::post('/penalites/ecole', [Penalite::class,'store'])->name('penalites.store');
+    Route::post('/ecole/penalite', [Penalite::class,'store'])->name('penalites.store');
     Route::get('ecole/dashboard/profil/{id}', [ProfilEcole::class, 'profil'])->name('profil');
+    Route::get('/penalite/{id}/edit', [Penalite::class, 'edit'])->name('penalite.edit');
+    Route::get('/afficher/penalite',[Penalite::class,'afficherPenalitesEtPaiements'])->name('calculer_penalites');
+    Route::delete('/penalite/{id}', [Penalite::class, 'destroy'])->name('penalite.destroy');
+    Route::put('/penalite/{id}', [Penalite::class, 'update'])->name('penalite.update');
     //Route::get('/ecole/{id}', [EcoleController::class, 'show'])->name('ecole.profil');
     Route::post('/ecole/{id}', [ProfilEcole::class,'update'])->name('ecole.update');
     Route::post('/ecoles/{id}/banques', [ProfilEcole::class, 'updateBanque']);

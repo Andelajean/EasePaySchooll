@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "blood72/blade-minify": "^1.4",
         "endroid/qr-code": "^5.1",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel/breeze": "^2.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"

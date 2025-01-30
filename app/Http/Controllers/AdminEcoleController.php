@@ -203,13 +203,13 @@ public function classe(Request $request)
       ->where('classe', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
       ->whereBetween('created_at', [$yesterday, $today])
-      ->paginate(50);
+      ->paginate(2);
 
   // Total des paiements (sans prendre en compte la date)
   $paiementsTotal = DB::table('paiements')
       ->where('classe', $classeSelectionnee)
       ->where('nom_ecole', $ecole->nom_ecole)
-      ->paginate(50); // Ici on récupère le nombre total de paiements
+      ->paginate(2); // Ici on récupère le nombre total de paiements
 
   // Si une date est sélectionnée, récupérer les paiements pour cette date
   if ($dateSelectionnee) {
@@ -220,7 +220,7 @@ public function classe(Request $request)
           ->where('classe', $classeSelectionnee)
           ->where('nom_ecole', $ecole->nom_ecole)
           ->whereBetween('created_at', [$startOfDay, $endOfDay])
-          ->paginate(50);  // Paginer les résultats par 50
+          ->paginate(2);  // Paginer les résultats par 50
   }
   $banque = $classes;
   // Retourner la vue avec les données
@@ -261,20 +261,20 @@ public function banque(Request $request)
         ->where('banque', $classeSelectionnee)
         ->where('nom_ecole', $ecole->nom_ecole)
         ->where('created_at', '>=', $today)
-        ->paginate(50);
+        ->paginate(2);
 
     // Paiements pour hier
     $paiementsHier = DB::table('paiements')
         ->where('banque', $classeSelectionnee)
         ->where('nom_ecole', $ecole->nom_ecole)
         ->whereBetween('created_at', [$yesterday, $today])
-        ->paginate(50);
+        ->paginate(2);
 
     // Total des paiements (sans prendre en compte la date)
     $paiementsTotal = DB::table('paiements')
         ->where('banque', $classeSelectionnee)
         ->where('nom_ecole', $ecole->nom_ecole)
-        ->paginate(50); // Ici on récupère le nombre total de paiements
+        ->paginate(2); // Ici on récupère le nombre total de paiements
 
     // Si une date est sélectionnée, récupérer les paiements pour cette date
     if ($dateSelectionnee) {
@@ -285,7 +285,7 @@ public function banque(Request $request)
             ->where('banque', $classeSelectionnee)
             ->where('nom_ecole', $ecole->nom_ecole)
             ->whereBetween('created_at', [$startOfDay, $endOfDay])
-            ->paginate(50);  // Paginer les résultats par 50
+            ->paginate(2);  // Paginer les résultats par 50
     }
 
     $banque = $classes;
@@ -465,7 +465,7 @@ public function tout(Request $request)
         $paiementsAujourdhui = DB::table('paiements')
             ->where('nom_ecole', $ecole->nom_ecole)
             ->whereBetween('created_at', [$startOfDay, $endOfDay])
-            ->paginate(50);  // Pagination sur 50 paiements par page
+            ->paginate(2);  // Pagination sur 50 paiements par page
     }
 
     // Retourner la vue avec les paiements et les totaux
