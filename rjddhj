@@ -1,0 +1,42 @@
+[33mcommit 799519a294f9fb2f494ebefb813f4d39c99fd0e4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Wed Jan 29 01:43:13 2025 +0100
+
+    stagging des dossiers et fichiers non suivi en production
+
+[33mcommit 4165148030518f6f22c979e2d64e2cc2461d6fc7[m[33m ([m[1;32mlink_prod_local[m[33m)[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Tue Jan 14 12:15:05 2025 +0100
+
+    MAJ de la session admin
+
+[33mcommit 132544032f917250eafd71af4e019d8c1c37e84a[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Tue Jan 7 21:31:07 2025 +0100
+
+    MAJ PAGE REGISTER
+
+[33mcommit 751595e7928e4337d779b5ef513817ae71a5ae20[m
+Merge: 4ae4b36 94f31af
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Tue Jan 7 21:29:12 2025 +0100
+
+    Merge branch 'link_prod_local' of https://github.com/Andelajean/EasePaySchooll into link_prod_local
+
+[33mcommit 94f31af65d6b7822d84734d4133bc41d94388952[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Tue Jan 7 21:28:24 2025 +0100
+
+    MAJ PAYMENT
+
+[33mcommit 4ae4b36c47157bb3ad28fef91aaf944fa2708d8b[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Tue Jan 7 20:00:32 2025 +0100
+
+    REDIRETION UPDATE
+
+[33mcommit 4b38d924c590c7acbe69873b38e38134d1132328[m
+Author: omd34 <danielotomo34@gmail.com>
+Date:   Mon Dec 30 03:50:29 2024 +0100
+
+    Merge github repository with local
