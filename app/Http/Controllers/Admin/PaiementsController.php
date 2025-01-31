@@ -9,14 +9,17 @@ use App\Models\Banque;
 
 class PaiementsController extends Controller
 {
-    //
-
     public function showAllPaiement($id){
-       $paiements=Paiement::where('id_ecole',$id)->get();
-       $id_ecole=$id;
-       $ecoles=Ecole::all();
-       $banques=Banque::all();
-       return view('admin.paiement.showAllParEcole', compact('paiements','ecoles','id','banques'));
+        $paiements = Paiement::where('id_ecole', $id)->get();
+        $id_ecole = $id;
+        $ecoles = Ecole::all();
+        $banques = Banque::all();
+        return view('admin.paiement.showAllParEcole', compact('paiements', 'ecoles', 'id', 'banques'));
+    }
 
+    public function getBanquesByEcole($ecoleId)
+    {
+        $banques = Paiement::select('banque')->where('id_ecole', $ecoleId)->distinct()->get();
+        return response()->json($banques);
     }
 }

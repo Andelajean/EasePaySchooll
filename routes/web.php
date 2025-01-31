@@ -78,13 +78,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
  //** GESTION DES STATISTIQUES ADMIN **//
  Route::get('/statistics', [StatisticsController::class, 'index'])->middleware(['auth', 'verified'])->name('statistics.index');
  Route::get('/statistics/data', [StatisticsController::class, 'getData']);
-  
+ Route::get('/statistics/banques/{ecoleId}', [StatisticsController::class, 'getBanquesByEcole']);
+ 
 
  //** GESTIONS DES PAIEMENTS ADMIN **//
  Route::group(['prefix' => 'paiement'], function(){
    
     Route::get('/showAll/{id}', [PaiementsController::class,'showAllPaiement'])->name('show.paiement.parEcole');
     Route::get('/showAllPaiement',[EcolesController::class,'showAllPaiement'])->name("show.all.paiement");
+    Route::get('/banques/{ecoleId}', [PaiementsController::class, 'getBanquesByEcole']);
 
 });
 

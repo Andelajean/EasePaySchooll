@@ -18,11 +18,11 @@ class Ecole extends Model
 
     public function paiements()
     {
-        return $this->hasMany(Paiement::class);
+        return $this->hasMany(Paiement::class, 'id_ecole','nom_ecole');
     }
     public function classes()
 {
-    return $this->hasMany(Classe::class, 'id_ecole', 'id');
+    return $this->hasMany(Classe::class, 'id_ecole', 'id','nom_ecole');
 }
 public function PenaliteEcoles()
     {

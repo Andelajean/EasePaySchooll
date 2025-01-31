@@ -125,10 +125,11 @@
     </section>
     <!-- /.content -->
 
-  <script>
-    ///***Nous permet de filtrer par banque et par date***///
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('bankFilter').addEventListener('change', filterTable);
     document.getElementById('dateFilter').addEventListener('change', filterTable);
+    document.getElementById('ecole').addEventListener('change', updateBanques);
 
     function filterTable() {
         var bankFilter = document.getElementById('bankFilter').value;
@@ -137,7 +138,7 @@
         var tr = table.getElementsByTagName('tr');
 
         for (var i = 1; i < tr.length; i++) {
-            var tdBank = tr[i].getElementsByTagName('td')[2];
+            var tdBank = tr[i].getElementsByTagName('td')[5];
             var tdDate = tr[i].getElementsByTagName('td')[13];
             if (tdBank && tdDate) {
                 var bankValue = tdBank.textContent || tdBank.innerText;
@@ -152,8 +153,31 @@
         }
     }
 
-    ///***Nous permet de faire des recherches***///
-        document.getElementById('searchInput').addEventListener('keyup', function() {
+    function updateBanques() {
+        var ecoleId = document.getElementById('ecole').value;
+        var banqueSelect = document.getElementById('bankFilter');
+
+        if (ecoleId) {
+            fetch(`/paiements/banques/${ecoleId}`)
+                .then(response => response.json())
+                .then(data => {
+                    banqueSelect.innerHTML = '<option value="">Toutes les banques</option>';
+                    data.forEach(function(banque) {
+                        var option = document.createElement('option');
+                        option.value = banque.nom;
+                        option.text = banque.nom;
+                        banqueSelect.appendChild(option);
+                    });
+                    filterTable();
+                })
+                .catch(error => console.error('Error fetching banques:', error));
+        } else {
+            banqueSelect.innerHTML = '<option value="">Toutes les banques</option>';
+            filterTable();
+        }
+    }
+
+    document.getElementById('searchInput').addEventListener('keyup', function() {
         var input = document.getElementById('searchInput');
         var filter = input.value.toLowerCase();
         var table = document.getElementById('example2');
@@ -177,7 +201,8 @@
                 tr[i].style.display = "none";
             }
         }
-    }); 
-   </script> 
+    });
+});
+</script>
 
 @endsection
