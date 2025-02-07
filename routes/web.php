@@ -47,7 +47,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 });
 
  //** GESTION ECOLE ADMIN **//
- Route::group(['prefix' => 'ecole'], function () {
+ 
+ Route::group(['prefix' => 'ecole','middleware' => ['auth', 'verified']], function () {
     
     Route::get('/addEcole',[EcolesController::class,'addEcole'])->name("add.Ecole");
     Route::get('/showAll',[EcolesController::class,'showAllEcole'])->name("show.all.Ecole");
@@ -58,7 +59,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 });
 
  //** GESTION BANQUE ADMIN **//
- Route::group(['prefix' => 'bank'], function () {
+ Route::group(['prefix' => 'bank','middleware' => ['auth', 'verified']], function () {
     
     Route::get('/addBanque',[BanquesController::class,'addBank'])->name('add.bank');
     Route::get('/showAll',[BanquesController::class,'showAllBank'])->name('show.all.bank');
@@ -68,15 +69,18 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('update',[BanquesController::class,'updateBank'])->name('update.bank'); 
 });
 
+
+Route::group(['middleware' => ['auth', 'verified']], function () {
+
  //** GESTION DES REQUESTES ADMIN **//
  Route::post('/execute-sql', [SqlController::class, 'execute']);
  Route::get('/request', function () {
         $ecoles=Ecole::all();
         return view('admin.requetesql.sqlrequest',compact('ecoles'));
-    })->middleware(['auth', 'verified'])->name('sql');
+    })->name('sql');
 
  //** GESTION DES STATISTIQUES ADMIN **//
- Route::get('/statistics', [StatisticsController::class, 'index'])->middleware(['auth', 'verified'])->name('statistics.index');
+ Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics.index');
  Route::get('/statistics/data', [StatisticsController::class, 'getData']);
  Route::get('/statistics/banques/{ecoleId}', [StatisticsController::class, 'getBanquesByEcole']);
  
@@ -90,6 +94,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 });
 
+
+});
 ///*** CONTACTS ***///
 Route::group(['prefix' => 'contact'], function () {
     Route::get('/showAll',[ContactsController::class,'showAllContact'])->name("show.all.Contact");
