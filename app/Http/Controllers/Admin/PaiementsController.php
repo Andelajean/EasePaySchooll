@@ -14,7 +14,7 @@ class PaiementsController extends Controller
         $id_ecole = $id;
         $ecoles = Ecole::all();
         $banques = Banque::all();
-        return view('admin.paiement.showAllParEcole', compact('paiements', 'ecoles', 'id', 'banques'));
+        return view('Admin.paiement.showAllParEcole', compact('paiements', 'ecoles', 'id', 'banques'));
     }
 
     public function getBanquesByEcole($ecoleId)

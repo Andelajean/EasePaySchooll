@@ -52,7 +52,8 @@ class StatisticsController extends Controller
 
         $dailyPaymentsBySchool = $query->get();
 
-        return view('admin.statistics.index', compact('totalUsers', 'onlineUsers', 'newRegistrations', 'totalVisits', 'ecoles', 'banques', 'totalPayments', 'totalSchools', 'paymentsBySchool', 'dailyPaymentsBySchool', 'selectedDate', 'selectedEcole', 'selectedBanque'));
+        return view('Admin.statistics.index', compact('totalUsers', 'onlineUsers', 'newRegistrations', 'totalVisits', 'ecoles', 'banques', 
+'totalPayments', 'totalSchools', 'paymentsBySchool', 'dailyPaymentsBySchool', 'selectedDate', 'selectedEcole', 'selectedBanque'));
     }
 
     public function getBanquesByEcole($ecoleId)

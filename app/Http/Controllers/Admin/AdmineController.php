@@ -12,7 +12,7 @@ class AdmineController extends Controller
     {
         $ecoles=Ecole::all();
         $messages = Contact::latest()->take(3)->get(); 
-        return view('admin.dashboard',compact('ecoles','messages'));
+        return view('Admin.dashboard',compact('ecoles','messages'));
 
     }
 

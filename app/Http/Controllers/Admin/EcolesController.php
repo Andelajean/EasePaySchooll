@@ -17,20 +17,20 @@ class EcolesController extends Controller
     public function addEcole()
     {
         $ecoles=Ecole::all();
-        return view('admin.ecole.addEcole',compact('ecoles'));
+        return view('Admin.ecole.addEcole',compact('ecoles'));
     }
     public function showAllEcole()
     {
         $Ecole = Ecole::all();
         $ecoles=Ecole::all();
-        return view('admin.ecole.showAll',compact('Ecole','ecoles'));
+        return view('Admin.ecole.showAll',compact('Ecole','ecoles'));
     }
 
     public function showAllPaiement()
     {
         $ecoles = Ecole::all();
         $paiements=Paiement::all();
-        return view('admin.paiement.showAllPaiement',compact('paiements','ecoles'));
+        return view('Admin.paiement.showAllPaiement',compact('paiements','ecoles'));
     }
 
     public function save(Request $request)
@@ -107,7 +107,7 @@ class EcolesController extends Controller
         if(!$ecoles)
            redirect() -> route('show.all.Ecole') -> with(['Erreur' => "Ecole n'existe pas !!!"]);
          
-        return view('admin.ecole.update',compact('ecoles','banques','id'));
+        return view('Admin.ecole.update',compact('ecoles','banques','id'));
     }
 
     public function updateEcole(Request $request)
