@@ -1,52 +1,56 @@
-<x-guest-layout>
+<!-- resources/views/auth/register.blade.php -->
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h2>Créer un nouveau compte</h2>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <!-- Autres champs d'inscription ici -->
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <label for="students">Ajouter un étudiant</label>
+        <input type="text" id="student-search" class="form-control" placeholder="Rechercher un étudiant...">
+        <ul id="student-results" class="list-group mt-2"></ul>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <input type="hidden" name="students" id="students" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="btn btn-primary mt-3">S'inscrire</button>
     </form>
-</x-guest-layout>
+</div>
+
+<script>
+    const studentResults = document.getElementById('student-results');
+    const studentSearch = document.getElementById('student-search');
+    const selectedStudents = [];
+
+    studentSearch.addEventListener('input', function() {
+        const query = this.value;
+        if (query.length > 0) {
+            fetch(`/search-students?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    studentResults.innerHTML = '';
+                    data.forEach(student => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item student-item';
+                        li.textContent = student.nom_complet;
+                        li.addEventListener('click', () => {
+                            selectedStudents.push(student.nom_complet);
+                            updateSelectedStudents();
+                            studentResults.innerHTML = ''; // Clear results
+                        });
+                        studentResults.appendChild(li);
+                    });
+                });
+        } else {
+            studentResults.innerHTML = '';
+        }
+    });
+
+    function updateSelectedStudents() {
+        const studentsInput = document.getElementById('students');
+        studentsInput.value = JSON.stringify(selectedStudents); // Store selected students in hidden input
+    }
+</script>
+@endsection

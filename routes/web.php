@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Penalite;
 use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
@@ -206,3 +207,4 @@ Route::middleware(['auth.ecole'])->group(function () {
 Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::class, 'show_paiement']);
 });
 
+Route::get('/search-students', [StudentController::class, 'search']);
