@@ -304,4 +304,13 @@ public function payer(Request $request)
             'heure_paiement' => $request->heure_paiement,
         ]);
     }
+
+
+    public function historiquePaiement(Request $request)
+    {
+        $nom_complet = $request->input('nom_complet');
+        $paiements = Paiement::where('nom_complet', 'like', '%' . $nom_complet . '%')->get();
+
+        return view('historique_paiement', compact('paiements'));
+    }
 }

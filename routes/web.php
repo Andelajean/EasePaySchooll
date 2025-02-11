@@ -208,3 +208,5 @@ Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::cla
 });
 
 Route::get('/search-students', [StudentController::class, 'search']);
+
+Route::get('/historique-paiement', [PaiementController::class, 'historiquePaiement'])->name('historique.paiement');
