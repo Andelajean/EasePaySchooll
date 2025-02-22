@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Mail\IdentifiantMisAJour;
+use App\Models\Filiere;
 use Illuminate\Support\Facades\Mail;
 
 class ProfilEcole extends Controller
@@ -26,6 +27,36 @@ class ProfilEcole extends Controller
         // Retourner la vue avec les données de la classe
         return view('Ecole.edit_classe', compact('classe'));
     }
+    public function edit_filiere($id)
+    {
+        // Récupération de la classe sélectionnée
+        $filiere = Filiere::findOrFail($id);
+
+        // Retourner la vue avec les données de la classe
+        return view('Ecole.edit_filiere', compact('filiere'));
+    }
+    public function update_filiere(Request $request, $id)
+{
+    // Validation des données
+    $request->validate([
+        'nom_filiere' => 'required|string',
+         'ecole_id' => 'required|exists:ecoles,id'
+    ]);
+
+    // Recherche de la filière à mettre à jour
+    $filiere = Filiere::findOrFail($id);
+
+    // Mise à jour des valeurs
+    $filiere->filiere = $request->nom_filiere;
+    $filiere->ecole_id = $request->ecole_id;
+
+    // Sauvegarde des modifications
+    $filiere->save();
+
+    // Redirection avec un message de confirmation
+    return redirect()->route('profil')->with('success', 'Filière mise à jour avec succès !');
+}
+
    
         public function updateClasse(Request $request, $id)
         {
@@ -76,16 +107,19 @@ class ProfilEcole extends Controller
         $classe->update(array_merge($validatedData, ['totalite' => $totalite]));
         $ecoleId = $classe->id_ecole;
         // Rediriger avec un message de succès
-        return redirect()->route('profil', ['id' => $ecoleId])
+        return redirect()->route('profil')
         ->with('success', 'Classe mise à jour avec succès.');
     }
-    public function profil($id)
+    public function profil()
 {
     // Récupération de l'école avec ses classes
-    $ecole = Ecole::with('classes')->findOrFail($id);
-
+    $ecole = Session::get('ecole');
+    $filiere = Filiere::where('ecole_id',$ecole->id)->get();
+    if ($ecole) {
+        // Récupérer l'identifiant de l'école active
+        $idEcole = $ecole->id; 
     // Filtrage des classes avec montants non nuls
-    $classes = $ecole->classes->filter(function ($classe) {
+    $classes =  $ecole->classes->filter(function ($classe) {
         return $classe->premiere_tranche !== null ||
                $classe->deuxieme_tranche !== null ||
                $classe->troisieme_tranche !== null ||
@@ -97,9 +131,10 @@ class ProfilEcole extends Controller
                $classe->totalite !== null;
     });
 
-    return view('Ecole.profil', compact('ecole', 'classes'));
+    return view('Ecole.profil', compact('ecole', 'classes','filiere'));
 }
-
+return redirect()->route('login.ecole')->with('error', 'Aucune école active trouvée.');
+}
 
 public function update(Request $request, $id)
 {
@@ -284,7 +319,7 @@ public function updateBanque(Request $request, $id)
     
         // Redirection après succès
         return redirect()
-            ->route('profil', ['id' => $validated['id_ecole']])
+            ->route('profil')
             ->with('success', 'Classe ajoutée avec succès !');
     }
     
@@ -363,6 +398,17 @@ public function addBank(Request $request, $id)
     // Redirection avec un message de succès
     return redirect()->back()->with('success', 'Banque ajoutée avec succès.');
 }
+public function addfiliere($id , Request $request){
+    $request->validate([
+        'nom_filiere'=>'required|string'
+    ]);
+    $fil = new Filiere();
+    $fil->filiere = $request->nom_filiere;
+    $fil->ecole_id = $id;
+    $fil->save();
+    return redirect()->back()->with('success','Filière Enregistrée avec success !');
+
+}
 
 public function destroy($id)
 {
@@ -434,5 +480,18 @@ public function generateIdentifiant(Request $request)
         ->send(new IdentifiantMisAJour($ecole, $nouvelIdentifiant));
 
     return redirect()->back()->with('success', "L'identifiant a été généré avec succès et envoyé par email.");
+}
+public function delete_filiere($id){
+    try {
+        // Recherche et suppression de la classe
+        $classe =Filiere::findOrFail($id);
+        $classe->delete();
+
+        // Redirection après suppression avec un message de succès
+        return redirect()->back()->with('success', 'Filière  supprimée avec succès.');
+    } catch (\Exception $e) {
+        // Gestion des erreurs
+        return redirect()->back()->with('error', 'Une erreur est survenue lors de la suppression : ' . $e->getMessage());
+    }
 }
 }

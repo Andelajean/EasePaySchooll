@@ -1,4 +1,4 @@
-<!doctype html>
+<!--<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -17,17 +17,17 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
   <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
-    <!-- amchart css -->
+    amchart css 
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <!-- others css -->
+     others css 
     <link rel="stylesheet" href="/assets/css/typography.css">
     <link rel="stylesheet" href="/assets/css/default-css.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
-    <!-- modernizr css -->
+     modernizr css 
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-
+</head>-->
+ <!--
 <body>
    
     <div id="preloader">
@@ -59,66 +59,82 @@
                                 <ul class="collapse">
                                     <li class="active"><a href="{{route('dashboard_ecole')}}">Paiement D'Aujourd'hui</a></li>
                                     <li><a href="{{route('classe')}}">Paiement Par Classe</a></li>
+                                    <li><a href="{{route('niveau')}}">Paiement Par Niveau</a></li>
+                                    <li><a href="{{route('filiere')}}">Paiement Par Filiere</a></li>
                                     <li><a href="{{route('banque')}}">Paiement Par Banque</a></li>
-                                     <li><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                     <li ><a href="{{route('banque_classe')}}">Paiement Par Classe et Par Banque</a></li>
+                                    <li ><a href="{{route('classe_filiere')}}">Paiement Par Classe et Par Filiere</a></li>
                                     <li ><a href="{{route('classe_tranche')}}">Paiement Par Classe et Par Tranche</a></li>
                                     <li><a href="{{route('tranche')}}">Paiement Par Tranche</a></li>
                                     <li><a href="{{route('tout')}}">Tous les Paiements</a></li>
                                 </ul>
                             </li>
-                             <li >
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Materiel</span></a>
-                                <ul class="collapse">
-                                <li ><a href="{{route('reception')}}">Receptionner le Materiel</a></li>
-                                <li ><a href="/materiel/ecole/recu">Materiel Recu</a></li>
+                            <li >
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Uniforme   
+                                    </span></a>
+                                     <ul class="collapse">
+                                    <li ><a href="{{route('fac.distribuer_polo')}}">Distribuer Les Polo</a></li>
+                                      <li><a href="{{route('fac.distribuer_badge')}}">Distribuer Les Badges</a></li>
+                                    <li><a href="{{route('fac.badge')}}">Liste des Badges Distribués</a></li>
+                                     <li  ><a href="{{route('fac.polo')}}">Liste des Polo Distribués</a></li>
                                 </ul>
                             </li>
                             <li >
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-slice"></i><span>Uniforme Scolaire</span></a>
-                                <ul class="collapse">
-                                <li ><a href="{{route('distribution')}}">Distribution Des Uniformes Scolaires</a></li>
-                                <li><a href="{{route('distribuer')}}">Liste Des Uniformes Distribués</a></li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Penalité  
+                                    </span></a>
+                                     <ul class="collapse">
+                                     <li  ><a href="{{route('calculer_penalites')}}">Penalité Par classe</a></li>
                                 </ul>
                             </li>
-                        </ul>
+                           
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
         <!-- sidebar menu area end -->
-        <!-- main content area start -->
+        <!-- main content area start
         <div class="main-content">
-            <!-- header area start -->
+            <!-- header area start 
             <div class="header-area">
                 <div class="row align-items-center">
-                    <!-- nav and search button -->
+                    <!-- nav and search button 
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
                             <span></span>
                             <span></span>
                             <span></span>
                         </div>
-                                          <div class="search-box pull-left">
-    <form action="#">
-        <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
-        <i class="ti-search"></i>
-    </form>
-    <ul id="suggestions" class="list-group" style="display: none;"></ul>
-</div>
-        
+                       <div class="search-box pull-left">
+                            <form action="#">
+                                <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required>
+                                    <i class="ti-search"></i>
+                            </form>
+                            <ul id="suggestions" class="list-group" style="display: none;"></ul>
+                        </div>
                     </div>
-                  </div> 
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            <li class="settings-btn">
+                              <a class="ti-settings "href="{{route('penalite')}}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+        
+            
             <!-- header area end -->
-            <!-- page title area start -->
+            <!-- page title area start 
             <div class="page-title-area">
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="{{route('dashboard_ecole')}}"> Home</a></li>
+                                <li><a href="{{route('dashboard_ecole')}}">Home</a></li>
                                 <li><span>Accueil</span></li>
                             </ul>
                         </div>
@@ -134,7 +150,7 @@
     <i class="fa fa-angle-down"></i>
 </h4>
                             <div class="dropdown-menu">
-                                
+                               
                                 <a class="dropdown-item" href="{{route('logoute')}}">Se Deconnecter</a>
                                 @if(Session::has('ecole'))
                 <a class="dropdown-item" href="{{ route('profil', ['id' => Session::get('ecole')->id]) }}">Profil</a>
@@ -145,10 +161,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         
-   <div class="main-content-inner">
-                <!-- sales report area start -->
+            <div class="main-content-inner">
+                <!-- sales report area start 
                 <div class="sales-report-area mt-5 mb-5">
                     <div class="row">
                         <div class="col-md-4">
@@ -173,7 +189,7 @@
                         <h4 class="header-title mb-0">Paiements d'hier</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $nombrePaiementsHier }}</h2> <!-- Affichage du nombre de paiements -->
+                        <h2>{{ $nombrePaiementsHier }}</h2>  Affichage du nombre de paiements 
                     </div>
                                 </div>
                                 
@@ -187,7 +203,7 @@
                         <h4 class="header-title mb-0">Tous les paiements</h4>
                     </div>
                     <div class="d-flex justify-content-between pb-2">
-                        <h2>{{ $totalNombrePaiements }}</h2> <!-- Affichage du nombre de paiements -->
+                        <h2>{{ $totalNombrePaiements }}</h2> Affichage du nombre de paiements 
                     </div>
                                 </div>
                             </div>
@@ -195,9 +211,9 @@
                     </div>
                 </div>
                 
-                  <!-- row area start -->
+                   row area start 
                   <div class="row">
-                    <!-- Live Crypto Price area start -->
+                     Live Crypto Price area start 
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
@@ -217,8 +233,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Live Crypto Price area end -->
-                    <!-- trading history area start -->
+                  Live Crypto Price area end 
+                 trading history area start 
                     <div class="col-lg-8 mt-sm-30 mt-xs-30">
                         <div class="card">
                             <div class="card-body">
@@ -270,8 +286,8 @@
                                                         <td>{{ $paiementsParClasse['nombre_paiements_classe'] }}</td>
                                                         <td>{{ number_format($paiementsParClasse['montant_total_classe'], 2) }} FCFA</td>
                                                         @foreach($paiementsParClasse['paiements_par_tranche'] as $tranche => $montant)
-                        <td>{{ number_format($montant, 2) }} FCFA</td>
-                        @endforeach
+                                                        <td>{{ number_format($montant, 2) }} FCFA</td>
+                                                        @endforeach
                                                     </tr>
                                                    
                                                 </table>
@@ -304,9 +320,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- trading history area end -->
+                     trading history area end 
                 </div>
-                <!-- row area end -->
+                 row area end 
               
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
@@ -322,6 +338,8 @@
                                                 <td class="mv-icon">Nom Etudiant/Eleve</td>
                                                 <td class="coin-name">Classe</td>
                                                 <td class="buy">Banque de Paiement</td>
+                                                <td class="sell">Filière</td>
+                                                <td class="trends">Niveau</td>
                                                 <td class="sell">Date Paiement</td>
                                                 <td class="trends">Heure Paiement</td>
                                                 <td class ="trends"> Detail </td>
@@ -332,6 +350,8 @@
                 <td>{{ $paiement->nom_complet }}</td>
                 <td>{{ $paiement->classe }}</td>
                 <td>{{ $paiement->banque }}</td>
+                <td>{{ $paiement->filiere }}</td>
+                <td>{{ $paiement->niveau_universite }}</td>
                 <td>{{ $paiement->created_at->format('d/m/Y') }}</td>
                 <td>{{ $paiement->created_at->format('H:i') }}</td>
                 <td>{{$paiement->details}}
@@ -349,22 +369,23 @@
                         </div>
                     </div>
                 </div>
-<!-- main content end -->
+                
+ main content end 
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- En-tête de la modale avec la croix rouge pour fermer -->
+          En-tête de la modale avec la croix rouge pour fermer
             <div class="modal-header">
                 <h5 class="modal-title" id="studentModalLabel">Détails de l'élève</h5>
                 <button type="button" class="btn-close"  id="close-modal-btn"data-bs-dismiss="modal" aria-label="Fermer" style="color: red; font-size: 1.5rem;">&times;</button>
             </div>
-            <!-- Corps de la modale avec le tableau de détails -->
+             Corps de la modale avec le tableau de détails 
             <div class="modal-body">
                 <table id="student-details-table" class="table table-striped">
-                    <!-- Les détails de l'élève seront insérés ici via JavaScript -->
+                    Les détails de l'élève seront insérés ici via JavaScript 
                 </table>
             </div>
-            <!-- Pied de page de la modale avec un bouton rouge pour fermer -->
+      Pied de page de la modale avec un bouton rouge pour fermer 
             <div class="modal-footer">
                 <button type="button" id="close-modal-btn" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
             </div>
@@ -372,44 +393,359 @@
     </div>
 </div>
 
-               
-       
+
+
         <footer>
     <div class="footer-area">
-        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="#">Smart Tech Engineering</a>.</p>
+        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
     </div>
 </footer>
 
-        <!-- footer area end-->
+       footer area end
     </div>
    
     <script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>
-    <!-- bootstrap 4 js -->
+     bootstrap 4 js 
     <script src="/assets/js/popper.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/owl.carousel.min.js"></script>
     <script src="/assets/js/metisMenu.min.js"></script>
     <script src="/assets/js/jquery.slimscroll.min.js"></script>
     <script src="/assets/js/jquery.slicknav.min.js"></script>
-
-    <!-- start chart js -->
+ <script src="/jscript/search_paiement.js"></script>
+    start chart js 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
+    start highcharts js 
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- start zingchart js -->
+     start zingchart js 
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
     <script>
     zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
     </script>
-     <script src="/jscript/search_paiement.js"></script>
-    <!-- all line chart activation -->
+    all line chart activation 
     <script src="/assets/js/line-chart.js"></script>
-    <!-- all pie chart -->
+   all pie chart 
     <script src="/assets/js/pie-chart.js"></script>
-    <!-- others plugins -->
+     others plugins 
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
 </body>
+</html> -->
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ asset('image/site.webmanifest') }}">
+  <meta name="description" content="EasePaySchool est une plateforme qui permet de faciliterles paiements de frais de scolarité. grace à  son systeme de paiement en ligne , il devient la première application dans ce secteur.">
+    <title>Dashbord Ecole</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+   
+</head>
+<body>
+    <div class="flex flex-col h-screen">
+        <!-- Barre supérieure -->
+        <div class="flex justify-between items-center bg-white p-4 shadow-md">
+            <!-- Barre de recherche -->
+            <div class="w-1/3">
+                       <form action="#" class="relative flex items-center bg-blue-500 p-2 rounded-lg">
+                            <input type="text" id="search-input" name="search" placeholder="Rechercher un élève, entrez son Nom" required class="w-full p-2 rounded-md outline-none text-white bg-blue-500 placeholder-white">
+                        </form>
+                    </div>
+
+                    <!-- Nom de l'école centré -->
+                    <div class="flex-grow text-center bg-gray-200 p-2 rounded-lg">
+                        @if(Session::has('ecole'))
+                            {{ Session::get('ecole')->nom_ecole }}  
+                        @else
+                            Invité <!-- Si aucune école n'est connectée, afficher 'Invité' -->
+                        @endif
+                    </div>
+
+                    <!-- Boutons des paramètres et du profil -->
+                    <div class="flex space-x-4">
+                        <a href="{{route('penalite')}}" class=" text-white px-4 py-2 rounded-lg">
+                            <img src="{{asset('img/parametre.png')}} " alt="Paramètres" class="w-6 h-6">
+                        </a>
+                        <a href="{{ route('profil') }}" class=" text-white px-4 py-2 rounded-lg">
+                            <img src="{{asset('img/profil1.png')}}" alt="Profil" class="w-6 h-6">
+                        </a>
+                        <a href="{{route('logoute')}}" class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                            Se connecter
+                        </a>
+                    </div>
+        </div>
+        
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <div class="w-64 bg-gray-800 text-white h-full p-4">
+                <h2 class="text-xl font-bold mb-4">DashBoard</h2>
+                <div>
+                        <button class="flex items-center w-full p-3 hover:bg-gray-700" onclick="toggleTab('paiements')">
+                            💵 Paiements
+                        </button>
+                        <div id="paiements" class="hidden pl-6 bg-gray-700">
+                            <ul class="mt-2 space-y-2">
+                                <li class="active"><a href="{{route('dashboard_ecole')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('dashboard_ecole') ? 'bg-blue-700 text-white' : '' }}">Paiement D'Aujourd'hui</a></li>
+                                <li><a href="{{route('classe')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('classe') ? 'bg-blue-700 text-white' : '' }}">Paiement Par Classe</a></li>
+                               
+                                <li><a href="{{route('banque')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('banque') ? 'bg-blue-700 text-white' : '' }}">Paiement Par Banque</a></li>
+                                <li><a href="{{route('banque_classe')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('banque_classe') ? 'bg-blue-700 text-white' : '' }}">Paiement Par Classe et Par Banque</a></li>
+                            
+                                <li><a href="{{route('classe_tranche')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('classe_tranche') ? 'bg-blue-700 text-white' : '' }}">Paiement Par Classe et Par Tranche</a></li>
+                                <li><a href="{{route('tranche')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('tranche') ? 'bg-blue-700 text-white' : '' }}">Paiement Par Tranche</a></li>
+                                <li><a href="{{route('tout')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('tout') ? 'bg-blue-700 text-white' : '' }}">Tous les Paiements</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Uniforme -->
+                    <div>
+                        <button class="flex items-center w-full p-3 hover:bg-gray-700" onclick="toggleTab('uniforme')">
+                            👕 Uniforme et Materiel
+                        </button>
+                        <div id="uniforme" class="hidden pl-6 bg-gray-700">
+                        <ul class="mt-2 space-y-2">
+                                <li><a href="{{route('distribution')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('distribution') ? 'bg-blue-700 text-white' : '' }}">Receptionner le Materiel</a></li>
+                                <li><a href="{{route('distribuer')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('distribuer') ? 'bg-blue-700 text-white' : '' }}">Materiel Recu</a></li>
+                                <li><a href="{{route('reception')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('reception') ? 'bg-blue-700 text-white' : '' }}">Distribution Des Uniformes Scolaires</a></li>
+                                <li><a href="{{route('recus')}}" class="block px-4 py-2 rounded hover:bg-blue-700 {{ request()->routeIs('recus') ? 'bg-blue-700 text-white' : '' }}">Liste Des Uniformes Distribués</a></li>
+                        </ul>
+                        </div>
+                    </div>
+
+                    <!-- Pénalité -->
+                    <div>
+                        <button class="flex items-center w-full p-3 hover:bg-gray-700" onclick="toggleTab('penalite')">
+                            ⚠️ Pénalité
+                        </button>
+                        <div id="penalite" class="hidden pl-6 bg-gray-700">
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="{{route('calculer_penalites')}}" class="block px-4 py-2 rounded hover:bg-blue-700{{ request()->routeIs('calculer_penalites') ? 'bg-blue-700 text-white' : '' }}">Penalité Par classe</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- Contenu principal -->
+            <div class="flex-1 p-6">
+                <div class="main-content-inner">
+                    <div class="sales-report-area mt-5 mb-5">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="single-report bg-gradient-to-r from-blue-400 to-blue-600 p-4 shadow-md rounded-lg text-white">
+                             <div class="s-report-inner">
+                                    <div class="icon text-3xl"><i class="fa fa-btc"></i></div>
+                                    <div class="s-report-title flex justify-between">
+                                        <h4 class="header-title mb-0">Paiements d'aujourd'hui</h4>
+                                    </div>
+                                    <div class="flex justify-between pb-2">
+                                        <h2>{{ $nombrePaiementsAujourdhui }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="single-report bg-gradient-to-r from-green-400 to-green-600 p-4 shadow-md rounded-lg text-white">
+                                <div class="s-report-inner">
+                                    <div class="icon text-3xl"><i class="fa fa-money-bill"></i></div>
+                                    <div class="s-report-title flex justify-between">
+                                        <h4 class="header-title mb-0">Paiements d'hier</h4>
+                                    </div>
+                                    <div class="flex justify-between pb-2">
+                                        <h2>{{ $nombrePaiementsHier }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="single-report bg-gradient-to-r from-yellow-400 to-yellow-600 p-4 shadow-md rounded-lg text-white">
+                                <div class="s-report-inner">
+                                    <div class="icon text-3xl"><i class="fa fa-eur"></i></div>
+                                    <div class="s-report-title flex justify-between">
+                                        <h4 class="header-title mb-0">Tous les paiements</h4>
+                                    </div>
+                                    <div class="flex justify-between pb-2">
+                                        <h2>{{ $totalNombrePaiements }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section class="flex flex-wrap p-4">
+    <!-- Détails à gauche -->
+    <div class="w-full lg:w-1/3 p-4">
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="p-6">
+                <h4 class="text-lg font-semibold mb-4">Détails</h4>
+                <div class="mt-5">
+                    <ul class="space-y-4">
+                        <li class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-500 text-white flex items-center justify-center rounded-full mr-2">MT</div>
+                                <span>Montant Total</span>
+                            </div>
+                            <span class="text-blue-500"><i class="fas fa-long-arrow-up"></i>{{ number_format($montantTotal, 2) }} FCFA</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-green-500 text-white flex items-center justify-center rounded-full mr-2">MA</div>
+                                <span>Montant d'aujourd'hui</span>
+                            </div>
+                            <span class="text-blue-500"><i class="fas fa-long-arrow-up"></i>{{ number_format($montantAujourdhui, 2) }} FCFA</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-red-500 text-white flex items-center justify-center rounded-full mr-2">MH</div>
+                                <span>Montant d'hier</span>
+                            </div>
+                            <span class="text-blue-500"><i class="fas fa-long-arrow-up"></i>{{ number_format($montantHier, 2) }} FCFA</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des paiements à droite -->
+    <div class="w-full lg:w-2/3 p-4">
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="p-6">
+                <!-- En-tête avec titre, onglets et formulaire -->
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+                    <h4 class="text-lg font-semibold">Montant Des Paiements</h4>
+                    <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+                        <!-- Onglets -->
+                        <div class="trd-history-tabs">
+                            <ul class="flex space-x-4">
+                                <li>
+                                    <a class="text-blue-500 font-semibold border-b-2 border-blue-500" href="#buy_order" role="tab">Classe</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Formulaire de sélection de classe -->
+                        <form method="GET" action="{{ route('dashboard_ecole') }}" class="flex items-center">
+                            <label for="classe" class="mr-2">Choisir une classe :</label>
+                            <select name="classe" id="classe" onchange="this.form.submit()" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">-- Sélectionnez une classe --</option>
+                                @foreach($classes as $classe)
+                                    <option value="{{ $classe->nom_classe }}" {{ request('classe') == $classe->nom_classe ? 'selected' : '' }}>
+                                        {{ $classe->nom_classe }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tableau des paiements -->
+                <div class="trad-history mt-4">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="buy_order" role="tabpanel">
+                            <div class="overflow-x-auto">
+                                @if($paiementsParClasse)
+                                    <table class="min-w-full bg-white border border-gray-200">
+                                        <thead>
+                                            <tr class="bg-gray-100">
+                                                <th class="py-2 px-4 border-b">Nom_classe</th>
+                                                <th class="py-2 px-4 border-b">Nombre paiement</th>
+                                                <th class="py-2 px-4 border-b">Montant total</th>
+                                                <th class="py-2 px-4 border-b">1ère Tranche</th>
+                                                <th class="py-2 px-4 border-b">2ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">3ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">4ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">5ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">6ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">7ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">8ème Tranche</th>
+                                                <th class="py-2 px-4 border-b">Totalité</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="py-2 px-4 border-b">{{ $paiementsParClasse['classe'] }}</td>
+                                                <td class="py-2 px-4 border-b">{{ $paiementsParClasse['nombre_paiements_classe'] }}</td>
+                                                <td class="py-2 px-4 border-b">{{ number_format($paiementsParClasse['montant_total_classe'], 2) }} FCFA</td>
+                                                @foreach($paiementsParClasse['paiements_par_tranche'] as $tranche => $montant)
+                                                    <td class="py-2 px-4 border-b">{{ number_format($montant, 2) }} FCFA</td>
+                                                @endforeach
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="mt-5 mb-5">
+    <div class="w-full">
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h4 class="text-xl font-semibold">Paiements D'Aujourd'hui</h4>
+            </div>
+            <div class="mt-4 overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700">
+                            <th class="px-4 py-2 border">Nom Etudiant/Élève</th>
+                            <th class="px-4 py-2 border">Classe</th>
+                            <th class="px-4 py-2 border">Banque de Paiement</th>
+                            <th class="px-4 py-2 border">Filière</th>
+                            <th class="px-4 py-2 border">Niveau</th>
+                            <th class="px-4 py-2 border">Date Paiement</th>
+                            <th class="px-4 py-2 border">Heure Paiement</th>
+                            <th class="px-4 py-2 border">Détail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($paiementsAujourdhui as $paiement)
+                        <tr class="border">
+                            <td class="px-4 py-2 border">{{ $paiement->nom_complet }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->classe }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->banque }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->filiere }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->niveau_universite }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->created_at->format('d/m/Y') }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->created_at->format('H:i') }}</td>
+                            <td class="px-4 py-2 border">{{ $paiement->details }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-center border">Aucun paiement effectué aujourd'hui.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+            
+        </div>
+        <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+    <p>&copy; Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By 
+        <a href="https://www.truesitetechnology.com/contact" class="text-blue-400 hover:underline">True Site Technology</a>.
+    </p>
+</footer>
+    </div>
+   
+   
+
+    <script>
+        function toggleTab(tab) {
+            let element = document.getElementById(tab);
+            element.classList.toggle("hidden");
+        }
+    </script>
+     <script src="/jscript/search_paiement.js"></script>
+     <script src="/jscript/recherche_etudiant.js"></script>
+     
+</body>
 </html>

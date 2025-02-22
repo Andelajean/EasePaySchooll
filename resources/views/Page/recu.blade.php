@@ -173,6 +173,7 @@
         </div>
     </div>
 
+
     <!-- Script html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
@@ -238,5 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     </script>
+
 </body>
 </html>

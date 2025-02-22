@@ -23,4 +23,3 @@ class PenailiteEcole extends Model
         return $this->belongsTo(Ecole::class);
     }
 }
-

@@ -243,7 +243,7 @@ public function afficherPenalitesEtPaiements(Request $request)
 
     // Pagination manuelle pour un tableau PHP
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
-    $perPage = 3;
+    $perPage = 5;
     $currentPageItems = array_slice($resultats, ($currentPage - 1) * $perPage, $perPage);
     $resultatsPagines = new LengthAwarePaginator($currentPageItems, count($resultats), $perPage);
 

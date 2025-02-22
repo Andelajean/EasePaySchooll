@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Paiement;
 use App\Models\Classe;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdminEcoleController extends Controller
 {
@@ -444,18 +445,18 @@ public function tout(Request $request)
     $paiementsAujourdhui = DB::table('paiements')
         ->where('nom_ecole', $ecole->nom_ecole)
         ->where('created_at', '>=', $today)
-        ->paginate(50);  // Pagination sur 50 paiements par page
+        ->paginate(2);  // Pagination sur 50 paiements par page
 
     // Paiements d'hier (sans pagination pour les totaux, juste pour l'affichage)
     $paiementsHier = DB::table('paiements')
         ->where('nom_ecole', $ecole->nom_ecole)
         ->whereBetween('created_at', [$yesterday, $today])
-        ->get();
+        ->paginate(2);
 
     // Paiements totaux (sans pagination pour les totaux)
     $paiementsTotal = DB::table('paiements')
         ->where('nom_ecole', $ecole->nom_ecole)
-        ->get();
+        ->paginate(2);
 
     // Si une date est sélectionnée, on récupère les paiements pour cette date
     if ($dateSelectionnee) {
@@ -827,5 +828,49 @@ public function show_paiement($nom_complet)
         return response()->json(['error' => 'Une erreur est survenue : ' . $e->getMessage()], 500);
     }
 }
+public function searchEleves(Request $request)
+{
+    $query = $request->input('query');
+
+    // Vérifie si une école est connectée via la session
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return response()->json(['error' => 'Vous devez être connecté à une école.'], 403);
+    }
+
+    // Recherche des élèves associés à l'école connectée
+    $eleves = Paiement::where('id_ecole', $ecole->id)
+        ->where('nom_complet', 'LIKE', "%{$query}%")
+        ->select('nom_complet', 'id') // Inclure l'ID pour redirection
+        ->distinct()
+        ->get();
+
+    return response()->json($eleves);
+}
+
+// Page de détail d'un élève
+public function detailEleve($id)
+{
+    // Vérifie si une école est connectée
+    $ecole = Session::get('ecole');
+    if (!$ecole) {
+        return redirect()->route('login.ecole')->with('error', 'Vous devez être connecté à une école.');
+    }
+
+    // Récupérer le paiement correspondant à l'ID
+    $paiement = Paiement::find($id);
+
+    if (!$paiement) {
+        return redirect()->back()->with('error', 'Paiement non trouvé.');
+    }
+
+    // Récupérer tous les paiements de l'élève avec le même nom_complet
+    $paiements = Paiement::where('nom_complet', $paiement->nom_complet)
+                         ->where('id_ecole', $ecole->id)
+                         ->get();
+
+    return view('Ecole.detail_etudiant', compact('paiements'));
+}
+
 
 }

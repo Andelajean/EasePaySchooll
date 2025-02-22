@@ -25,6 +25,7 @@ use App\Models\Ecole;
 use App\Models\Role;
 
 use App\Mail\UserNotification;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -78,15 +79,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
  //** GESTION DES STATISTIQUES ADMIN **//
  Route::get('/statistics', [StatisticsController::class, 'index'])->middleware(['auth', 'verified'])->name('statistics.index');
  Route::get('/statistics/data', [StatisticsController::class, 'getData']);
- Route::get('/statistics/banques/{ecoleId}', [StatisticsController::class, 'getBanquesByEcole']);
- 
+  
 
  //** GESTIONS DES PAIEMENTS ADMIN **//
  Route::group(['prefix' => 'paiement'], function(){
    
     Route::get('/showAll/{id}', [PaiementsController::class,'showAllPaiement'])->name('show.paiement.parEcole');
     Route::get('/showAllPaiement',[EcolesController::class,'showAllPaiement'])->name("show.all.paiement");
-    Route::get('/banques/{ecoleId}', [PaiementsController::class, 'getBanquesByEcole']);
 
 });
 
@@ -143,7 +142,7 @@ Route::middleware(['auth.ecole'])->group(function () {
     Route::get('ecole/dashboard', [AdminEcoleController::class, 'dashboard'])->name('dashboard_ecole');
     Route::get('/ecole/penalite',[Penalite::class,'penalite'])->name('penalite');
     Route::post('/ecole/penalite', [Penalite::class,'store'])->name('penalites.store');
-    Route::get('ecole/dashboard/profil/{id}', [ProfilEcole::class, 'profil'])->name('profil');
+    Route::get('ecole/dashboard/profil', [ProfilEcole::class, 'profil'])->name('profil');
     Route::get('/penalite/{id}/edit', [Penalite::class, 'edit'])->name('penalite.edit');
     Route::get('/afficher/penalite',[Penalite::class,'afficherPenalitesEtPaiements'])->name('calculer_penalites');
     Route::delete('/penalite/{id}', [Penalite::class, 'destroy'])->name('penalite.destroy');
@@ -154,14 +153,21 @@ Route::middleware(['auth.ecole'])->group(function () {
     Route::post('/ecole/{id}/classe', [ProfilEcole::class, 'addClass'])->name('ecole.addClass');
     Route::get('/classes/{id}/edit', [ProfilEcole::class, 'edit'])->name('classes.edit');
     Route::delete('/classes/{id}', [ProfilEcole::class, 'destroy'])->name('classes.destroy');
+    Route::post('/ecoles/{id}/filiere', [ProfilEcole::class, 'addfiliere'])->name('ecoles.filiere');
     Route::post('/ecoles/{id}/add-bank', [ProfilEcole::class, 'addBank'])->name('ecoles.add-bank');
     Route::get('/classes/{id}/edit', [ProfilEcole::class, 'edit'])->name('classes.edit');
     Route::post('/classes/{id}/update', [ProfilEcole::class, 'updateClasse'])->name('classes.update');
+    //
+    Route::get('/filiere/{id}/edit', [ProfilEcole::class, 'edit_filiere'])->name('ecole.edit_filiere');
+    Route::post('/filiere/{id}/update', [ProfilEcole::class, 'update_filiere'])->name('classes.update');
+    //
     Route::post('/classes/store', [ProfilEcole::class, 'store'])->name('classes.store');
     Route::delete('/ecoles/{ecole}/banques/{index}', [ProfilEcole::class, 'deleteBank'])->name('ecoles.deleteBank');
+    Route::delete('/ecole/filiere/{id}',[ProfilEcole::class,'delete_filiere'])->name('ecoles.delete_filiere');
     Route::post('/ecoles/generer-identifiant', [ProfilEcole::class, 'generateIdentifiant'])->name('ecoles.generateIdentifiant');
 
-
+    Route::get('/search-eleves', [AdminEcoleController::class, 'searchEleves'])->name('search.eleves');
+    Route::get('/detail-eleve/{id}', [AdminEcoleController::class, 'detailEleve'])->name('detail.eleve');
 
     Route::get('/paiement/ecole/classe', [AdminEcoleController::class, 'classe'])->name('classe');
     Route::get('/paiement/ecole/tranche', [AdminEcoleController::class, 'tranche'])->name('tranche');
@@ -199,4 +205,3 @@ Route::middleware(['auth.ecole'])->group(function () {
     Route::get('/search-student/paiement', [AdminEcoleController::class, 'search_paiement'])->name('search-student');
 Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::class, 'show_paiement']);
 });
-
