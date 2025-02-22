@@ -24,17 +24,27 @@ use App\Http\Controllers\Penalite;
 use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
 use App\Models\Role;
-
+use App\Http\Controllers\ChildController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Mail\UserNotification;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('Page.index');
 });
-
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
+Route::get('/dashboard', [RegisteredUserController::class, 'showDashboard'])
+->middleware(['auth', 'verified'])
+->name('dashboard');
+
+//telechargement des recus
+Route::get('/receipt/download/{id}', [ChildController::class, 'downloadReceipt'])->name('download.receipt');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -210,3 +220,7 @@ Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::cla
 Route::get('/search-students', [StudentController::class, 'search']);
 
 Route::get('/historique-paiement', [PaiementController::class, 'historiquePaiement'])->name('historique.paiement');
+
+
+
+Route::get('/search-children', [ChildController::class, 'search'])->name('search.children');

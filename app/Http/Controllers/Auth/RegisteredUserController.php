@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Student; // Assurez-vous d'inclure le modèle Student
+use App\Models\Child;
+use App\Models\Paiement;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class RegisteredUserController extends Controller
 {
@@ -21,7 +22,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         return view('auth.register');
-    } 
+    }
 
     /**
      * Handle an incoming registration request.
@@ -29,35 +30,62 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'children_names' => ['required', 'array'],
+        'children_names.*' => ['required', 'string']
+    ]);
+
+    // Créez l'utilisateur
+    $user = new User([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    // Sauvegardez l'utilisateur pour obtenir son ID
+    $user->save();
+
+    // Ajoutez les noms des enfants et associez-les au parent (utilisateur)
+    $childrenNames = $request->children_names;
+    foreach ($childrenNames as $childName) {
+        Child::create([
+            'user_id' => $user->id, // Associe l'enfant au parent
+            'nom_complet' => $childName
+        ]);
+    }
+
+    // Enregistrez la chaîne des noms des enfants dans l'utilisateur
+    $user->children_names = implode(', ', $childrenNames);
+    $user->save();
+
+    // Événement d'inscription
+    event(new Registered($user));
+
+    // Connexion de l'utilisateur
+    Auth::login($user);
+    
+    // Redirection vers le tableau de bord
+    return redirect()->route('dashboard');
+}
+
+
+    /**
+     * Show the user's dashboard with children payments.
+     */
+    public function showDashboard(): View
     {
-        // Ajoutez 'students' à la validation
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'students' => ['required', 'json'], // Validation pour le champ des étudiants
-        ]);
+        $parent = Auth::user();
 
-        // Créez l'utilisateur
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Récupérez les enfants du parent
+        $children = Child::where('user_id', $parent->id)->get();
 
-        // Ajoutez les étudiants
-        $studentNames = json_decode($request->students); // Décoder le JSON des étudiants
-        foreach ($studentNames as $studentName) {
-            $user->students()->create(['nom_complet' => $studentName]); // Assurez-vous que la relation est bien définie
-        }
+        // Récupérez les paiements de chaque enfant
+        $paiements = Paiement::whereIn('nom_complet', $children->pluck('nom_complet'))->get();
 
-        // Événement d'inscription
-        event(new Registered($user));
-
-        // Connexion de l'utilisateur
-        Auth::login($user);
-
-        // Redirection vers le tableau de bord
-        return redirect(route('dashboard', absolute: false));
+        return view('dashboard', compact('paiements'));
     }
 }

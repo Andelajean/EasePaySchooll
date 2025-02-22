@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Child;
+use App\Models\Paiement;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,35 +25,39 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-{
-    // Authentifie l'utilisateur avec les informations fournies dans la requête
-    $request->authenticate();
+    {
+        // Authentifie l'utilisateur avec les informations fournies dans la requête
+        $request->authenticate();
 
-    // Régénère l'ID de session pour éviter les attaques de fixation de session
-    $request->session()->regenerate();
+        // Régénère l'ID de session pour éviter les attaques de fixation de session
+        $request->session()->regenerate();
 
-    // Récupère l'utilisateur authentifié
-    $user = auth()->user();
+        // Récupère l'utilisateur authentifié
+        $user = auth()->user();
 
-    // Récupère les messages de la table contacts
-    $messages = \App\Models\Contact::where('lue', false)->latest()->get();
-    $ecoles=\App\Models\Ecole::all();
+        // Récupère les messages de la table contacts
+        $messages = \App\Models\Contact::where('lue', false)->latest()->get();
+        $ecoles = \App\Models\Ecole::all();
 
-    // Redirige en fonction du rôle de l'utilisateur
-    switch ($user->role) {
-        case 1:
-            // Rôle 1 (admin)
-            return redirect()->intended(route('dashboard-admin'))->with(['messages'=>$messages,'ecoles'=>$ecoles]);
-        case 2:
-            // Rôle 2 (école)
-            return redirect()->intended(route('dashboard-ecole'));
-        default:
-            // Tous les autres rôles
-            return redirect()->intended(route('dashboard'));
+        // Récupère les enfants du parent
+        $children = Child::where('user_id', $user->id)->get();
+
+        // Récupère les paiements de chaque enfant
+        $paiements = Paiement::whereIn('nom_complet', $children->pluck('nom_complet'))->get();
+
+        // Redirige en fonction du rôle de l'utilisateur
+        switch ($user->role) {
+            case 1:
+                // Rôle 1 (admin)
+                return redirect()->intended(route('dashboard-admin'))->with(['messages' => $messages, 'ecoles' => $ecoles]);
+            case 2:
+                // Rôle 2 (école)
+                return redirect()->intended(route('dashboard-ecole'));
+            default:
+                // Tous les autres rôles
+                return redirect()->intended(route('dashboard'))->with(['paiements' => $paiements]);
+        }
     }
-}
-
-    
 
     /**
      * Destroy an authenticated session.
