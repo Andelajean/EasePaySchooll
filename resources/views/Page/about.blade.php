@@ -51,7 +51,7 @@
     <!-- Titre principal -->
     <header class="text-center py-8">
       <h1 class="text-4xl font-bold text-gray-900" id="messa"></span> </h1>
-      <p class="mt-2 text-lg text-white" id="mess"></p>
+      <p class="mt-2 text-lg text-white" id="messag"></p>
     </header>
 
 <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -115,11 +115,11 @@
     <section class="bg-white rounded-lg shadow p-6 mb-8">
       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Qui a développé <span class="font-bold italic text-blue-600">EasePaySchool</span> ?</h2>
       <p class="text-gray-600">
-        <span class="font-bold italic text-blue-600">EasePaySchool</span> a été conçu et développé par <span class="font-semibold text-gray-900">Smart Tech Engineering</span>, une entreprise spécialisée dans les solutions technologiques innovantes. 
+        <span class="font-bold italic text-blue-600">EasePaySchool</span> a été conçu et développé par <span class="font-semibold text-gray-900">True Stite Technology</span>, une entreprise spécialisée dans les solutions technologiques innovantes. 
         À la tête de cette entreprise, se trouve <span class="font-semibold text-gray-900">Gael ANDELA</span>, un leader visionnaire et passionné par les technologies de pointe.
       </p>
       <div class="mt-4">
-        <h3 class="text-lg font-semibold text-gray-800 mb-2">Qualités de Smart Tech Engineering :</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Qualités de True Stite Technology :</h3>
         <ul class="list-disc list-inside text-gray-600">
           <li>Expertise en développement logiciel.</li>
           <li>Solutions innovantes adaptées aux besoins des utilisateurs.</li>

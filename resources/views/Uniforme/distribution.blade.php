@@ -236,9 +236,9 @@
 
        
         <footer>
-    <div class="footer-area">
-        <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
-    </div>
+        <div class="footer-area">
+                <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://truesitetechnology.com">True Site Technology </a>.</p>
+            </div>
 </footer>
 
         <!-- footer area end-->

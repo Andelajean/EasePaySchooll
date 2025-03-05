@@ -19,11 +19,14 @@ use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Penalite;
 use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
 use App\Models\Role;
-
+use App\Http\Controllers\ChildController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Mail\UserNotification;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +35,13 @@ Route::get('/', function () {
     return view('Page.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [RegisteredUserController::class, 'showDashboard'])
+->middleware(['auth', 'verified'])
+->name('dashboard');
+
+//telechargement des recus
+Route::get('/receipt/download/{id}', [ChildController::class, 'downloadReceipt'])->name('download.receipt');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -124,6 +131,8 @@ Route::get('/search-school', [EcoleController::class, 'searchSchool']);
 Route::get('/school/{id}', [EcoleController::class, 'getSchoolDetails']);
 Route::post('/payement',[PaiementController::class,'payer'])->name('payer');
 Route::get('/recu-paiement/{id_paiement}',[PageController::class,'recu'])->name('recu');
+Route::get('/verifier_recu/{id_paiement}', [PaiementController::class, 'handlePaymentConfirmation'])
+    ->name('verifier_recu');
 Route::get('/telecharger-recu/{id_paiement}', [PageController::class, 'telechargerRecu'])->name('telecharger_recu');
 Route::get('/verifier-paiement', [PageController::class, 'verifierPaiement'])->name('verifier.paiement');
 Route::get('/login/ecole',[EcoleController::class,'login'])->name('login.ecole');
@@ -205,3 +214,13 @@ Route::middleware(['auth.ecole'])->group(function () {
     Route::get('/search-student/paiement', [AdminEcoleController::class, 'search_paiement'])->name('search-student');
 Route::get('/student-details/paiement/{nom_complet}', [AdminEcoleController::class, 'show_paiement']);
 });
+
+
+Route::get('/search-students', [StudentController::class, 'search']);
+
+Route::get('/historique-paiement', [PaiementController::class, 'historiquePaiement'])->name('historique.paiement');
+
+
+
+Route::get('/search-children', [ChildController::class, 'search'])->name('search.children');
+

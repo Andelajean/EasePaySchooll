@@ -91,7 +91,7 @@
 
     <!-- Footer Section -->
     <div class="email-footer">
-        <p>Développé par <strong>TrueSiteTechnology</strong>.</p>
+        <p>Développé par <strong>True Site Technology</strong>.</p>
         <p>Si vous avez des questions, n'hésitez pas à nous contacter à contact@truesitetechnology.com</p>
     </div>
 </div>

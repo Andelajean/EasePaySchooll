@@ -25,7 +25,7 @@ class EcoleController extends Controller
     $ecoleExistante = Ecole::where('email', $request->input('email'))->first();
     $ide = Ecole::where('identifiant', $request->input('identifiant'))->first();
     $ecoleexi = Ecole::where('nom_ecole', $request->input('nom_ecole'))->first();
-   // $ecoleExistante = Ecole::where('email', $request->input('email'))->first();
+   $ecoleExis = Ecole::where('telephone', $request->input('telephone'))->first();
 
 
     // Si l'email n'existe pas, renvoyer un message d'erreur
@@ -34,6 +34,9 @@ class EcoleController extends Controller
     }
     if ($ecoleexi) {
         return redirect()->back()->withErrors(['nom_ecole' => 'Cette ecole existe deja. Veuillez entrer le nom de votre ecole.']);
+    }
+    if ($ecoleExis) {
+        return redirect()->back()->withErrors(['telephone' => 'Ce numero de telephone  existe deja. Veuillez entrer le numero de telephone de votre ecole.']);
     }
     if ($ecoleExistante) {
         return redirect()->back()->withErrors(['identifiant' => 'L\'identifiant existe deja.']);
@@ -130,9 +133,83 @@ class EcoleController extends Controller
     
         return response()->json([]);
     }
-    public function getSchoolDetails($id)
+    /*public function getSchoolDetails($id)
 {
-    $ecole = Ecole::with('classes')->find($id); // Charge l'école avec ses classes
+    $ecole = Ecole::with(['classes', 'filieres'])->find($id); // Charge l'école avec ses classes et filières
+
+    if ($ecole) {
+        Log::info('Niveau trouvé pour l\'école (ID: ' . $ecole->id . ') : ' . $ecole->niveau);
+
+        // Filtrer les banques non nulles
+        $banques = collect([
+            $ecole->nom_banque1,
+            $ecole->nom_banque2,
+            $ecole->nom_banque3,
+            $ecole->nom_banque4,
+            $ecole->nom_banque5,
+            $ecole->nom_banque6,
+            $ecole->nom_banque7,
+            $ecole->nom_banque8,
+        ])->filter()->values();
+
+        // Préparer les données des classes avec montants dynamiques et filières
+        $classes = $ecole->classes->map(function ($classe) use ($ecole) {
+            $tranches = collect([
+                'premiere_tranche' => $classe->premiere_tranche,
+                'deuxieme_tranche' => $classe->deuxieme_tranche,
+                'troisieme_tranche' => $classe->troisieme_tranche,
+                'quatrieme_tranche' => $classe->quatrieme_tranche,
+                'cinquieme_tranche' => $classe->cinquieme_tranche,
+                'sixieme_tranche' => $classe->sixieme_tranche,
+                'septieme_tranche' => $classe->septieme_tranche,
+                'huitieme_tranche' => $classe->huitieme_tranche,
+                'totalite' => $classe->totalite,
+            ])->filter()->toArray();
+
+            // Associer les filières à cette classe
+            $filieres = $ecole->filieres->map(function ($filiere) {
+                return [
+                    'id' => $filiere->id,
+                    'filiere' => $filiere->filiere
+                ];
+            });
+
+            // Logger les filières trouvées pour cette classe
+            Log::info('Filières trouvées pour la classe ' . $classe->nom_classe . ' : ', $filieres->toArray());
+
+            return [
+                'nom_classe' => $classe->nom_classe,
+                'montants' => $tranches,
+                'filieres' => $filieres, // Ajout des filières pour cette classe
+            ];
+        });
+
+        // Logger toutes les filières de l'école
+        Log::info('Filières trouvées pour l\'école (ID: ' . $ecole->id . ') : ', $ecole->filieres->toArray());
+
+        // Stocker les données de l'école dans la session
+        Session::put('school_data', [
+            'nom_ecole' => $ecole->nom_ecole,
+            'telephone' => $ecole->telephone,
+            'ville' => $ecole->ville,
+            'niveau' => $ecole->niveau,
+            'banques' => $banques,
+            'classes' => $classes,
+        ]);
+
+        return response()->json([
+            'view' => $ecole->niveau === 'primaire_secondaire' ? route('primaire') : route('universite'),
+            'banques' => $banques,
+            'classes' => $classes,
+        ]);
+    }
+
+    Log::error('École introuvable pour l\'ID : ' . $id);
+    return response()->json(['error' => 'École introuvable'], 404);
+}*/
+public function getSchoolDetails($id)
+{
+    $ecole = Ecole::with(['classes', 'filieres'])->find($id); // Charge l'école avec ses classes et filières
 
     if ($ecole) {
         Log::info('Niveau trouvé pour l\'école (ID: ' . $ecole->id . ') : ' . $ecole->niveau);
@@ -169,6 +246,16 @@ class EcoleController extends Controller
             ];
         });
 
+        // Préparer les filières
+        $filieres = $ecole->filieres->map(function ($filiere) {
+            return [
+                'id' => $filiere->id,
+                'filiere' => $filiere->filiere
+            ];
+        });
+
+        // Logger les filières
+        Log::info('Filières trouvées pour l\'école (ID: ' . $ecole->id . ') : ', $filieres->toArray());
         // Stocker les données de l'école dans la session
         Session::put('school_data', [
             'nom_ecole' => $ecole->nom_ecole,
@@ -177,11 +264,19 @@ class EcoleController extends Controller
             'niveau' => $ecole->niveau,
             'banques' => $banques,
             'classes' => $classes,
+            'filieres' => $filieres,
         ]);
 
+        /* Passer les données à la vue
+        return view('votre_vue', [
+            'classes' => $classes,
+            'filieres' => $filieres,
+            'banques' => $banques,
+        ]);*/
         return response()->json([
             'view' => $ecole->niveau === 'primaire_secondaire' ? route('primaire') : route('universite'),
             'banques' => $banques,
+            'filieres' => $filieres,
             'classes' => $classes,
         ]);
     }
@@ -189,8 +284,6 @@ class EcoleController extends Controller
     Log::error('École introuvable pour l\'ID : ' . $id);
     return response()->json(['error' => 'École introuvable'], 404);
 }
-
-    
     
     public function login(){
         return view('Ecole.login');

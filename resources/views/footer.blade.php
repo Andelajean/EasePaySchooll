@@ -37,7 +37,7 @@
           <i class="bi bi-geo-alt icon"></i>
           <div class="address">
             <h4>Adresse</h4>
-            <p>Centre, Yaounde</p>
+            <p>Poste Centrale, Yaounde</p>
             <p></p>
           </div>
 
@@ -69,9 +69,9 @@
           <h4>Follow Us</h4>
           <div class="social-links d-flex">
             <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.facebook.com/share/15jMdafZzH/" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/andelagael?utm_source=qr&igsh=NWp4N3dmaGFyOXYw" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/Jean Gael ANDELA" class="linkedin"><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
 

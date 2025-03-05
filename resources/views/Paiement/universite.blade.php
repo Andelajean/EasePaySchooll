@@ -126,8 +126,19 @@
 
         <!-- Champs pour l'université -->
         <div id="university-fields" class="md:col-span-2">
-            <label for="filiere">Filière</label>
-            <input type="text" id="filiere" name="filiere" class="border p-2 w-full" placeholder="Exemple : Génie logiciel">
+        
+          <label for="filiere">Filière</label>
+         <!-- Ajouter les filières ici -->
+         <select id="filiere" name="filiere" class="border p-2 w-full"  required>
+                <option value="" disabled selected>-- Sélectionnez une filière  --</option>
+                @foreach(session('school_data.filieres', []) as $filieres)
+                    <option value="{{ $filieres['filiere'] }}">
+                        {{ $filieres['filiere'] }}
+                    </option>
+                @endforeach
+            </select>
+   
+       
             <label for="niveau_universite">Niveau Universitaire</label>
             <select id="niveau_universite" name="niveau_universite" class="border p-2 w-full">
                 <option value="" disabled selected>-- Sélectionnez une option --</option>
@@ -163,13 +174,29 @@
         </div>
        
     </div>
+    <div>
+            <label for="heure_paiement" class="hidden">Phone</label>
+            <input type="tel" id="phone" name="phone" class="border p-2 w-full hidden" readonly>
+        </div>
 
     <!-- Boutons -->
     <div class="flex justify-between mt-4">
         <button type="button" id="annuler" class="bg-red-500 text-white px-4 py-2 rounded">Annuler</button>
-        <button type="submit" id="payButton" class="bg-green-500 text-white px-4 py-2 rounded">Payer</button>
+        <button type="button" id="openModal" class="bg-green-500 text-white px-4 py-2 rounded">Payer</button>
     </div>
 </form>
+<!-- Fenêtre modale -->
+<div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-bold mb-4">Entrez votre numéro de téléphone</h2>
+        <label for="phoneNumber" class="block mb-2">Numéro de téléphone :</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" class="border p-2 w-full mb-4" placeholder="Ex: 6XXXXXXXX" required>
+        <div class="flex justify-end">
+            <button id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Annuler</button>
+            <button id="confirmPayment" class="bg-green-500 text-white px-4 py-2 rounded">Confirmer</button>
+        </div>
+    </div>
+</div>
 
 </div>
  @include('Page.footer')

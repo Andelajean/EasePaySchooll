@@ -134,7 +134,7 @@
                 <p><strong>TrueSiteTechnology SARL</strong></p>
                 <p>Site web : <strong>www.truesitetechnology.com</strong></p>
                 <p>Email : <strong>contact@truesitetechnology.com</strong></p>
-                <p>Tel : <strong>+237 620 699 733 / 659 454 737 / 679 091 819</strong></p>
+                <p>Tel : <strong>+237  659 454 737 / 679 091 819</strong></p>
             </div>
             <div class="info">
                 <h2>Informations de l'école</h2>

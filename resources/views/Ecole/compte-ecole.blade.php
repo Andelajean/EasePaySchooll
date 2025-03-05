@@ -92,12 +92,7 @@
         <!-- Telephone -->
         <div class="flex flex-col">
           <label for="telephone" class="mb-2 font-medium text-white">Téléphone</label>
-
-          <input type="tel" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le num�ro de t�l�phone" required value="+237" maxlength="13" required> 
-        </div>
-
-        
-
+          <input type="tel" id="telephone" name="telephone" class="p-2 border rounded-md" placeholder="Entrez le numéro de téléphone" required value="+237" maxlength="13"> 
         </div>
 
       </div>

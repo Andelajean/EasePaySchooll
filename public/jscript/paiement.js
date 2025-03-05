@@ -91,67 +91,57 @@ document.getElementById('montant').addEventListener('input', function() {
 
     document.getElementById('montant_total').value = montantTotal;
 });
- // Fonction pour définir la date et l'heure actuelles
- document.addEventListener('DOMContentLoaded', function() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const currentTime = `${hours}:${minutes}`;
-    document.getElementById('heure_paiement').value = currentTime;
-    const currentDateTime = `${year}-${month}-${day}-${hours}:${minutes}`;
-    document.getElementById('date_paiement').value = currentDateTime;
-});
 
-
-
-//
 document.addEventListener('DOMContentLoaded', function () {
     const classeSelect = document.getElementById('classe');
     const detailsSelect = document.getElementById('details');
     const montantInput = document.getElementById('montant');
+    //const filiereSelect = document.getElementById('filiere');
     const montantTotalInput = document.getElementById('montant_total');
 
     // Fonction pour calculer le montant total
     function calculateTotalAmount(montant) {
-        let montantTotal;
-        if (montant <= 50000) {
-            montantTotal = montant + 500;
-        } else {
-            montantTotal = montant + 1000;
-        }
+        let montantTotal = montant <= 50000 ? montant + 500 : montant + 1000;
         montantTotalInput.value = montantTotal.toFixed(2); // Afficher avec deux décimales
     }
 
+    
     // Gestion du changement de classe
     classeSelect.addEventListener('change', function () {
         const selectedOption = classeSelect.options[classeSelect.selectedIndex];
-        const montants = JSON.parse(selectedOption.getAttribute('data-montants') || '{}');
+        console.log('Option de classe sélectionnée :', selectedOption);
+
+        // Récupérer les montants
+        const montantsData = selectedOption.getAttribute('data-montants');
+        console.log('Données brutes des montants :', montantsData);
+
+        const montants = JSON.parse(montantsData || '{}');
+        console.log('Montants parsés :', montants);
 
         // Réinitialiser les tranches
         detailsSelect.innerHTML = '<option value="" disabled selected>-- Sélectionnez une tranche --</option>';
         Object.keys(montants).forEach(tranche => {
-            detailsSelect.innerHTML += `<option value="${tranche}" data-montant="${montants[tranche]}">${tranche.replace('_', ' ')}</option>`;
+            const option = document.createElement('option');
+            option.value = tranche;
+            option.setAttribute('data-montant', montants[tranche]);
+            option.textContent = tranche.replace('_', ' ');
+            detailsSelect.appendChild(option);
         });
 
-        montantInput.value = ''; // Réinitialiser le montant
-        montantTotalInput.value = ''; // Réinitialiser le montant total
+        // Réinitialiser les champs de montant
+        montantInput.value = '';
+        montantTotalInput.value = '';
     });
 
     // Gestion du changement de tranche
     detailsSelect.addEventListener('change', function () {
         const selectedOption = detailsSelect.options[detailsSelect.selectedIndex];
         const montant = parseFloat(selectedOption.getAttribute('data-montant')) || 0;
-        montantInput.value = montant; // Afficher le montant de la tranche
 
-        // Calculer le montant total
-        calculateTotalAmount(montant);
+        montantInput.value = montant; // Afficher le montant de la tranche
+        calculateTotalAmount(montant); // Calculer le montant total
     });
 });
-
-
 // Empêcher le clic droit
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault(); // Empêche l'affichage du menu contextuel
@@ -172,4 +162,28 @@ document.addEventListener('keydown', function (e) {
     if (key === 'f12' || key === 'f5') {
         e.preventDefault();
     }
+});
+
+//fenetre numero
+document.getElementById("openModal").addEventListener("click", function () {
+    document.getElementById("paymentModal").classList.remove("hidden");
+});
+
+document.getElementById("closeModal").addEventListener("click", function () {
+    document.getElementById("paymentModal").classList.add("hidden");
+});
+
+document.getElementById("confirmPayment").addEventListener("click", function () {
+    let phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+    if (!phoneNumber) {
+        alert("Veuillez entrer un numéro de téléphone.");
+        return;
+    }
+
+    // Injecter le numéro dans le champ de téléphone du formulaire
+    document.getElementById("phone").value = phoneNumber;
+
+    // Soumettre le formulaire
+    document.getElementById("schoolForm").submit();
 });

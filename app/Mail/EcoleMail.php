@@ -42,12 +42,16 @@ class EcoleMail extends Mailable
     }
 
 
+/*
+
     public function mailuserreply($message, $email) {
         return $this->view('Ecole.email-reply')
                     ->subject('Merci d\'avoir fait confiance à EasePaySchool')
                     ->with(['message' => $message, 'email' => $email]);
     }
-    
+
+    */
+
     /**
      * Get the attachments for the message.
      *

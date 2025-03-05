@@ -28,4 +28,9 @@ public function PenaliteEcoles()
     {
         return $this->hasMany(PenailiteEcole::class);
     }
+    public function filieres()
+    {
+        return $this->hasMany(Filiere::class, 'ecole_id', 'id');
+    }
+
 }

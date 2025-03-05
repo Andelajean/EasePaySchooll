@@ -75,7 +75,7 @@
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
                 <h3>Adresse</h3>
-                <p>Centre,Yaounde</p>
+                <p>Poste Centrale,Yaounde</p>
               </div>
             </div><!-- End Info Item -->
 

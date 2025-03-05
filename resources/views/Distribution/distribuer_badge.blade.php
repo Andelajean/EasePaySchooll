@@ -229,8 +229,8 @@
 
         <!-- Footer -->
         <footer>
-            <div class="footer-area">
-                <p>&copy; <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://colorlib.com/wp/">Smart Tech Engineering</a>.</p>
+        <div class="footer-area">
+                <p>© Copyright <?php echo date('Y'); ?>. All rights reserved. Develop By <a href="https://truesitetechnology.com">True Site Technology </a>.</p>
             </div>
         </footer>
         <!-- Footer End -->

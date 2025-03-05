@@ -152,20 +152,30 @@
             <label for="heure_paiement"  class="hidden">Heure de paiement</label>
             <input type="niveau" id="niveau" name="niveau" class="hidden" value="{{ session('school_data.niveau') }}" readonly>
         </div>
+        <div>
+            <label for="heure_paiement" class="hidden">Phone</label>
+            <input type="tel" id="phone" name="phone" class="border p-2 w-full hidden" readonly>
+        </div>
     </div>
 
     <!-- Boutons -->
     <div class="flex justify-between mt-4">
         <button type="button" id="annuler" class="bg-red-500 text-white px-4 py-2 rounded">Annuler</button>
-        <button 
-    type="submit" 
-    id="payButton" 
-    class="bg-green-500 text-white px-4 py-2 rounded flex items-center justify-center">
-    Payer
-</button>
-
+        <button type="button" id="openModal" class="bg-green-500 text-white px-4 py-2 rounded">Payer</button>
     </div>
 </form>
+<!-- Fenêtre modale -->
+<div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-bold mb-4">Entrez votre numéro de téléphone</h2>
+        <label for="phoneNumber" class="block mb-2">Numéro de téléphone :</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" class="border p-2 w-full mb-4" placeholder="Ex: 6XXXXXXXX" required>
+        <div class="flex justify-end">
+            <button id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Annuler</button>
+            <button id="confirmPayment" class="bg-green-500 text-white px-4 py-2 rounded">Confirmer</button>
+        </div>
+    </div>
+</div>
 
 </div>
  @include('Page.footer')
