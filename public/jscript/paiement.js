@@ -58,9 +58,17 @@
             if (xhr.status === 404) {
                 alert('École introuvable.');
             } else {
-                alert('Une erreur s\'est produite. Veuillez réessayer.');
+                // Afficher les détails de l'erreur
+                console.error('Statut de l\'erreur:', xhr.status); // Code d'état HTTP
+                console.error('Statut du texte:', xhr.statusText); // Texte correspondant à l'état
+                console.error('Réponse:', xhr.responseText); // Détails de la réponse du serveur
+                
+                // Afficher une alerte utilisateur avec un message détaillé
+                alert('Une erreur s\'est produite : ' + xhr.status + ' - ' + xhr.statusText + 
+                      '. Détails : ' + xhr.responseText);
             }
         }
+        
     });
 });
 

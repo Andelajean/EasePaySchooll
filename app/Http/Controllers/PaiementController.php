@@ -289,17 +289,33 @@ public function payer(Request $request)
     public function handlePaymentConfirmation(Request $request, $paymentId)
 {
     try {
+        // Vérifiez les paramètres renvoyés par Monetbil
+            $status = $request->get('status');
+            $transactionId = $request->get('transaction_id');
+
+            if ($status === 'success') {
+                // Paiement réussi
+                Log::warning('La réponse de l\'API Monetbil est invalide. Le paiement sera enregistré dans la base de données.');
+            } else {
+                // Paiement échoué ou annulé
+                return redirect()->back()->with('error', 'Le paiement a échoué ou a été annulé.');
+            }
+
         // Vérifier le statut du paiement auprès de l'API Monetbil
-        $paymentStatus = $this->checkPaymentStatus($paymentId);
+       // $paymentStatus = $this->checkPaymentStatus($paymentId);
 
         // Si le statut est null (API ne retourne pas de réponse valide), enregistrer le paiement
-        if ($paymentStatus === null) {
+       /* if ($paymentStatus === null) {
             Log::warning('La réponse de l\'API Monetbil est invalide. Le paiement sera enregistré dans la base de données.');
-        }
-        // Si le paiement a échoué ou a été annulé, retourner une erreur
-        elseif ($paymentStatus === 'failed' || $paymentStatus === 'cancelled') {
+        }else{
+           
+           throw new \Exception('Le paiement a échoué ou a été annulé.');
+        }*/
+      /*  else($paymentStatus === 'failed' || $paymentStatus === 'cancelled') {
             throw new \Exception('Le paiement a échoué ou a été annulé.');
-        }
+        }*/
+
+       
 
         // Récupérer les données depuis la session
         $nom_ecole = session('nom_ecole');
