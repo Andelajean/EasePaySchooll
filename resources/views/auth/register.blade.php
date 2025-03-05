@@ -29,6 +29,7 @@
 
             .input-group {
                 margin-bottom: 1.2rem; /* Espacement réduit pour une meilleure visibilité */
+                position: relative; /* Pour positionner la liste des résultats */
             }
 
             .material-icons {
@@ -73,6 +74,31 @@
 
             .bg-red-500 {
                 background-color: #dc3545;
+            }
+
+            ul.autocomplete-list {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 10;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                max-height: 150px;
+                overflow-y: auto;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            ul.autocomplete-list li {
+                padding: 8px;
+                cursor: pointer;
+            }
+
+            ul.autocomplete-list li:hover {
+                background-color: #f0f0f0;
             }
         </style>
     </head>
@@ -126,7 +152,8 @@
                     </label>
                     <div id="children-names-container">
                         <div class="input-group">
-                            <input type="text" name="children_names[]" placeholder="Nom de l'enfant" autocomplete="off" />
+                            <input type="text" name="children_names[]" placeholder="Nom de l'enfant" autocomplete="off" oninput="handleChildNameInput(event)" />
+                            <ul class="autocomplete-list"></ul>
                         </div>
                     </div>
                     <button type="button" id="add-child-name" class="bg-blue-500">Ajouter un enfant</button>
@@ -154,7 +181,8 @@
                     const newChildNameEntry = document.createElement('div');
                     newChildNameEntry.classList.add('input-group');
                     newChildNameEntry.innerHTML = `
-                        <input type="text" name="children_names[]" placeholder="Nom de l'enfant" autocomplete="off" />
+                        <input type="text" name="children_names[]" placeholder="Nom de l'enfant" autocomplete="off" oninput="handleChildNameInput(event)" />
+                        <ul class="autocomplete-list"></ul>
                     `;
                     childrenNamesContainer.appendChild(newChildNameEntry);
                 });
@@ -166,6 +194,31 @@
                     }
                 });
             });
+
+            function handleChildNameInput(event) {
+                const input = event.target;
+                const list = input.nextElementSibling;
+
+                if (input.value.length > 0) {
+                    fetch(`/search-children?q=${input.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            list.innerHTML = '';
+                            data.forEach(child => {
+                                const li = document.createElement('li');
+                                li.textContent = child.nom_complet;
+                                li.classList.add('cursor-pointer', 'p-2', 'hover:bg-gray-200');
+                                li.addEventListener('click', function () {
+                                    input.value = child.nom_complet;
+                                    list.innerHTML = '';
+                                });
+                                list.appendChild(li);
+                            });
+                        });
+                } else {
+                    list.innerHTML = '';
+                }
+            }
         </script>
     </body>
 </x-guest-layout>
