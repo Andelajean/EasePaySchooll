@@ -298,7 +298,8 @@ public function payer(Request $request)
                 Log::warning('La réponse de l\'API Monetbil est invalide. Le paiement sera enregistré dans la base de données.');
             } else {
                 // Paiement échoué ou annulé
-                return redirect()->back()->with('error', 'Le paiement a échoué ou a été annulé.');
+               // return redirect()->back()->with('error', 'Le paiement a échoué ou a été annulé.');
+               throw new \Exception('Le paiement a échoué ou a été annulé.');
             }
 
         // Vérifier le statut du paiement auprès de l'API Monetbil
