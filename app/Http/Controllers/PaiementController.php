@@ -299,8 +299,10 @@ public function payer(Request $request)
             } else {
                 // Paiement échoué ou annulé
                // return redirect()->back()->with('error', 'Le paiement a échoué ou a été annulé.');
-               throw new \Exception('Le paiement a échoué ou a été annulé.');
+              // throw new \Exception('Le paiement a échoué ou a été annulé.');
+               return redirect('paiement')->with('error', 'Le paiement a échoué ou a été annulé.');;
             }
+
 
         // Vérifier le statut du paiement auprès de l'API Monetbil
        // $paymentStatus = $this->checkPaymentStatus($paymentId);
