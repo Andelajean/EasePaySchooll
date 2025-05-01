@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nav Bar</title>
+    <title>Nos Concours</title>
     <link href="/style/navbar.css" rel="stylesheet">
 </head>
 <body>
@@ -29,10 +29,15 @@
         @if(Request::is('paiement') || Request::is('paiement/primaire') || Request::is('paiement/universite')) 
             bg-blue-500 text-white 
         @endif p-2 rounded">
-        Paiement
+       Scolarité
     </a>
 </li>
-
+<li>
+        <a href="{{ route('concours') }}" class=" 
+            @if(Request::is('saintjean/concours')) bg-blue-500 text-white @endif p-2 rounded">
+           Nos Concours
+        </a>
+    </li>
     <li>
         <a href="{{ route('ecole.contact.admin') }}" class=" 
             @if(Request::is('ecole/contact/admin')) bg-blue-500 text-white @endif p-2 rounded">
@@ -79,6 +84,8 @@
         </div>
     @endif
     <div id="error-message" style="color:red;"></div>
+
+   
     <script src="/jscript/navbar.js"></script>
 </body>
 </html>

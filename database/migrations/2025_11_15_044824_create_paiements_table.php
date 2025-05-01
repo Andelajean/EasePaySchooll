@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('qr_code')->nullable(); // Champ pour le QR code
             $table->string('date_paiement');
             $table->string('heure_paiement');
-            $table->foreign('id_ecole')->references('id')->on('ecoles')->onDelete('set null');
+            $table->foreign('id_ecole')->references('id')->on('ecoles');
             $table->timestamps();
         });
     }

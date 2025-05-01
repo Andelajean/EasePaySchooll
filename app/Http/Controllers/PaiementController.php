@@ -197,7 +197,7 @@ public function payer(Request $request)
             $url = "https://api.monetbil.com/widget/v2.1/3etaiVRfi6g1DbNmq7CVou52wisgHmfU";
     
             $data = [
-                'amount' => '6', // Utiliser le montant majoré
+                'amount' =>$montantMajore , // Utiliser le montant majoré
                 'currency' => 'XAF',
                 'locale' => 'fr',
                 'phone' => $request->phone,

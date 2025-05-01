@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\PaiementsController;
 use App\Http\Controllers\Admin\SqlController;
 use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\AdminConcours;
 use App\Http\Controllers\Penalite;
 use App\Http\Controllers\ProfilEcole;
 use App\Models\Ecole;
@@ -27,8 +28,17 @@ use App\Models\Role;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CandidateMessagingController;
+use App\Http\Controllers\CivilController;
+use App\Http\Controllers\ConcourController;
+use App\Http\Controllers\GeneralisteController;
+use App\Http\Controllers\Geoscience;
+use App\Http\Controllers\PolitiqueController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SessionController;
 use App\Mail\UserNotification;
 use FontLib\Table\Type\name;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -141,7 +151,226 @@ Route::post('/login-ecole', [AdminEcoleController::class, 'login'])->name('login
 Route::get('/help',[PageController::class,'help'])->name('help');
 Route::get('/about',[PageController::class,'about'])->name('about');
 Route::get('/index',[PageController::class,'index'])->name('index');
+// start concours 
+echo "# saint_jean" >> README.md 
 
+//git commit -m "premier commit" 
+//git branch -M main 
+//git remote add origin https://github.com/Andelajean/saint_jean.git
+// git push -u origin main
+
+//admin
+Route::get('/admin/login/school',[AdminConcours::class,'inscription'])->name('inscription');
+
+Route::post('/admin/inscription', [AdminConcours::class, 'processForm'])->name('inscription.submit');
+Route::get('/saintjean/concours/civil', [CivilController::class, 'index'])->name('civil');
+Route::get('/saintjean/concours/finance', [ConcourController::class, 'finance'])->name('finance');
+Route::get('/saintjean/concours/geoscience', [Geoscience::class, 'index'])->name('geoscience');
+Route::get('/saintjean/concours/politique', [PolitiqueController::class, 'index'])->name('politique');
+Route::get('/saintjean/concours/inge', [GeneralisteController::class, 'index'])->name('inge');
+Route::post('/inscription/finance', [ConcourController::class, 'store_finance'])
+->name('finance.store');
+Route::post('/inscription/igea', [Geoscience::class, 'geoscience_finance'])
+->name('geoscience.store');
+Route::post('/inscription/politique', [PolitiqueController::class, 'store_pol'])
+    ->name('politique.store');
+    Route::post('/inscription/inge', [GeneralisteController::class, 'store_inge'])
+    ->name('inge.store');
+    Route::post('/inscription/civil', [CivilController::class, 'store_civil'])
+    ->name('civil.store');
+// Routes publiques
+
+        Route::get('/login/admin', [AdminConcours::class, 'showLoginForm'])->name('admin.login');
+        Route::post('/login/traitement', [AdminConcours::class, 'login'])->name('admin.login.submit');
+    
+    // Routes protégées
+ Route::middleware('admin')->group(function () {
+    //logout and profil
+    Route::get('/admin/concours/logout',[AdminConcours::class,'logout'])->name('admin_concours.logout');
+    Route::get('/admin/concours/profil',[AdminConcours::class,'profil'])->name('admin_concours.profil');
+    //end
+        Route::get('/admin/concours/index',[AdminConcours::class,'index'])->name('admin_concours.index');
+Route::get('/admin/concours/finance',[AdminConcours::class,'finance'])->name('admin_concours.finance');
+
+// email general
+Route::post('/send-email', [CandidateMessagingController::class, 'sendEmail'])->name('send.email');
+//end
+
+
+ // Soumission du formulaire
+
+
+
+ Route::get('/candidates/{id}/messaging/form', [CandidateMessagingController::class, 'showMessagingForm'])
+     ->name('candidate.messaging.form');
+     
+Route::post('/candidates/{id}/messaging/send', [CandidateMessagingController::class, 'sendMessage'])
+     ->name('candidate.send-message');
+     Route::get('/candidates/finance', [AdminConcours::class, 'finance'])
+     ->name('candidate.finance');
+     
+Route::post('/candidates/assign-rooms', [RoomController::class, 'assignRooms'])
+     ->name('candidates.assign-rooms');
+     Route::get('/salles-attribution', [RoomController::class, 'showAttribution'])
+     ->name('salles.attribution');
+Route::get('/finance/partagesalle/mail',[ConcourController::class,'shareRoomsFinance'])->name('candidates.share-rooms.finance');
+//resultat
+Route::post('/share-results/finance', [ConcourController::class, 'shareWithGeosciences'])
+     ->name('share.results.finance');
+
+     
+// Impression
+Route::get('/candidates/print-rooms', function() {
+    $candidates = DB::table('management_finances')
+                  ->whereNotNull('exam_room')
+                  ->orderBy('exam_room')
+                  ->orderBy('exam_seat')
+                  ->get();
+                  
+    return view('Concours.Admin.impression_finance', compact('candidates'));
+})->name('candidates.print-rooms');
+     
+Route::post('/share-rooms', [RoomController::class, 'shareRooms'])
+     ->name('share.rooms');
+     //geoscience
+    
+     Route::get('/admin/concours/igea',[Geoscience::class,'geoscience'])->name('admin_concours.geoscience');
+     Route::get('/salles-attribution/igea', [Geoscience::class, 'showAttribution'])
+     ->name('salles.attribution_igea');
+     Route::post('/candidates/assign-rooms/igea', [Geoscience::class, 'assignRooms'])
+     ->name('candidates.assign-rooms.igea');
+     Route::get('/candidates/print-rooms/igea', function() {
+        $candidates = DB::table('geosciences')
+                      ->whereNotNull('exam_room')
+                      ->orderBy('exam_room')
+                      ->orderBy('exam_seat')
+                      ->get();
+                      
+        return view('Concours.Geoscience.impression_geoscience', compact('candidates'));
+    })->name('candidates.print-rooms.igea');
+    Route::post('/candidates/share-rooms', function() {
+        $candidates = DB::table('management_finances')
+                      ->whereNotNull('exam_room')
+                      ->get();
+                      
+        foreach ($candidates as $candidate) {
+            Mail::to($candidate->email)->send(new \App\Mail\RoomAssignment($candidate));
+        }
+        
+        return back()->with('success', 'Les affectations ont été envoyées par email');
+    })->name('candidates.share-rooms.igea');
+    
+    Route::post('/candidates/share-rooms/geoscience', [Geoscience::class, 'shareRooms'])
+    ->name('candidates.share-rooms.geoscience');
+
+    //resultat
+ Route::post('/share-results/geoscience', [Geoscience::class, 'shareWithGeosciences'])
+ ->name('share.results.geoscience');
+    //end geoscience
+    //politique
+    
+    Route::get('/admin/concours/politique',[PolitiqueController::class,'politique'])->name('admin_concours.politique');
+    Route::get('/salles-attribution/politique', [PolitiqueController::class, 'showAttribution'])
+    ->name('salles.attribution_sph');
+    Route::post('/candidates/assign-rooms/politique', [PolitiqueController::class, 'assignRooms'])
+    ->name('candidates.assign-rooms.politique');
+    Route::get('/candidates/print-rooms/politique', function() {
+       $candidates = DB::table('politiques')
+                     ->whereNotNull('exam_room')
+                     ->orderBy('exam_room')
+                     ->orderBy('exam_seat')
+                     ->get();
+                     
+       return view('Concours.Geoscience.impression_politique', compact('candidates'));
+   })->name('candidates.print-rooms.politique');
+   Route::post('/candidates/share-rooms/politique', function() {
+       $candidates = DB::table('politiques')
+                     ->whereNotNull('exam_room')
+                     ->get();
+                     
+       foreach ($candidates as $candidate) {
+           Mail::to($candidate->email)->send(new \App\Mail\RoomAssignment($candidate));
+       }
+       
+       return back()->with('success', 'Les affectations ont été envoyées par email');
+   })->name('candidates.share-rooms.politique');
+  
+   Route::post('/candidates/share-rooms/polotique', [PolitiqueController::class, 'shareRooms'])
+   ->name('candidates.share-rooms.politique');
+   //resultat
+   Route::post('/share-results/politique', [PolitiqueController::class, 'shareWithGeosciences'])
+     ->name('share.results.politique');
+
+   // end politique
+
+   //inge
+  
+   Route::get('/admin/concours/inge',[GeneralisteController::class,'inge'])->name('admin_concours.inge');
+   Route::get('/salles-attribution/inge', [GeneralisteController::class, 'showAttribution'])
+   ->name('salles.attribution.inge');
+   Route::post('/candidates/assign-rooms/inge', [GeneralisteController::class, 'assignRooms'])
+   ->name('candidates.assign-rooms.inge');
+   Route::get('/candidates/print-rooms/inge', function() {
+      $candidates = DB::table('generalistes')
+                    ->whereNotNull('exam_room')
+                    ->orderBy('exam_room')
+                    ->orderBy('exam_seat')
+                    ->get();
+                    
+      return view('Concours.Inge.impression_inge', compact('candidates'));
+  })->name('candidates.print-rooms.inge');
+  Route::post('/candidates/share-rooms/inge', [GeneralisteController::class, 'shareRooms'])
+  ->name('candidates.share-rooms.inge');
+  
+  //resultat
+  Route::post('/share-results/inge', [GeneralisteController::class, 'shareWithGeosciences'])
+     ->name('share.results.inge');
+  // end inge
+
+  //civil
+ 
+  Route::get('/admin/concours/civil',[CivilController::class,'civil'])->name('admin_concours.civil');
+  Route::get('/salles-attribution/civil', [CivilController::class, 'showAttribution'])
+  ->name('salles.attribution.civil');
+  Route::post('/candidates/assign-rooms/civil', [CivilController::class, 'assignRooms'])
+  ->name('candidates.assign-rooms.civil');
+  Route::get('/candidates/print-rooms/civil', function() {
+     $candidates = DB::table('civil')
+                   ->whereNotNull('exam_room')
+                   ->orderBy('exam_room')
+                   ->orderBy('exam_seat')
+                   ->get();
+                   
+     return view('Concours.Civil.impression_civil', compact('candidates'));
+ })->name('candidates.print-rooms.civil');
+ Route::post('/candidates/share-rooms/civil', function() {
+     $candidates = DB::table('civils')
+                   ->whereNotNull('exam_room')
+                   ->get();
+                   
+     foreach ($candidates as $candidate) {
+         Mail::to($candidate->email)->send(new \App\Mail\RoomAssignment($candidate));
+     }
+     
+     return back()->with('success', 'Les affectations ont été envoyées par email');
+ })->name('candidates.share-rooms.civil');
+
+ Route::post('/candidates/share-rooms/civil', [CivilController::class, 'shareRooms'])
+ ->name('candidates.share-rooms.civil');
+ //resultat
+ Route::post('/share-results/civil', [CivilController::class, 'shareWithGeosciences'])
+     ->name('share.results.civil');
+  //end civil
+  //session
+  Route::post('/sessions', [SessionController::class, 'store'])->name('sessions.store');
+
+
+    });
+
+
+Route::get('/saintjean/concours', [ConcourController::class, 'concours'])->name('concours');
+
+ // end cocncour
 Route::get('/ecole/compte/classe/primaire_secondaire/{id}', [EcoleController::class, 'classe_primaire'])->name('classe.primaire');
 Route::get('/ecole/compte/classe/universite/{id}', [EcoleController::class, 'classe_univ'])->name('classe.univ');
 Route::post('/ecole/compte/classe/traitement/{id}', [EcoleController::class, 'traitement_classe'])->name('traitement.classe');
@@ -179,6 +408,7 @@ Route::middleware(['auth.ecole'])->group(function () {
     Route::get('/detail-eleve/{id}', [AdminEcoleController::class, 'detailEleve'])->name('detail.eleve');
 
     Route::get('/paiement/ecole/classe', [AdminEcoleController::class, 'classe'])->name('classe');
+    
     Route::get('/paiement/ecole/tranche', [AdminEcoleController::class, 'tranche'])->name('tranche');
     Route::get('/paiement/ecole/niveau', [AdminEcoleController::class, 'niveau'])->name('niveau');
     Route::get('/paiement/ecole/filiere', [AdminEcoleController::class, 'filiere'])->name('filiere');
