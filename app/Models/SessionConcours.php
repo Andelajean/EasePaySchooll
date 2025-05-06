@@ -10,7 +10,7 @@ class SessionConcours extends Model
 {
     use HasFactory;
 
-    protected $table = 'meme'; // Nom de table spécifié comme demandé
+    protected $table = 'sessions_concours'; // Nom de table spécifié comme demandé
     
     protected $fillable = [
         'nom_session',

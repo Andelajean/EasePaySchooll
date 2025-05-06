@@ -126,6 +126,10 @@
                                         <label for="email" class="form-label required-field">Email</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
+                                    <div class="col-md-6">
+                                        <label for="telephone" class="form-label required-field">Ecole de Provenance</label>
+                                        <input type="tel" class="form-control" id="lycee" name="lycee" required>
+                                    </div>
                                 </div>
                             </div>
                             

@@ -57,79 +57,111 @@
         <!-- Section des cartes de formations -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <!-- Carte 1 - Management et Finance (MF) -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
-                <div class="absolute top-6 right-6 text-blue-500">
-                    <i class="fas fa-chart-line text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Management et Finance (MF)</h3>
-                <div class="space-y-2 mb-6">
-                    <p class="text-gray-600">Date de début: 15/09/2023</p>
-                    <p class="text-gray-600">Date de fin: 15/06/2024</p>
-                </div>
-                <a href="{{route('finance')}}" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                    Candidater
-            </a>
-            </div>
+            <!-- Carte 1 - Management et Finance (MF) -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
+    <div class="absolute top-6 right-6 text-blue-500">
+        <i class="fas fa-chart-line text-2xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4">Management et Finance (MF)</h3>
+    <div class="space-y-2 mb-6">
+        <p class="text-gray-600">Concours 1 : 07/05/2025</p>
+        <p class="text-gray-600">Concours 2 : 25/07/2025</p>
+    </div>
+    <div class="flex space-x-2">
+        <a href="{{ route('finance') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+            Candidater
+        </a>
+        <a href="{{ asset('concours/fichier/Fiche inscription concours Management et Finances 2025.pdf') }}" download class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+    Télécharger la fiche
+</a>
 
-            <!-- Carte 2 - Science Politique et Humaine(SPH) -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
-                <div class="absolute top-6 right-6 text-blue-500">
-                    <i class="fas fa-landmark text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Science Politique et Humaine (SPH)</h3>
-                <div class="space-y-2 mb-6">
-                    <p class="text-gray-600">Date de début: 20/09/2023</p>
-                    <p class="text-gray-600">Date de fin: 20/06/2024</p>
-                </div>
-                <a href="{{route('politique')}}" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                    Candidater
-            </a>
-            </div>
+    </div>
+</div>
 
-            <!-- Carte 3 - Geoscience, Environnement et Agro Industrie (IGEA) -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
-                <div class="absolute top-6 right-6 text-blue-500">
-                    <i class="fas fa-leaf text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Geoscience, Environnement et Agro Industrie (IGEA)</h3>
-                <div class="space-y-2 mb-6">
-                    <p class="text-gray-600">Date de début: 10/09/2023</p>
-                    <p class="text-gray-600">Date de fin: 10/06/2024</p>
-                </div>
-                <a href="{{route('geoscience')}}" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                    Candidater
-                </a>
-            </div>
+<!-- Carte 2 - Science Politique et Humaine (SPH) -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
+    <div class="absolute top-6 right-6 text-blue-500">
+        <i class="fas fa-landmark text-2xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4">Science Politique et Humaine (SPH)</h3>
+    <div class="space-y-2 mb-6">
+        <p class="text-gray-600">Concours 1 : 10/05/2025</p>
+        <p class="text-gray-600">Concours 2 : 19/07/2025</p>
+    </div>
+    <div class="flex space-x-2">
+        <a href="{{ route('politique') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+            Candidater
+        </a>
+        <a href="{{ asset('concours/fichier/Fiche-inscription-SPH-concours-2025.pdf') }}" download class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+    Télécharger la fiche
+</a>
 
-            <!-- Carte 4 - Ingenieur Generaliste(INGE) -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
-                <div class="absolute top-6 right-6 text-blue-500">
-                    <i class="fas fa-cogs text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Ingenieur Generaliste (INGE)</h3>
-                <div class="space-y-2 mb-6">
-                    <p class="text-gray-600">Date de début: 05/09/2023</p>
-                    <p class="text-gray-600">Date de fin: 05/06/2024</p>
-                </div>
-                <a href="{{route('inge')}}" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                    Candidater
-            </a>
-            </div>
+    </div>
+</div>
 
-            <!-- Carte 5 - Ingenieur en genie civil (IGC) -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
-                <div class="absolute top-6 right-6 text-blue-500">
-                    <i class="fas fa-hard-hat text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Ingenieur en genie civil (IGC)</h3>
-                <div class="space-y-2 mb-6">
-                    <p class="text-gray-600">Date de début: 12/09/2023</p>
-                    <p class="text-gray-600">Date de fin: 12/06/2024</p>
-                </div>
-                <a href="{{route('civil')}}" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                    Candidater
-            </a>
-            </div>
+<!-- Carte 3 - Geoscience, Environnement et Agro Industrie (IGEA) -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
+    <div class="absolute top-6 right-6 text-blue-500">
+        <i class="fas fa-leaf text-2xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4">Geoscience, Environnement et Agro Industrie (IGEA)</h3>
+    <div class="space-y-2 mb-6">
+        <p class="text-gray-600">Concours 1 : 10/05/2025</p>
+        <p class="text-gray-600">Concours 2 : 19/07/2025</p>
+    </div>
+    <div class="flex space-x-2">
+        <a href="{{ route('geoscience') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+            Candidater
+        </a>
+        <a href="{{ asset('concours/fichier/Fiche-dinscription-concours-IGEA-2025.pdf') }}" download class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+    Télécharger la fiche
+</a>
+
+    </div>
+</div>
+
+<!-- Carte 4 - Ingenieur Generaliste (INGE) -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
+    <div class="absolute top-6 right-6 text-blue-500">
+        <i class="fas fa-cogs text-2xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4">Ingenieur Generaliste (INGE)</h3>
+    <div class="space-y-2 mb-6">
+        <p class="text-gray-600">Concours 1 : 17/05/2025</p>
+        <p class="text-gray-600">Concours 2 : 12/07/2025</p>
+    </div>
+    <div class="flex space-x-2">
+        <a href="{{ route('inge') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+            Candidater
+        </a>
+        <a href="{{ asset('concours/fichier/Fiche d\'inscription concours Ingé Généraliste 2025.pdf') }}" download class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+    Télécharger la fiche
+     </a>
+
+    </div>
+</div>
+
+<!-- Carte 5 - Ingenieur en genie civil (IGC) -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
+    <div class="absolute top-6 right-6 text-blue-500">
+        <i class="fas fa-hard-hat text-2xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4">Ingenieur en genie civil (IGC)</h3>
+    <div class="space-y-2 mb-6">
+        <p class="text-gray-600">Concours 1 : 17/05/2025</p>
+        <p class="text-gray-600">Concours 2 : 22/07/2025</p>
+    </div>
+    <div class="flex space-x-2">
+        <a href="{{ route('civil') }}" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+            Candidater
+        </a>
+        <a href="{{ asset('concours/fichier/Fiche d\'inscription concours Génie Civil 2025.pdf') }}" download class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-center">
+    Télécharger la fiche
+</a>
+
+    </div>
+</div>
+
 
             <!-- Carte 6 - Exemple supplémentaire
             <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 relative">
