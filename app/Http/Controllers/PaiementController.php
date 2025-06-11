@@ -12,6 +12,9 @@ use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use App\Models\Classe;
 use Illuminate\Support\Facades\Log;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Error\Card;
 
 class PaiementController extends Controller
 {
@@ -28,6 +31,9 @@ public function universite(){
 public function payer(Request $request)
 {
     try {
+        // Vérification du mode de paiement choisi
+        $modePaiement = $request->mode_paiement; // Récupérer le mode choisi (carte ou téléphone)
+
         // Validation des données
         $validator = Validator::make($request->all(), $this->validationRules($request));
 
@@ -72,8 +78,16 @@ public function payer(Request $request)
             'montant_majore' => $montantMajore, // Montant avec majoration
         ]);
 
-        // Effectuer le paiement via l'API Monetbil
-        $paymentResponse = $this->callMomoApi($request, $id_paiement, $montantMajore);
+        // Vérifier le mode de paiement et appeler l'API appropriée
+        if ($modePaiement === "telephone") {
+            // Paiement via Monetbil
+            $paymentResponse = $this->callMomoApi($request, $id_paiement, $montantMajore);
+        } elseif ($modePaiement === "carte") {
+            // Paiement via Stripe
+            $paymentResponse = $this->callStripeApi($request,$id_paiement, $montantMajore);
+        } else {
+            throw new \Exception("Mode de paiement invalide.");
+        }
 
         // Vérifier si l'appel à l'API a échoué
         if ($paymentResponse['status'] === 'error') {
@@ -238,6 +252,27 @@ public function payer(Request $request)
             return ['status' => 'error', 'message' => 'Une erreur s\'est produite lors de l\'appel à l\'API Monetbil.'];
         }
     }
+
+
+
+    private function callStripeApi(Request $request,$id_paiement, $montantMajore)
+{
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    try {
+        $charge = Charge::create([
+            'amount' => intval($montantMajore * 100), // Stripe exige des montants en centimes
+            'currency' => 'eur',
+            'source' => $request->stripeToken, // Token envoyé depuis le frontend
+            'description' => 'Paiement des frais scolaires'
+        ]);
+
+        return ['status' => 'success', 'payment_url' => url('/confirmation-paiement')];
+    } catch (\Exception $e) {
+        return ['status' => 'error', 'message' => $e->getMessage()];
+    }
+}
+
     private function checkPaymentStatus($paymentId)
     {
         // URL de l'API Monetbil pour vérifier le statut du paiement
@@ -294,31 +329,12 @@ public function payer(Request $request)
             $transactionId = $request->get('transaction_id');
 
             if ($status === 'success') {
-                // Paiement réussi
+                   // Paiement réussi
                 Log::warning('La réponse de l\'API Monetbil est invalide. Le paiement sera enregistré dans la base de données.');
             } else {
-                // Paiement échoué ou annulé
-               // return redirect()->back()->with('error', 'Le paiement a échoué ou a été annulé.');
-              // throw new \Exception('Le paiement a échoué ou a été annulé.');
+             
                return redirect('paiement')->with('error', 'Le paiement a échoué ou a été annulé.');;
             }
-
-
-        // Vérifier le statut du paiement auprès de l'API Monetbil
-       // $paymentStatus = $this->checkPaymentStatus($paymentId);
-
-        // Si le statut est null (API ne retourne pas de réponse valide), enregistrer le paiement
-       /* if ($paymentStatus === null) {
-            Log::warning('La réponse de l\'API Monetbil est invalide. Le paiement sera enregistré dans la base de données.');
-        }else{
-           
-           throw new \Exception('Le paiement a échoué ou a été annulé.');
-        }*/
-      /*  else($paymentStatus === 'failed' || $paymentStatus === 'cancelled') {
-            throw new \Exception('Le paiement a échoué ou a été annulé.');
-        }*/
-
-       
 
         // Récupérer les données depuis la session
         $nom_ecole = session('nom_ecole');

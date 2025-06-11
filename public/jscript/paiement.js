@@ -172,16 +172,33 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-//fenetre numero
+//fenetre choix du mode de paieement
 document.getElementById("openModal").addEventListener("click", function () {
-    document.getElementById("paymentModal").classList.remove("hidden");
+   // document.getElementById("paymentModal").classList.remove("hidden");
+   document.getElementById("paymentChoiceModal").classList.remove("hidden");
+
 });
+
+
+document.getElementById("payWithPhone").addEventListener("click", function () {
+     document.getElementById("paymentModal").classList.remove("hidden");
+     document.getElementById("paymentChoiceModal").classList.add("hidden");
+ 
+ });
+ 
+
 
 document.getElementById("closeModal").addEventListener("click", function () {
     document.getElementById("paymentModal").classList.add("hidden");
 });
 
-document.getElementById("confirmPayment").addEventListener("click", function () {
+
+//Ca me permet de fermer la fenetre des choix//
+document.getElementById("closeModalChoice").addEventListener("click", function () {
+    document.getElementById("paymentChoiceModal").classList.add("hidden");
+});
+
+document.getElementById("confirmPaymentPhone").addEventListener("click", function () {
     let phoneNumber = document.getElementById("phoneNumber").value.trim();
 
     if (!phoneNumber) {
@@ -192,6 +209,28 @@ document.getElementById("confirmPayment").addEventListener("click", function () 
     // Injecter le numéro dans le champ de téléphone du formulaire
     document.getElementById("phone").value = phoneNumber;
 
+    document.getElementById("mode_paiement").value = "telephone";
     // Soumettre le formulaire
     document.getElementById("schoolForm").submit();
+});
+
+
+document.getElementById("confirmPaymentCard").addEventListener("click", function () {
+   
+    // Injecter le numéro dans le champ de téléphone du formulaire
+    document.getElementById("phone").value = "0000000000";
+
+    document.getElementById("mode_paiement").value = "carte";
+    // Soumettre le formulaire
+    document.getElementById("schoolForm").submit();
+});
+
+
+stripe.createToken(cardElement).then(function(result) {
+    if (result.error) {
+        alert(result.error.message);
+    } else {
+        document.getElementById("stripeToken").value = result.token.id;
+        document.getElementById("schoolForm").submit();
+    }
 });

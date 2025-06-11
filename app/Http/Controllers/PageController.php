@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paiement;
+use App\Models\PaiementSaintJean;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF; 
@@ -104,4 +105,38 @@ class PageController extends Controller
     public function index(){
         return view('Page.index');
     }
+
+
+
+
+    public function recu_saintjean($id_paiement){
+        // Rechercher le paiement dans la base de données
+      try {
+        // Récupérer le paiement en base
+        $paiement = PaiementSaintJean::where('id_paiement', $id_paiement)->first();
+
+        // Vérifier si le paiement existe
+        if (!$paiement) {
+            return redirect()->route('concours')->withErrors(['error' => 'Paiement introuvable.']);
+        }
+
+        // Passer les données à la vue du reçu
+        return view('Page.recu_saintjean', [
+            'id_paiement' => $paiement->id_paiement,
+            'photo_path' => $paiement->photo_concourant,
+            'qr_code_path' => $paiement->qr_code_path,
+            'nom_complet' => $paiement->nom_concourant,
+            'telephone' => $paiement->numero_telephone,
+            'montant' => $paiement->somme_deboursee,
+            'date_paiement' => $paiement->date_paiement,
+            'heure_paiement' => $paiement->heure_paiement,
+            'filiere_concours' => $paiement->filiere_concours,
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Erreur lors de l\'affichage du reçu:', ['error' => $e->getMessage()]);
+        return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite lors de l\'affichage du reçu.']);
+    }
+
+    }
+
 }

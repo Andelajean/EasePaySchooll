@@ -152,7 +152,7 @@ Route::get('/help',[PageController::class,'help'])->name('help');
 Route::get('/about',[PageController::class,'about'])->name('about');
 Route::get('/index',[PageController::class,'index'])->name('index');
 // start concours 
-echo "# saint_jean" >> README.md 
+//echo "# saint_jean" >> README.md ;
 
 //git commit -m "premier commit" 
 //git branch -M main 
@@ -172,7 +172,7 @@ Route::post('/inscription/finance', [ConcourController::class, 'store_finance'])
 ->name('finance.store');
 Route::post('/inscription/igea', [Geoscience::class, 'geoscience_finance'])
 ->name('geoscience.store');
-Route::post('/inscription/politique', [PolitiqueController::class, 'store_pol'])
+Route::post('/inscription/politique', [PolitiqueController::class, 'politique_finance'])
     ->name('politique.store');
     Route::post('/inscription/inge', [GeneralisteController::class, 'store_inge'])
     ->name('inge.store');
@@ -454,3 +454,28 @@ Route::get('/historique-paiement', [PaiementController::class, 'historiquePaieme
 
 Route::get('/search-children', [ChildController::class, 'search'])->name('search.children');
 
+
+
+
+
+///*****ROUTES POUR LA GESTION DES PAIEMENTS DES CONCOURS ****////
+Route::post('/geoscience/candidater', [Geoscience::class, 'candidaterGeoscience'])->name('candidater_geoscience');
+Route::get('/recu_geoscience/{id_paiement}', [Geoscience::class, 'handlePaymentConfirmation'])
+    ->name('recu_geoscience');
+
+Route::post('/politique/candidater', [PolitiqueController::class, 'candidaterPolitique'])->name('candidater_politique');
+Route::get('/recu_politique/{id_paiement}', [PolitiqueController::class, 'handlePaymentConfirmation'])
+    ->name('recu_politique');
+
+Route::post('/generaliste/candidater', [GeneralisteController::class, 'candidaterGeneraliste'])->name('candidater_generaliste');
+Route::get('/recu_generaliste/{id_paiement}', [GeneralisteController::class, 'handlePaymentConfirmation'])
+    ->name('recu_generaliste');
+
+Route::post('/civil/candidater', [CivilController::class, 'candidaterCivil'])->name('candidater_civil');
+Route::get('/recu_civil/{id_paiement}', [CivilController::class, 'handlePaymentConfirmation'])
+    ->name('recu_civil');
+
+
+
+
+Route::get('/recu-paiement/{id_paiement}',[PageController::class,'recu_saintjean'])->name('recu_saintjean');

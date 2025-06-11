@@ -52,4 +52,39 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
         }
     });
+
+
+    //fenetre choix du mode de paieement
+    document.getElementById("openModal").addEventListener("click", function () {
+    // document.getElementById("paymentModal").classList.remove("hidden");
+    document.getElementById("paymentModal").classList.remove("hidden");
+ 
+ });
+
+
+ document.getElementById("confirmPaymentPhone").addEventListener("click", function () {
+    let phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+    if (!phoneNumber) {
+        alert("Veuillez entrer un numéro de téléphone.");
+        return;
+    }
+
+    // Injecter le numéro dans le champ de téléphone du formulaire
+    document.getElementById("telephone").value = phoneNumber;
+
+    //document.getElementById("mode_paiement").value = "telephone";
+    // Soumettre le formulaire
+    document.getElementById("inscriptionForm").submit();
+});
+
+document.getElementById("closeModal").addEventListener("click", function () {
+    document.getElementById("paymentModal").classList.add("hidden");
+});
+
+    
+    
+document.getElementById("closeModal").addEventListener("click", function () {
+    document.getElementById("paymentModal").classList.add("hidden");
+});
 });

@@ -6,6 +6,19 @@
     <title>Inscription au concours - IGEA</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Bootstrap CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/style/style.css" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <style>
         .form-section {
             display: none;
@@ -255,7 +268,22 @@
     <div class="card-footer bg-light">
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-secondary" onclick="prevSection('part2', 'part1')">Précédent</button>
-            <button type="submit" class="btn btn-success">Valider l'inscription</button>
+            <button type="button" id="openModal" class="btn btn-success">Valider l'inscription</button>
+        </div>
+    </div>
+
+      <!-- Champs cachés pour connaitre le mode de paiement -->
+    <input type="hidden" id="mode_paiement" name="mode_paiement" value="telephone">
+     <!-- Fenêtre modale -->
+     <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-lg font-bold mb-4">Entrez votre numéro de téléphone pour effectuer le paiement du concour</h2>
+            <label for="phoneNumber" class="block mb-2">Numéro de téléphone :</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" class="border p-2 w-full mb-4" placeholder="Ex: 6XXXXXXXX" required>
+            <div class="flex justify-end">
+                <button id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Annuler</button>
+                <button id="confirmPaymentPhone" class="bg-green-500 text-white px-4 py-2 rounded">Confirmer</button>
+            </div>
         </div>
     </div>
 </div>
@@ -371,5 +399,6 @@
         }
     });
 </script>
+<script src="/jscript/concours.js"></script>
 </body>
 </html>
