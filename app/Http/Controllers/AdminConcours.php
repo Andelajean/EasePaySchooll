@@ -13,6 +13,49 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 class AdminConcours extends Controller
 {
+    public function profil_update(Request $request)
+{
+    $admin = Session::get('admin');
+
+    $validator = Validator::make($request->all(), [
+        'nom' => 'required|string|max:255',
+        'telephone' => 'required|string|max:20|unique:administrations,telephone,' . $admin->id,
+        'email' => 'required|email|unique:administrations,email,' . $admin->id,
+        'identifiant' => 'nullable|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+    ], [
+        'identifiant.confirmed' => 'Les mots de passe ne correspondent pas.',
+        'identifiant.regex' => 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.',
+        'email.unique' => 'Cet email est déjà utilisé.',
+        'telephone.unique' => 'Ce numéro de téléphone est déjà utilisé.',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    $admin->nom = $request->nom;
+    $admin->telephone = $request->telephone;
+    $admin->email = $request->email;
+
+    if ($request->filled('identifiant')) {
+        $admin->identifiant = Hash::make($request->identifiant);
+    }
+
+    $admin->save();
+
+    Session::put('admin', $admin);
+
+    return redirect()->route('admin_concours.index')->with('success', 'Profil mis à jour avec succès.');
+}
+
+    public function profil()
+    {
+        $user = Session::get('admin'); // tu récupères l'admin connecté
+        return view('Concours.Auth.profil', compact('user'));
+    }
+    
 
     public function inscription(){
         return view('Concours.Auth.inscription');

@@ -17,6 +17,7 @@ class Generaliste extends Model
         'date_naissance',
         'lieu_naissance',
         'nationalite',
+        'lycee',
         'region_origine',
         'adresse',
         'telephone',

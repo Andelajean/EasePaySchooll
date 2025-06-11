@@ -21,6 +21,7 @@ class Civil extends Model
        'adresse',
        'telephone',
        'email',
+       'lycee',
        'titulaire_bac',
        'diplome_bac_path',
        'bulletin_seconde_path',

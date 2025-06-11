@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('nationalite');
             $table->string('region_origine');
             $table->string('adresse');
+            $table->string('lycee');
             $table->string('telephone');
             $table->string('email')->unique();
             // Information sur le bac

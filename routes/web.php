@@ -154,10 +154,6 @@ Route::get('/index',[PageController::class,'index'])->name('index');
 // start concours 
 //echo "# saint_jean" >> README.md ;
 
-//git commit -m "premier commit" 
-//git branch -M main 
-//git remote add origin https://github.com/Andelajean/saint_jean.git
-// git push -u origin main
 
 //admin
 Route::get('/admin/login/school',[AdminConcours::class,'inscription'])->name('inscription');
@@ -188,6 +184,8 @@ Route::post('/inscription/politique', [PolitiqueController::class, 'politique_fi
     //logout and profil
     Route::get('/admin/concours/logout',[AdminConcours::class,'logout'])->name('admin_concours.logout');
     Route::get('/admin/concours/profil',[AdminConcours::class,'profil'])->name('admin_concours.profil');
+    
+    Route::post('/admin/concours/profil/update',[AdminConcours::class,'profil_update'])->name('profil.update');
     //end
         Route::get('/admin/concours/index',[AdminConcours::class,'index'])->name('admin_concours.index');
 Route::get('/admin/concours/finance',[AdminConcours::class,'finance'])->name('admin_concours.finance');
@@ -235,8 +233,8 @@ Route::post('/share-rooms', [RoomController::class, 'shareRooms'])
      //geoscience
     
      Route::get('/admin/concours/igea',[Geoscience::class,'geoscience'])->name('admin_concours.geoscience');
-     Route::get('/salles-attribution/igea', [Geoscience::class, 'showAttribution'])
-     ->name('salles.attribution_igea');
+     Route::get('/salles-attribution/ingea', [Geoscience::class, 'showAttribution'])
+     ->name('salles.attribution_ingea');
      Route::post('/candidates/assign-rooms/igea', [Geoscience::class, 'assignRooms'])
      ->name('candidates.assign-rooms.igea');
      Route::get('/candidates/print-rooms/igea', function() {

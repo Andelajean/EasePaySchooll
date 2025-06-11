@@ -40,7 +40,7 @@
     <h2 class="text-2xl font-bold">Gestion des Candidats pour la Filière Ingenieur Genie Civil</h2>
     <div class="flex space-x-4">
          <!-- Bouton Tri Alphabétique -->
-         <a href="{{ route('salles.attribution_sph', ['alphabetical' => true]) }}" 
+         <a href="{{ route('salles.attribution.civil', ['alphabetical' => true]) }}" 
            class="bg-blue-600 text-white px-4 py-2 rounded flex items-center">
            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"/>
@@ -61,7 +61,7 @@
 
         <div class="px-6 py-4">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
@@ -72,6 +72,8 @@
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nationalité</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Région</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Adresse</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ecolde De Provenance</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">BAC</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fichiers</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
@@ -94,6 +96,8 @@
                                 {{ $candidate->telephone }}<br>
                                 <small class="text-blue-500">{{ $candidate->email }}</small>
                             </td>
+                            <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{{ $candidate->adresse }}</td>
+                            <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{{ $candidate->lycee }}</td>
                             <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                                 @if($candidate->titulaire_bac)
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Oui</span>
@@ -124,11 +128,7 @@
         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
 </a>
-                                <a href="{{ Storage::url($candidate->adresse) }}" target="_blank" class="text-green-600 hover:text-green-900" title="Voir adresse">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
+                                
                             </td>
                         </tr>
                         @endforeach

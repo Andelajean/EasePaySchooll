@@ -62,6 +62,7 @@ class ConcourController extends Controller
             'adresse' => 'required|string|max:500',
             'telephone' => 'required|string|max:20',
             'email' => 'required|email|unique:management_finances',
+            'lycee' => 'required|string|max:255',
             'titulaire_bac' => 'required|boolean',
             
             // Fichiers obligatoires
@@ -120,6 +121,7 @@ class ConcourController extends Controller
             'adresse' => $request->adresse,
             'telephone' => $request->telephone,
             'email' => $request->email,
+            'lycee' => $request->lycee,
             'titulaire_bac' => $request->titulaire_bac,
             'created_at' => now(),
             'updated_at' => now()

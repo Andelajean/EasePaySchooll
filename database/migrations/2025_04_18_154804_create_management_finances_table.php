@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('region_origine');
             $table->string('adresse');
             $table->string('telephone');
+            $table->string('lycee');
             $table->string('email')->unique();
             // Information sur le bac
             $table->boolean('titulaire_bac')->default(false);
