@@ -208,8 +208,8 @@ public function payer(Request $request)
     private function callMomoApi(Request $request, $id_paiement, $montantMajore)
     {
         try {
-            $url = "https://api.monetbil.com/widget/v2.1/3etaiVRfi6g1DbNmq7CVou52wisgHmfU";
-    
+           // $url = "https://api.monetbil.com/widget/v2.1/3etaiVRfi6g1DbNmq7CVou52wisgHmfU";
+            $url = "https://api.monetbil.com/widget/v2.1/W72TUlOJsXADleZCnz4b5NtQ6Y8JkaEN";
             $data = [
                 'amount' =>$montantMajore , // Utiliser le montant majoré
                 'currency' => 'XAF',

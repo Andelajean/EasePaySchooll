@@ -18,7 +18,7 @@ class Geoscience extends Model
         'nationalite',
         'region_origine',
         'adresse',
-        'lycee',
+       // 'lycee',
         'telephone',
         'email',
         'titulaire_bac',
